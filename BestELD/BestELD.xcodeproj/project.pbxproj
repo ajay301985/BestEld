@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		137D5707C2C2EC904AD52D25 /* Pods_BestELD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A839C35402277F85BA4BBA /* Pods_BestELD.framework */; };
+		AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */; };
 		AA57D46125B38DD000269519 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46025B38DD000269519 /* StringExtension.swift */; };
 		AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46425B38F6B00269519 /* AppUtility.swift */; };
 		AA57D46825B3941300269519 /* AppNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46725B3941300269519 /* AppNavigationViewController.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		36A839C35402277F85BA4BBA /* Pods_BestELD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestELD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EC7AC0FFDA1BF6AE0C8E7BE /* Pods-BestELD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestELD.debug.xcconfig"; path = "Target Support Files/Pods-BestELD/Pods-BestELD.debug.xcconfig"; sourceTree = "<group>"; };
+		AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLDAppUtility.swift; sourceTree = "<group>"; };
 		AA57D46025B38DD000269519 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		AA57D46425B38F6B00269519 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		AA57D46725B3941300269519 /* AppNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				AA57D46025B38DD000269519 /* StringExtension.swift */,
 				AA57D46425B38F6B00269519 /* AppUtility.swift */,
+				AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */,
 			);
 			path = "Utility Files";
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */,
 				AA57D46125B38DD000269519 /* StringExtension.swift in Sources */,
 				AA7DAAB125B7587D001C5F6A /* LogBookViewController.swift in Sources */,
+				AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */,
 				AA7DAAB425B759D2001C5F6A /* LogBookViewModel.swift in Sources */,
 				AA7DAAAE25B754D1001C5F6A /* ViewViewModel.swift in Sources */,
 				AABEDA8925B2DA50007C9345 /* AppDelegate.swift in Sources */,

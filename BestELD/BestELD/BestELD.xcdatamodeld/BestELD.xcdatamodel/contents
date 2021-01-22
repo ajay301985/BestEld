@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DayData" representedClassName="DayData" syncable="YES" codeGenerationType="class">
         <attribute name="day" optional="YES" attributeType="String"/>
-        <attribute name="driverDLNumber" attributeType="String"/>
+        <attribute name="dlNumber" attributeType="String"/>
         <attribute name="dutyStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="endTimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -12,12 +12,13 @@
         <attribute name="rideDescription" optional="YES" attributeType="String"/>
         <attribute name="startTimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="userLocation" optional="YES" attributeType="String"/>
-        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="newRelationship" inverseEntity="DayMetaData"/>
+        <relationship name="ofDayMetaData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="dayData" inverseEntity="DayMetaData"/>
     </entity>
     <entity name="DayMetaData" representedClassName="DayMetaData" syncable="YES" codeGenerationType="class">
         <attribute name="day" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="driverDLNumber" attributeType="String"/>
-        <relationship name="newRelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DayData" inverseName="newRelationship" inverseEntity="DayData"/>
+        <attribute name="dayText" optional="YES" attributeType="String"/>
+        <attribute name="dlNumber" attributeType="String"/>
+        <relationship name="dayData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DayData" inverseName="ofDayMetaData" inverseEntity="DayData"/>
     </entity>
     <entity name="Driver" representedClassName="Driver" syncable="YES" codeGenerationType="class">
         <attribute name="dlBackImageurl" optional="YES" attributeType="String"/>
@@ -39,7 +40,7 @@
     </entity>
     <elements>
         <element name="DayData" positionX="-54" positionY="-18" width="128" height="28"/>
-        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="88"/>
+        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="103"/>
         <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
         <element name="Eld" positionX="-252" positionY="-225" width="128" height="118"/>
     </elements>

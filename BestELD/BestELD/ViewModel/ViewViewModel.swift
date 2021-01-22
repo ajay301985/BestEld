@@ -16,8 +16,27 @@ class ViewViewModel {
   } */
 
   func testUser() -> Driver? {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let context = appDelegate.persistentContainer.viewContext
+    let context = BLDAppUtility.dataContext()
+
+    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Driver")
+    let testDriverLicenceNumber = "xyz12345"
+    fetchRequest.predicate = NSPredicate(format: "dlNumber == %@", testDriverLicenceNumber)
+
+    do {
+      let testDriverData = try context.fetch(fetchRequest)
+      if testDriverData.isEmpty {
+        return createTestDriverData()
+      }
+      return testDriverData.first as! Driver
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+
+    return nil
+  }
+
+  private func createTestDriverData() -> Driver? {
+    let context = BLDAppUtility.dataContext()
 
     let entity = NSEntityDescription.entity(forEntityName: "Driver", in: context)
     let testDriver = NSManagedObject(entity: entity!, insertInto: context)
@@ -34,7 +53,7 @@ class ViewViewModel {
     }catch let error {
       print("Failed to save driver data\(error)")
     }
-    return testDriver as? Driver
+    return testDriver as! Driver
   }
 
   func logBookStoryboardInstance() -> LogBookViewController {
@@ -42,10 +61,28 @@ class ViewViewModel {
     return storyboard.instantiateViewController(withIdentifier: "LogBookViewController") as! LogBookViewController
   }
 
-  func testUserDayMetaData() -> DayMetaData? {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let context = appDelegate.persistentContainer.viewContext
+  func testUserDayMetaData(dayStart: Date, driverDL: String) -> DayMetaData? {
+    let context = BLDAppUtility.dataContext()
 
+    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "DayMetaData")
+    let startDay = dayStart.startOfDay
+    fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (day == %@)", driverDL,startDay as CVarArg)
+
+    do {
+      let testDriverMetaData = try context.fetch(fetchRequest)
+      if testDriverMetaData.isEmpty {
+        return createTestUserMetaData()
+      }
+      return testDriverMetaData.first as! DayMetaData
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    return nil
+  }
+
+
+  func createTestUserMetaData() -> DayMetaData? {
+    let context = BLDAppUtility.dataContext()
     let entity = NSEntityDescription.entity(forEntityName: "DayMetaData", in: context)
     let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context)
 
@@ -53,8 +90,11 @@ class ViewViewModel {
       print("wrong object")
       return nil
     }
-    dayMetaDataObj.setValue(Date(), forKey: "day")
-    dayMetaDataObj.setValue("test driver", forKey: "driverDLNumber")
+
+    let dayTextValue = BLDAppUtility.textForDate(date: Date())
+    dayMetaDataObj.setValue(Date().startOfDay, forKey: "day")
+    dayMetaDataObj.setValue(dayTextValue, forKey: "dayText")
+    dayMetaDataObj.setValue("xyz12345", forKey: "dlNumber")
 
     do {
       try context.save()
@@ -63,4 +103,5 @@ class ViewViewModel {
     }
     return dayMetaDataObj as? DayMetaData
   }
+
 }

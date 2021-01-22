@@ -32,7 +32,8 @@ class ViewController: UIViewController {
 
   @IBAction func loggedInAsATestUser(_ sender: Any) {
     let currentDriver = viewModel.testUser()
-    let driverMetaData = viewModel.testUserDayMetaData()
+    let dayTextValue = BLDAppUtility.textForDate(date: Date())
+    let driverMetaData = viewModel.testUserDayMetaData(dayStart: Date(), driverDL: currentDriver?.dlNumber ?? "xyz12345")
     guard  let driver = currentDriver, let metaData = driverMetaData else {
       assertionFailure("failed to create objects")
       return

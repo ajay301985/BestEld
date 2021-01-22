@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DayData" representedClassName="DayData" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="driverDLNumber" attributeType="String"/>
+        <attribute name="dutyStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endTimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isVoilation" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rideDescription" optional="YES" attributeType="String"/>
+        <attribute name="startTimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userLocation" optional="YES" attributeType="String"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="newRelationship" inverseEntity="DayMetaData"/>
+    </entity>
+    <entity name="DayMetaData" representedClassName="DayMetaData" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="driverDLNumber" attributeType="String"/>
+        <relationship name="newRelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DayData" inverseName="newRelationship" inverseEntity="DayData"/>
+    </entity>
+    <entity name="Driver" representedClassName="Driver" syncable="YES" codeGenerationType="class">
+        <attribute name="dlBackImageurl" optional="YES" attributeType="String"/>
+        <attribute name="dlExpiryDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dlFrontImageUrl" optional="YES" attributeType="String"/>
+        <attribute name="dlNumber" attributeType="String"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="primaryPhone" optional="YES" attributeType="String"/>
+        <attribute name="secondaryPhone" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Eld" representedClassName="Eld" syncable="YES" codeGenerationType="class">
+        <attribute name="fleetDotNumber" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="macAddress" optional="YES" attributeType="String"/>
+        <attribute name="remarks" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="DayData" positionX="-54" positionY="-18" width="128" height="28"/>
+        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="88"/>
+        <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
+        <element name="Eld" positionX="-252" positionY="-225" width="128" height="118"/>
+    </elements>
+</model>

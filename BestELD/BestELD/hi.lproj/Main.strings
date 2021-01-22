@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Login"; ObjectID = "74W-bC-iPm"; */
+"74W-bC-iPm.text" = "Login";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "EWA-QF-Rl0"; */
+"EWA-QF-Rl0.placeholder" = "Password";
+
+/* Class = "UITextField"; placeholder = "User Id"; ObjectID = "YZd-KZ-RtH"; */
+"YZd-KZ-RtH.placeholder" = "User Id";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "h4T-B7-xMs"; */
+"h4T-B7-xMs.normalTitle" = "Login";
+
+/* Class = "UIButton"; normalTitle = "Help"; ObjectID = "hOI-Mh-8r1"; */
+"hOI-Mh-8r1.normalTitle" = "Help";

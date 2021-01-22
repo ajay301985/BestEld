@@ -1,0 +1,24 @@
+PODS:
+  - L10n-swift (5.7.2):
+    - L10n-swift/Core (= 5.7.2)
+    - L10n-swift/Extension (= 5.7.2)
+    - L10n-swift/IBInspectable (= 5.7.2)
+  - L10n-swift/Core (5.7.2)
+  - L10n-swift/Extension (5.7.2):
+    - L10n-swift/Core
+  - L10n-swift/IBInspectable (5.7.2):
+    - L10n-swift/Core
+
+DEPENDENCIES:
+  - L10n-swift (~> 5.7)
+
+SPEC REPOS:
+  trunk:
+    - L10n-swift
+
+SPEC CHECKSUMS:
+  L10n-swift: 5895718b0534335a3af0e91e80f0d23dad4d5c30
+
+PODFILE CHECKSUM: a54701909ec8c08c9d7ffbb503194ef2c7e9566e
+
+COCOAPODS: 1.9.3

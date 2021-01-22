@@ -1,0 +1,6 @@
+framework module Pods_BestELD {
+  umbrella header "Pods-BestELD-umbrella.h"
+
+  export *
+  module * { export * }
+}

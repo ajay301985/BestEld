@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.backgroundColor = .red
     window?.rootViewController = controller
     window?.makeKeyAndVisible()
+
+    BldLocationManager.shared.requestLocationAccess()
     return true
   }
 

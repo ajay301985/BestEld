@@ -11,7 +11,7 @@ import UIKit
 
 
 class LogBookViewModel {
-  private var currentDriver: Driver
+  var currentDriver: Driver
   private var dayMetaDataArr: [DayMetaData]
   private var currentDayData: DayData?
 
@@ -41,11 +41,11 @@ class LogBookViewModel {
       case .OffDuty:
         performOffDutyStatusChanged()
       case .Sleeper:
-        performSleeperStatusChanged()
+        performSleeperStatusChanged(description: description, startTime: timeToStart)
       case .Yard:
-        performYardStatusChanged()
+        performYardStatusChanged(description: description, startTime: timeToStart)
       default:
-        performPersonalStatusChanged()
+        performPersonalStatusChanged(description: description, startTime: timeToStart)
     }
   }
 
@@ -58,14 +58,15 @@ class LogBookViewModel {
 
     let currentTime = Date()
     dayData.endTimeStamp = startTime ?? currentTime
-    let currentDayData1 = createDayData(start: startTime ?? currentTime, end: Date(), status: .OnDuty, desciption: description ?? "on Duty Now")
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .OnDuty, desciption: description ?? "on Duty Now", for: currentDriver)
+    currentDayData = currentDayData1
   }
 
   private func performOffDutyStatusChanged() {
-    let driverMetaData = testUserDayMetaData(dayStart: Date(), driverDL: currentDriver.dlNumber ?? "xyz12345")
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: currentDriver.dlNumber ?? "xyz12345")
     guard let metaData = driverMetaData, (metaData.dayData?.count ?? 0 > 0) else {
       let startDate = Date().startOfDay
-      currentDayData = createDayData(start: startDate, end: Date(), status: .OffDuty, desciption: "off duty")
+      currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OffDuty, desciption: "off duty",for: currentDriver)
       return
     }
 
@@ -74,16 +75,52 @@ class LogBookViewModel {
     //getData()
   }
 
-  private func performSleeperStatusChanged() {
-    getData()
+  private func performSleeperStatusChanged(description: String?, startTime: Date? = nil) {
+    guard let dayData = currentDayData else {
+      print("invalid day data")
+      return
+    }
+
+    let currentTime = Date()
+    dayData.endTimeStamp = startTime ?? currentTime
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Sleeper, desciption: description ?? "on Duty Now",for: currentDriver)
+    currentDayData = currentDayData1
   }
 
-  private func performYardStatusChanged() {
-    getData()
+  private func performYardStatusChanged(description: String?, startTime: Date? = nil) {
+    guard let dayData = currentDayData else {
+      print("invalid day data")
+      return
+    }
+
+    let currentTime = Date()
+    dayData.endTimeStamp = startTime ?? currentTime
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Yard, desciption: description ?? "on Duty Now",for: currentDriver)
+    currentDayData = currentDayData1
   }
 
-  private func performPersonalStatusChanged() {
-    getData()
+  private func performPersonalStatusChanged(description: String?, startTime: Date? = nil) {
+    guard let dayData = currentDayData else {
+      print("invalid day data")
+      return
+    }
+
+    let currentTime = Date()
+    dayData.endTimeStamp = startTime ?? currentTime
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Personal, desciption: description ?? "on Duty Now",for: currentDriver)
+    currentDayData = currentDayData1
+  }
+
+  private func performDrivingStatusChanged(description: String?, startTime: Date? = nil) {
+    guard let dayData = currentDayData else {
+      print("invalid day data")
+      return
+    }
+
+    let currentTime = Date()
+    dayData.endTimeStamp = startTime ?? currentTime
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Driving, desciption: description ?? "on Duty Now",for: currentDriver)
+    currentDayData = currentDayData1
   }
 
   private func getData() {
@@ -99,57 +136,13 @@ class LogBookViewModel {
     }
   }
 
-
-  func createDayData(start: Date, end: Date, status: DutyStatus, desciption: String?) -> DayData? {
-    let context = BLDAppUtility.dataContext()
-    let entity = NSEntityDescription.entity(forEntityName: "DayData", in: context)
-    let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context)
-    dayMetaDataObj.setValue("string", forKey: "day")
-    dayMetaDataObj.setValue(currentDriver.dlNumber, forKey: "dlNumber")
-    dayMetaDataObj.setValue(status.dutyIndex, forKey: "dutyStatus")
-    dayMetaDataObj.setValue(end, forKey: "endTimeStamp")
-    dayMetaDataObj.setValue("1009", forKey: "id")
-    dayMetaDataObj.setValue(1010101, forKey: "latitude")
-    dayMetaDataObj.setValue(1010505, forKey: "longitude")
-    dayMetaDataObj.setValue(desciption ?? "", forKey: "rideDescription")
-    dayMetaDataObj.setValue(start, forKey: "startTimeStamp")
-    dayMetaDataObj.setValue("USA, SA", forKey: "userLocation")
-    let driverMetaData = testUserDayMetaData(dayStart: Date(), driverDL: currentDriver.dlNumber ?? "xyz12345")
-    if (driverMetaData?.dayData?.count ?? 0 < 1) {
-      driverMetaData?.dayData = Set(arrayLiteral: dayMetaDataObj) as NSSet
-    } else {
-      //driverMetaData?.mutableSetValue(forKey: "DayData").add(dayMetaDataObj)
-      driverMetaData?.dayData?.adding(dayMetaDataObj)
-      //driverMetaData?.dayData?.adding(dayMetaDataObj)
-    }
-    do {
-      try context.save()
-    }catch let error {
-      print("Failed to save driver data\(error)")
-    }
-
-    return dayMetaDataObj as? DayData
-
-  }
-
-  func testUserDayMetaData(dayStart: Date, driverDL: String) -> DayMetaData? {
-    let context = BLDAppUtility.dataContext()
-
-    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "DayMetaData")
-    let startDay = dayStart.startOfDay
-    fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (day == %@)", driverDL,startDay as CVarArg)
-
-    do {
-      let testDriverMetaData = try context.fetch(fetchRequest)
-      return testDriverMetaData.first as! DayMetaData
-    } catch let error as NSError {
-      print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return nil
-  }
-
   var shouldSetDefaultOffDuty: Bool {
     return true
     //TODO: add conditions
+  }
+
+  func drivingStoryboardInstance() -> DrivingViewController {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    return storyboard.instantiateViewController(withIdentifier: "DrivingViewController") as! DrivingViewController
   }
 }

@@ -33,25 +33,37 @@ enum DutyStatus: Int16 {
     }
   }
 
-/*  init(index: Int) {
-    switch index {
-      case 0: self = .OnDuty
-      case 1: self = .OffDuty
-      case 2: self = .Sleeper
-      case 3: self = .Yard
-
+  var title: String {
+    switch self {
+      case .OnDuty:
+        return "On Duty"
+      case .OffDuty:
+        return "Off Duty"
+      case .Sleeper:
+        return "Sleeper"
+      case .Yard:
+        return "Yard"
+      case .Driving:
+        return "Driving"
       default:
-        assertionFailure("Index out of bounds for UISegmentControl")
-        self = .Personal
+        return "Personal"
     }
-  } */
+  }
 }
 
 class LogBookViewController: UIViewController {
 
   @IBOutlet weak var dutyStatusStackView: UIStackView!
   @IBOutlet weak var dutyStatusButton: UIButton!
+  @IBOutlet weak var tableView: UITableView!
   private var viewModel: LogBookViewModel!  //TODO: fix it
+
+  var currentStatus: DutyStatus = .OffDuty {
+    didSet {
+      dutyStatusButton.setTitle(currentStatus.title, for: .normal)
+    }
+  }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let currentDriver = viewModel.driverName
@@ -60,9 +72,14 @@ class LogBookViewController: UIViewController {
 
         dutyStatusStackView.isHidden = true
         performLoggedIn()
+       // tableView.register(DayDataTableViewCell.self, forCellReuseIdentifier: "dayDataTableCellIdentifier")
         // Do any additional setup after loading the view.
     }
 
+
+  override func viewWillAppear(_ animated: Bool) {
+    tableView.reloadData()
+  }
 
   func performLoggedIn() {
     if (viewModel.shouldSetDefaultOffDuty) {
@@ -75,73 +92,82 @@ class LogBookViewController: UIViewController {
   }
 
   @IBAction func dutyButtonClicked(_ sender: Any) {
-    var currentStatus: DutyStatus = .OffDuty
+    var status: DutyStatus = .OffDuty
     let button = sender as! UIButton
     switch button.tag {
       case 0:
-        print("off duty")
-        dutyStatusButton.setTitle("Off Duty", for: .normal)
-        currentStatus = .OffDuty
+        status = .OffDuty
       case 1:
-        print("on duty")
-        dutyStatusButton.setTitle("On Duty", for: .normal)
-        currentStatus = .OnDuty
+        status = .OnDuty
       case 2:
-        print("sleeper duty")
-        dutyStatusButton.setTitle("Sleeper", for: .normal)
-        currentStatus = .Sleeper
+        status = .Sleeper
       case 3:
-        print("personal duty")
-        dutyStatusButton.setTitle("Personal", for: .normal)
-        currentStatus = .Personal
+        status = .Personal
       default:
-        print("duty status yard")
-        dutyStatusButton.setTitle("Yard", for: .normal)
-        currentStatus = .Yard
+        status = .Yard
     }
     print("duty status")
     dutyStatusStackView.isHidden.toggle()
-    showAlertToUser(status: currentStatus)
+
+    showAlertToUser(
+      status: currentStatus,
+      continueAction: (title: nil, handler: { description,date in
+        self.viewModel?.dutyStatusChanged(status: status,description: description, timeToStart: date)
+        self.currentStatus = status
+        if status == .OnDuty {
+          let drivingController = self.viewModel.drivingStoryboardInstance()
+          drivingController.currentDriver = self.viewModel.currentDriver
+          drivingController.modalPresentationStyle = .fullScreen
+          self.navigationController?.pushViewController(drivingController, animated: true)
+          //self.present(drivingController, animated: true) {
+            print("present")
+          }
+      }),
+      cancelAction: (title: nil, handler: { description,date in
+      }))
+
   }
 
   @IBAction func dutyStatusButtonClicked(_ sender: Any) {
     dutyStatusStackView.isHidden.toggle()
   }
-  /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+}
+
+
+extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? "xyz12345")
+    return driverMetaData?.dayData?.count ?? 0
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? "xyz12345")
+    let dayDataArr = driverMetaData?.dayData?.allObjects as! [DayData]
+    let sortedData = dayDataArr.sorted(by: { $0.startTimeStamp ?? Date() < $1.startTimeStamp ?? Date()})
+
+    let tableCell = tableView.dequeueReusableCell(withIdentifier: "dayDataTableCellIdentifier") as! DayDataTableViewCell
+    
+    let currentDayData = sortedData[indexPath.row]
+    tableCell.dutyStatusLabel.text = DutyStatus(rawValue: currentDayData.dutyStatus)?.title
+    tableCell.descriptionLabel.text = currentDayData.rideDescription
+    tableCell.locationLabel.text = currentDayData.userLocation
+    let eventDate = currentDayData.startTimeStamp
+    let eventDateEnd = currentDayData.startTimeStamp
+    guard let dutyTime = eventDate else {
+      tableCell.timeLabel.text = "Invalid date"
+      return tableCell
     }
-    */
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    let currentDateString = dateFormatter.string(from: dutyTime)
+    var endTime = ""
+    if eventDateEnd != nil {
+      endTime = dateFormatter.string(from: eventDateEnd!)
+    }
 
-  func showAlertToUser(status: DutyStatus) {
-
-    let textField = UITextField(frame: CGRect(x: 10, y: 65, width: 260, height: 30))
-    textField.backgroundColor = .yellow
-
-    let myDatePicker: UIDatePicker = UIDatePicker()
-    // setting properties of the datePicker
-    myDatePicker.timeZone = NSTimeZone.local
-    myDatePicker.frame = CGRect(x: 50, y: 100, width: 270, height: 200)
-    myDatePicker.minimumDate = Date()
-    myDatePicker.datePickerMode = .time
-
-    let alertController = UIAlertController(title: "Select Date \n\n\n\n\n\n\n\n\n\n\n\n", message: nil, preferredStyle: UIAlertController.Style.alert)
-    alertController.view.addSubview(textField)
-    alertController.view.addSubview(myDatePicker)
-    let somethingAction = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: {_ in
-      let description = textField.text
-      let datePickerValue = myDatePicker.date
-      self.viewModel?.dutyStatusChanged(status: status,description: description, timeToStart: datePickerValue)
-    })
-    let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil)
-    alertController.addAction(somethingAction)
-    alertController.addAction(cancelAction)
-    self.present(alertController, animated: true, completion:{
-    })
+    tableCell.timeLabel.text = "\(currentDateString) - \(endTime)"
+    return tableCell
   }
 
 

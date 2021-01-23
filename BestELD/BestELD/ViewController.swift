@@ -31,9 +31,13 @@ class ViewController: UIViewController {
   }
 
   @IBAction func loggedInAsATestUser(_ sender: Any) {
-    let currentDriver = viewModel.testUser()
-    let dayTextValue = BLDAppUtility.textForDate(date: Date())
-    let driverMetaData = viewModel.testUserDayMetaData(dayStart: Date(), driverDL: currentDriver?.dlNumber ?? "xyz12345")
+    DataHandeler.shared.setupData(for: "xyz12345")
+    let currentDriver = DataHandeler.shared.currentDriver
+    DataHandeler.shared.cleanupData(for: "xyz12345") //clean up existing data
+    var driverMetaData = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: currentDriver?.dlNumber ?? "xyz12345")
+    if ((driverMetaData == nil)) {
+      driverMetaData = DataHandeler.shared.createTestUserMetaData(for: "xyz12345", data: Date())
+    }
     guard  let driver = currentDriver, let metaData = driverMetaData else {
       assertionFailure("failed to create objects")
       return

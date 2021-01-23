@@ -65,28 +65,34 @@ class DrivingViewController: UIViewController {
   }
 
   @IBAction func dutyButtonClicked(_ sender: Any) {
+    var status: DutyStatus = .OffDuty
     let button = sender as! UIButton
     switch button.tag {
       case 0:
-        print("off duty")
-        currentStatus = .OffDuty
+        status = .OffDuty
       case 1:
-        print("on duty")
-//        dutyStatusButton.setTitle("On Duty", for: .normal)
-//        currentStatus = .OnDuty
+        status = .OnDuty
       case 2:
-        print("sleeper duty")
-        currentStatus = .Sleeper
+        status = .Sleeper
       case 3:
-        print("personal duty")
-        currentStatus = .Personal
+        status = .Personal
       default:
-        print("duty status yard")
-        currentStatus = .Yard
+        status = .Yard
     }
-    disableButton(for: currentStatus)
+    print("duty status")
     dutyStatusStackView.isHidden.toggle()
-    navigationController?.popViewController(animated: true)
+
+    showAlertToUser(
+      status: currentStatus,
+      continueAction: (title: nil, handler: { description,date in
+        DataHandeler.shared.dutyStatusChanged(status: status,description: description, timeToStart: date)
+        self.currentStatus = status
+        self.disableButton(for: status)
+        self.dutyStatusStackView.isHidden.toggle()
+        self.navigationController?.popViewController(animated: true)
+      }),
+      cancelAction: (title: nil, handler: { description,date in
+      }))
   }
 
   func disableButton(for status:DutyStatus) {

@@ -72,6 +72,10 @@ class LogBookViewController: UIViewController {
 
         dutyStatusStackView.isHidden = true
         performLoggedIn()
+
+      if(DataHandeler.shared.currentDayData == nil) {
+        DataHandeler.shared.dutyStatusChanged(status: .OffDuty,description: "off duty from start of the day", timeToStart: Date())
+      }
        // tableView.register(DayDataTableViewCell.self, forCellReuseIdentifier: "dayDataTableCellIdentifier")
         // Do any additional setup after loading the view.
     }
@@ -83,7 +87,7 @@ class LogBookViewController: UIViewController {
 
   func performLoggedIn() {
     if (viewModel.shouldSetDefaultOffDuty) {
-      self.viewModel?.dutyStatusChanged(status: .OffDuty)
+     // self.viewModel?.dutyStatusChanged(status: .OffDuty)
     }
   }
 
@@ -112,7 +116,7 @@ class LogBookViewController: UIViewController {
     showAlertToUser(
       status: currentStatus,
       continueAction: (title: nil, handler: { description,date in
-        self.viewModel?.dutyStatusChanged(status: status,description: description, timeToStart: date)
+        DataHandeler.shared.dutyStatusChanged(status: status,description: description, timeToStart: date)
         self.currentStatus = status
         if status == .OnDuty {
           let drivingController = self.viewModel.drivingStoryboardInstance()
@@ -153,7 +157,7 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
     tableCell.descriptionLabel.text = currentDayData.rideDescription
     tableCell.locationLabel.text = currentDayData.userLocation
     let eventDate = currentDayData.startTimeStamp
-    let eventDateEnd = currentDayData.startTimeStamp
+    let eventDateEnd = currentDayData.endTimeStamp
     guard let dutyTime = eventDate else {
       tableCell.timeLabel.text = "Invalid date"
       return tableCell

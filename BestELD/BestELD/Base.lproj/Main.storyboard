@@ -212,12 +212,12 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sc0-1b-0Vk">
-                                                    <rect key="frame" x="261" y="6" width="98" height="35"/>
+                                                    <rect key="frame" x="244" y="6" width="115" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="16W-ss-fdu"/>
-                                                        <constraint firstAttribute="width" constant="98" id="nD3-Lb-OEC"/>
+                                                        <constraint firstAttribute="width" constant="115" id="nD3-Lb-OEC"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

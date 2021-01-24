@@ -32,8 +32,11 @@ class ViewController: UIViewController {
 
   @IBAction func loggedInAsATestUser(_ sender: Any) {
     DataHandeler.shared.setupData(for: "xyz12345")
-    let currentDriver = DataHandeler.shared.currentDriver
+    var currentDriver = DataHandeler.shared.currentDriver
     DataHandeler.shared.cleanupData(for: "xyz12345") //clean up existing data
+    if (currentDriver == nil) {
+      currentDriver = DataHandeler.shared.createTestDriverData()
+    }
     var driverMetaData = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: currentDriver?.dlNumber ?? "xyz12345")
     if ((driverMetaData == nil)) {
       driverMetaData = DataHandeler.shared.createTestUserMetaData(for: "xyz12345", data: Date())
@@ -42,7 +45,7 @@ class ViewController: UIViewController {
       assertionFailure("failed to create objects")
       return
     }
-
+    DataHandeler.shared.currentDriver = driver
     let bookViewModel = LogBookViewModel(driver: driver, metaData: [metaData])
     let logBookViewController = viewModel.logBookStoryboardInstance()
     logBookViewController.setViewModel(dataViewModel: bookViewModel)

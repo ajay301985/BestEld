@@ -40,8 +40,8 @@ extension UIViewController {
   func showAlertToUser(status: DutyStatus, continueAction: AlertAction,
                        cancelAction: AlertAction) {
 
-    let textField = UITextField(frame: CGRect(x: 10, y: 65, width: 260, height: 30))
-    textField.backgroundColor = .yellow
+    let textField = UITextField(frame: CGRect(x: 10, y: 65, width: 200, height: 30))
+    textField.backgroundColor = .lightGray
 
     let myDatePicker: UIDatePicker = UIDatePicker()
     // setting properties of the datePicker

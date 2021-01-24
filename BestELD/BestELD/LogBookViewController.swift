@@ -56,6 +56,7 @@ class LogBookViewController: UIViewController {
   @IBOutlet weak var dutyStatusStackView: UIStackView!
   @IBOutlet weak var dutyStatusButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var graphImageView: UIImageView!
   private var viewModel: LogBookViewModel!  //TODO: fix it
 
   var currentStatus: DutyStatus = .OffDuty {
@@ -70,14 +71,13 @@ class LogBookViewController: UIViewController {
         let currentDriver1 = viewModel.currentDay
         print("driver name is = \(currentDriver) and driving on \(currentDriver1)")
 
+        GraphGenerator.shared.setupImageView(imageView: graphImageView)
         dutyStatusStackView.isHidden = true
         performLoggedIn()
 
       if(DataHandeler.shared.currentDayData == nil) {
         DataHandeler.shared.dutyStatusChanged(status: .OffDuty,description: "off duty from start of the day", timeToStart: Date())
       }
-       // tableView.register(DayDataTableViewCell.self, forCellReuseIdentifier: "dayDataTableCellIdentifier")
-        // Do any additional setup after loading the view.
     }
 
 

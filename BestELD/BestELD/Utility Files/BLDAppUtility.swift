@@ -26,4 +26,19 @@ class BLDAppUtility {
     return dateString
   }
 
+  static func hourMinute(for inDate: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    let currentDateString = dateFormatter.string(from: inDate)
+    return currentDateString
+  }
+
+  static func hourMinuteValues(for inDate: Date) -> (hour: Int?, minute: Int?) {
+    let calendar = Calendar.current
+    let time=calendar.dateComponents([.hour,.minute,.second], from: inDate)
+    print("\(time.hour!):\(time.minute!):\(time.second!)")
+    return (time.hour, time.minute)
+  }
+
+
 }

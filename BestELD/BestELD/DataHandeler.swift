@@ -86,9 +86,16 @@ extension DataHandeler {
         performSleeperStatusChanged(description: description, startTime: timeToStart)
       case .Yard:
         performYardStatusChanged(description: description, startTime: timeToStart)
+      case .Driving:
+        performDrivingStatusChanged(description: description, startTime: timeToStart)
       default:
         performPersonalStatusChanged(description: description, startTime: timeToStart)
     }
+
+    let dayMetaDataObj = userDayMetaData(dayStart: Date(), driverDL: "xyz12345")
+    let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
+    let sortedData = dayDataArr.sorted(by: { $0.startTimeStamp ?? Date() < $1.startTimeStamp ?? Date()})
+    GraphGenerator.shared.generatePath(dayDataArr: sortedData)
   }
 
   private func performOnDutyStatusChanged(description: String?, startTime: Date? = nil) {
@@ -193,7 +200,7 @@ extension DataHandeler {
     return nil
   }
 
-  private func createTestDriverData() -> Driver? {
+  func createTestDriverData() -> Driver? {
     let context = BLDAppUtility.dataContext()
 
     let entity = NSEntityDescription.entity(forEntityName: "Driver", in: context)

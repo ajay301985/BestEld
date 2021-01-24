@@ -96,6 +96,7 @@ class DrivingViewController: UIViewController {
   }
 
   func disableButton(for status:DutyStatus) {
+    return
     let index = status.dutyIndex
     let array = dutyStatusStackView.subviews
     for currentView in array {

@@ -1,0 +1,15 @@
+{
+  "elddev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-besteld-elddev-191441-authRole",
+      "UnauthRoleArn": "arn:aws:iam::025273162973:role/amplify-besteld-elddev-191441-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::025273162973:role/amplify-besteld-elddev-191441-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-besteld-elddev-191441-deployment",
+      "UnauthRoleName": "amplify-besteld-elddev-191441-unauthRole",
+      "StackName": "amplify-besteld-elddev-191441",
+      "StackId": "arn:aws:cloudformation:us-west-2:025273162973:stack/amplify-besteld-elddev-191441/89805a50-60cb-11eb-9d5e-0af410a5cb31",
+      "AmplifyAppId": "d2wf6mjz9y4kcb"
+    }
+  }
+}

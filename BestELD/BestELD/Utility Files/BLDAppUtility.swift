@@ -40,5 +40,36 @@ class BLDAppUtility {
     return (time.hour, time.minute)
   }
 
+  static func menuItems(loggedInUser: Bool) -> [MenuItem] {
+    var menuItems: [MenuItem] = []
+    let dmeoMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Demo")
+    menuItems.append(dmeoMenuItemObj)
+
+    let testMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Test")
+    menuItems.append(testMenuItemObj)
+
+    let radioMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Radio")
+    menuItems.append(radioMenuItemObj)
+
+    let helpMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Help")
+    menuItems.append(helpMenuItemObj)
+
+    let messageMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Message")
+    menuItems.append(messageMenuItemObj)
+
+    let dotMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "DOT Ins")
+    menuItems.append(dotMenuItemObj)
+
+    let settingMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Settings")
+    menuItems.append(settingMenuItemObj)
+
+    let logbookMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Logbook")
+    menuItems.append(logbookMenuItemObj)
+
+    let sosMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "SOS")
+    menuItems.append(sosMenuItemObj)
+
+    return menuItems
+  }
 
 }

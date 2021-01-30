@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import AWSCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
 
     BldLocationManager.shared.requestLocationAccess()
+////ap-south-1_intkrexXe")//ap-south-1_
+    
+    let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USWest1, identityPoolId: "us-west-1_Mu9qLOLFG") //us-west-1_Mu9qLOLFG
+    let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
+    AWSServiceManager.default().defaultServiceConfiguration = configuration
+
+
+    //For cognito ap-south-1
+    //For amplify us-west-2
+    //For SQS us-west-1
     return true
   }
 

@@ -7,5 +7,13 @@ target 'BestELD' do
 
   # Pods for BestELD
   pod 'L10n-swift', '~> 5.7'
+  pod 'AWSMobileClient'
+  pod 'AWSPinpoint'
+  pod 'AWSDynamoDB'
+  pod 'Amplify'
+  pod 'AWSSQS'
+  pod 'AmplifyPlugins/AWSAPIPlugin'
+  pod 'AmplifyPlugins/AWSDataStorePlugin'
+
 
 end

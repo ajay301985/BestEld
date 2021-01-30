@@ -27,6 +27,19 @@ class BldLocationManager: NSObject  {
     locationManager.startMonitoringVisits()
     //locationManager.startUpdatingLocation()
   }
+
+  func deviceCurrentLocation() -> CLLocation? {
+    return currentLocation
+  }
+
+  var locationLatitute: CLLocationDegrees? {
+    currentLocation?.coordinate.latitude
+  }
+
+  var locationLongitude: CLLocationDegrees? {
+    currentLocation?.coordinate.longitude
+  }
+
 }
 
 extension BldLocationManager: CLLocationManagerDelegate {

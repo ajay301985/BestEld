@@ -7,15 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		038C847789E9407188E190D2 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DE86D57F4A4E8D81ABF9 /* Todo.swift */; };
 		137D5707C2C2EC904AD52D25 /* Pods_BestELD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A839C35402277F85BA4BBA /* Pods_BestELD.framework */; };
+		19AE7E82FA5B48BD8A9AEE39 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D566EE50753D4D8C8F45C0FC /* AmplifyModels.swift */; };
+		3AEC7697EEAB4B86B2B29DC0 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = D23968173F2F464AB60949FD /* awsconfiguration.json */; };
+		3C7AA0A7AD8B49D7B5B4C411 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F412AD9A5A2F412BACF5CC7B /* Priority.swift */; };
+		946F1C348371479291ABCBB3 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C686C3EBBBE449F89BE426D5 /* amplifyconfiguration.json */; };
 		AA16AABB25BD5DAE00A6D9CD /* GraphGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */; };
 		AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */; };
 		AA57D46125B38DD000269519 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46025B38DD000269519 /* StringExtension.swift */; };
 		AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46425B38F6B00269519 /* AppUtility.swift */; };
 		AA57D46825B3941300269519 /* AppNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46725B3941300269519 /* AppNavigationViewController.swift */; };
+		AA6ABB4B25C534D200B3F26F /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6ABB4A25C534D200B3F26F /* DeviceListViewController.swift */; };
+		AA6ABB5225C5592C00B3F26F /* EldDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6ABB5125C5592C00B3F26F /* EldDeviceManager.swift */; };
 		AA7DAAAE25B754D1001C5F6A /* ViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DAAAD25B754D1001C5F6A /* ViewViewModel.swift */; };
 		AA7DAAB125B7587D001C5F6A /* LogBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DAAB025B7587D001C5F6A /* LogBookViewController.swift */; };
 		AA7DAAB425B759D2001C5F6A /* LogBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DAAB325B759D2001C5F6A /* LogBookViewModel.swift */; };
+		AA7EDCD825C5147800291DED /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDCD725C5147800291DED /* MenuViewController.swift */; };
+		AA7EDCDB25C5169200291DED /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDCDA25C5169200291DED /* MenuItem.swift */; };
+		AAB2CAF925C5B90D00057DE8 /* DaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB2CAF825C5B90D00057DE8 /* DaysViewController.swift */; };
+		AAB2CAFC25C5B92E00057DE8 /* DutyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB2CAFB25C5B92E00057DE8 /* DutyStatusViewController.swift */; };
+		AAB2CAFF25C5B97E00057DE8 /* DailyLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB2CAFE25C5B97E00057DE8 /* DailyLogViewController.swift */; };
 		AAB39DB625B4DE6500EECA67 /* DriverApiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB39DB525B4DE6500EECA67 /* DriverApiRepository.swift */; };
 		AABD5EAF25BB40F6004A52D8 /* DrivingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EAE25BB40F6004A52D8 /* DrivingViewController.swift */; };
 		AABD5EB225BB43A1004A52D8 /* DrivingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EB125BB43A1004A52D8 /* DrivingViewModel.swift */; };
@@ -30,19 +42,65 @@
 		AABEDA9825B2DA51007C9345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AABEDA9625B2DA51007C9345 /* LaunchScreen.storyboard */; };
 		AABEDAA925B38678007C9345 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AABEDAAB25B38678007C9345 /* Localizable.strings */; };
 		AABEDAB825B387B0007C9345 /* UserPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABEDAB725B387B0007C9345 /* UserPreferencesViewController.swift */; };
+		AACCEB1025C0A8EB00F9AB0A /* EldLibManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB0F25C0A8EB00F9AB0A /* EldLibManager.m */; };
+		AACCEB1425C0AB6B00F9AB0A /* libEldBleSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AACCEB1325C0AB6B00F9AB0A /* libEldBleSdk.a */; };
+		AACCEB3125C0AC7E00F9AB0A /* EldFuelRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1625C0AC6D00F9AB0A /* EldFuelRecord.h */; };
+		AACCEB3225C0AC7E00F9AB0A /* EldManager.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1725C0AC6D00F9AB0A /* EldManager.h */; };
+		AACCEB3325C0AC7E00F9AB0A /* EldCachedMotionStartRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1825C0AC6D00F9AB0A /* EldCachedMotionStartRecord.h */; };
+		AACCEB3425C0AC7E00F9AB0A /* EldEngineParametersRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1925C0AC6D00F9AB0A /* EldEngineParametersRecord.h */; };
+		AACCEB3525C0AC7E00F9AB0A /* EldDataRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1A25C0AC6D00F9AB0A /* EldDataRecord.h */; };
+		AACCEB3625C0AC7E00F9AB0A /* EldEmissionsParametersRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1B25C0AC6D00F9AB0A /* EldEmissionsParametersRecord.h */; };
+		AACCEB3725C0AC7E00F9AB0A /* LGCentralManager.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1C25C0AC6D00F9AB0A /* LGCentralManager.h */; };
+		AACCEB3825C0AC7E00F9AB0A /* EldCachedEngineoffRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1D25C0AC6D00F9AB0A /* EldCachedEngineoffRecord.h */; };
+		AACCEB3925C0AC7E00F9AB0A /* EldScanObject.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1E25C0AC6D00F9AB0A /* EldScanObject.h */; };
+		AACCEB3A25C0AC7E00F9AB0A /* EldRawDiagnosticRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB1F25C0AC6D00F9AB0A /* EldRawDiagnosticRecord.h */; };
+		AACCEB3B25C0AC7E00F9AB0A /* EldDriverBehaviorRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2025C0AC6D00F9AB0A /* EldDriverBehaviorRecord.h */; };
+		AACCEB3C25C0AC7E00F9AB0A /* EldCachedPoweronRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2125C0AC6D00F9AB0A /* EldCachedPoweronRecord.h */; };
+		AACCEB3D25C0AC7E00F9AB0A /* EldBufferRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2225C0AC6D00F9AB0A /* EldBufferRecord.h */; };
+		AACCEB3E25C0AC7E00F9AB0A /* EldParameter.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2325C0AC6D00F9AB0A /* EldParameter.h */; };
+		AACCEB3F25C0AC7E00F9AB0A /* EldLatestRecords.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2425C0AC6D00F9AB0A /* EldLatestRecords.h */; };
+		AACCEB4025C0AC7E00F9AB0A /* EldBroadcast.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2525C0AC6D00F9AB0A /* EldBroadcast.h */; };
+		AACCEB4125C0AC7E00F9AB0A /* EldCachedPeriodicRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2625C0AC6D00F9AB0A /* EldCachedPeriodicRecord.h */; };
+		AACCEB4225C0AC7E00F9AB0A /* EldCachedDataRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2725C0AC6D00F9AB0A /* EldCachedDataRecord.h */; };
+		AACCEB4325C0AC7E00F9AB0A /* EldCachedMotionStopRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2825C0AC6D00F9AB0A /* EldCachedMotionStopRecord.h */; };
+		AACCEB4425C0AC7E00F9AB0A /* EldCachedNewTimeRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2925C0AC6D00F9AB0A /* EldCachedNewTimeRecord.h */; };
+		AACCEB4525C0AC7E00F9AB0A /* EldBleConnectionStates.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2A25C0AC6D00F9AB0A /* EldBleConnectionStates.h */; };
+		AACCEB4625C0AC7E00F9AB0A /* EldCachedEngineonRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2B25C0AC6D00F9AB0A /* EldCachedEngineonRecord.h */; };
+		AACCEB4725C0AC7E00F9AB0A /* EldTransmissionParametersRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2C25C0AC6D00F9AB0A /* EldTransmissionParametersRecord.h */; };
+		AACCEB4825C0AC7E00F9AB0A /* EldErrors.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2D25C0AC6D00F9AB0A /* EldErrors.h */; };
+		AACCEB4925C0AC7E00F9AB0A /* EldCachedNewVinRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2E25C0AC6D00F9AB0A /* EldCachedNewVinRecord.h */; };
+		AACCEB4A25C0AC7E00F9AB0A /* EldScanObject_protected.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB2F25C0AC6D00F9AB0A /* EldScanObject_protected.h */; };
+		AACCEB4B25C0AC7E00F9AB0A /* EldCallbacks.h in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB3025C0AC6D00F9AB0A /* EldCallbacks.h */; };
+		AACCEB5D25C0B21B00F9AB0A /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5425C0B21B00F9AB0A /* AFURLResponseSerialization.m */; };
+		AACCEB5E25C0B21B00F9AB0A /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5525C0B21B00F9AB0A /* AFHTTPSessionManager.m */; };
+		AACCEB5F25C0B21B00F9AB0A /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5725C0B21B00F9AB0A /* AFURLSessionManager.m */; };
+		AACCEB6025C0B21B00F9AB0A /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5825C0B21B00F9AB0A /* AFURLRequestSerialization.m */; };
+		AACCEB6125C0B21B00F9AB0A /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5A25C0B21B00F9AB0A /* AFNetworkReachabilityManager.m */; };
+		AACCEB6225C0B21B00F9AB0A /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5B25C0B21B00F9AB0A /* AFSecurityPolicy.m */; };
+		F783241DAC584F8D87CC00FB /* Todo+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465CC1D4D31A4807BE4EC7EE /* Todo+Schema.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		36A839C35402277F85BA4BBA /* Pods_BestELD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestELD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EC7AC0FFDA1BF6AE0C8E7BE /* Pods-BestELD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestELD.debug.xcconfig"; path = "Target Support Files/Pods-BestELD/Pods-BestELD.debug.xcconfig"; sourceTree = "<group>"; };
+		465CC1D4D31A4807BE4EC7EE /* Todo+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "Todo+Schema.swift"; path = "amplify/generated/models/Todo+Schema.swift"; sourceTree = "<group>"; };
+		7943DE86D57F4A4E8D81ABF9 /* Todo.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = Todo.swift; path = amplify/generated/models/Todo.swift; sourceTree = "<group>"; };
+		8A409668DDF64D9D8A520A08 /* schema.graphql */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text; name = schema.graphql; path = amplify/backend/api/amplifyDatasource/schema.graphql; sourceTree = "<group>"; };
 		AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphGenerator.swift; sourceTree = "<group>"; };
 		AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLDAppUtility.swift; sourceTree = "<group>"; };
 		AA57D46025B38DD000269519 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		AA57D46425B38F6B00269519 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		AA57D46725B3941300269519 /* AppNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationViewController.swift; sourceTree = "<group>"; };
+		AA6ABB4A25C534D200B3F26F /* DeviceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
+		AA6ABB5125C5592C00B3F26F /* EldDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EldDeviceManager.swift; sourceTree = "<group>"; };
 		AA7DAAAD25B754D1001C5F6A /* ViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewModel.swift; sourceTree = "<group>"; };
 		AA7DAAB025B7587D001C5F6A /* LogBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBookViewController.swift; sourceTree = "<group>"; };
 		AA7DAAB325B759D2001C5F6A /* LogBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBookViewModel.swift; sourceTree = "<group>"; };
+		AA7EDCD725C5147800291DED /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		AA7EDCDA25C5169200291DED /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		AAB2CAF825C5B90D00057DE8 /* DaysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysViewController.swift; sourceTree = "<group>"; };
+		AAB2CAFB25C5B92E00057DE8 /* DutyStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DutyStatusViewController.swift; sourceTree = "<group>"; };
+		AAB2CAFE25C5B97E00057DE8 /* DailyLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogViewController.swift; sourceTree = "<group>"; };
 		AAB39DB525B4DE6500EECA67 /* DriverApiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverApiRepository.swift; sourceTree = "<group>"; };
 		AABD5EAE25BB40F6004A52D8 /* DrivingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingViewController.swift; sourceTree = "<group>"; };
 		AABD5EB125BB43A1004A52D8 /* DrivingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingViewModel.swift; sourceTree = "<group>"; };
@@ -72,7 +130,56 @@
 		AABEDAB525B386FE007C9345 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AABEDAB625B386FE007C9345 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AABEDAB725B387B0007C9345 /* UserPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesViewController.swift; sourceTree = "<group>"; };
+		AACCEB0E25C0A8EB00F9AB0A /* EldLibManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EldLibManager.h; sourceTree = "<group>"; };
+		AACCEB0F25C0A8EB00F9AB0A /* EldLibManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EldLibManager.m; sourceTree = "<group>"; };
+		AACCEB1325C0AB6B00F9AB0A /* libEldBleSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEldBleSdk.a; sourceTree = "<group>"; };
+		AACCEB1625C0AC6D00F9AB0A /* EldFuelRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldFuelRecord.h; sourceTree = "<group>"; };
+		AACCEB1725C0AC6D00F9AB0A /* EldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldManager.h; sourceTree = "<group>"; };
+		AACCEB1825C0AC6D00F9AB0A /* EldCachedMotionStartRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedMotionStartRecord.h; sourceTree = "<group>"; };
+		AACCEB1925C0AC6D00F9AB0A /* EldEngineParametersRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldEngineParametersRecord.h; sourceTree = "<group>"; };
+		AACCEB1A25C0AC6D00F9AB0A /* EldDataRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldDataRecord.h; sourceTree = "<group>"; };
+		AACCEB1B25C0AC6D00F9AB0A /* EldEmissionsParametersRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldEmissionsParametersRecord.h; sourceTree = "<group>"; };
+		AACCEB1C25C0AC6D00F9AB0A /* LGCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGCentralManager.h; sourceTree = "<group>"; };
+		AACCEB1D25C0AC6D00F9AB0A /* EldCachedEngineoffRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedEngineoffRecord.h; sourceTree = "<group>"; };
+		AACCEB1E25C0AC6D00F9AB0A /* EldScanObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldScanObject.h; sourceTree = "<group>"; };
+		AACCEB1F25C0AC6D00F9AB0A /* EldRawDiagnosticRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldRawDiagnosticRecord.h; sourceTree = "<group>"; };
+		AACCEB2025C0AC6D00F9AB0A /* EldDriverBehaviorRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldDriverBehaviorRecord.h; sourceTree = "<group>"; };
+		AACCEB2125C0AC6D00F9AB0A /* EldCachedPoweronRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedPoweronRecord.h; sourceTree = "<group>"; };
+		AACCEB2225C0AC6D00F9AB0A /* EldBufferRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldBufferRecord.h; sourceTree = "<group>"; };
+		AACCEB2325C0AC6D00F9AB0A /* EldParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldParameter.h; sourceTree = "<group>"; };
+		AACCEB2425C0AC6D00F9AB0A /* EldLatestRecords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldLatestRecords.h; sourceTree = "<group>"; };
+		AACCEB2525C0AC6D00F9AB0A /* EldBroadcast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldBroadcast.h; sourceTree = "<group>"; };
+		AACCEB2625C0AC6D00F9AB0A /* EldCachedPeriodicRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedPeriodicRecord.h; sourceTree = "<group>"; };
+		AACCEB2725C0AC6D00F9AB0A /* EldCachedDataRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedDataRecord.h; sourceTree = "<group>"; };
+		AACCEB2825C0AC6D00F9AB0A /* EldCachedMotionStopRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedMotionStopRecord.h; sourceTree = "<group>"; };
+		AACCEB2925C0AC6D00F9AB0A /* EldCachedNewTimeRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedNewTimeRecord.h; sourceTree = "<group>"; };
+		AACCEB2A25C0AC6D00F9AB0A /* EldBleConnectionStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldBleConnectionStates.h; sourceTree = "<group>"; };
+		AACCEB2B25C0AC6D00F9AB0A /* EldCachedEngineonRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedEngineonRecord.h; sourceTree = "<group>"; };
+		AACCEB2C25C0AC6D00F9AB0A /* EldTransmissionParametersRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldTransmissionParametersRecord.h; sourceTree = "<group>"; };
+		AACCEB2D25C0AC6D00F9AB0A /* EldErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldErrors.h; sourceTree = "<group>"; };
+		AACCEB2E25C0AC6D00F9AB0A /* EldCachedNewVinRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCachedNewVinRecord.h; sourceTree = "<group>"; };
+		AACCEB2F25C0AC6D00F9AB0A /* EldScanObject_protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldScanObject_protected.h; sourceTree = "<group>"; };
+		AACCEB3025C0AC6D00F9AB0A /* EldCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EldCallbacks.h; sourceTree = "<group>"; };
+		AACCEB5025C0B21B00F9AB0A /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		AACCEB5125C0B21B00F9AB0A /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		AACCEB5225C0B21B00F9AB0A /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		AACCEB5325C0B21B00F9AB0A /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		AACCEB5425C0B21B00F9AB0A /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		AACCEB5525C0B21B00F9AB0A /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		AACCEB5625C0B21B00F9AB0A /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		AACCEB5725C0B21B00F9AB0A /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		AACCEB5825C0B21B00F9AB0A /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		AACCEB5925C0B21B00F9AB0A /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		AACCEB5A25C0B21B00F9AB0A /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		AACCEB5B25C0B21B00F9AB0A /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		AACCEB5C25C0B21B00F9AB0A /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		AAE0A4A725C09EE2006A686E /* BestELD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BestELD-Bridging-Header.h"; sourceTree = "<group>"; };
+		C686C3EBBBE449F89BE426D5 /* amplifyconfiguration.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = amplifyconfiguration.json; sourceTree = "<group>"; };
+		C9AE857565A446428AAC8546 /* amplifytools.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; path = amplifytools.xcconfig; sourceTree = "<group>"; };
+		D23968173F2F464AB60949FD /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = awsconfiguration.json; sourceTree = "<group>"; };
+		D566EE50753D4D8C8F45C0FC /* AmplifyModels.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = AmplifyModels.swift; path = amplify/generated/models/AmplifyModels.swift; sourceTree = "<group>"; };
 		D7B409EDC0D8D11C0EE35ECC /* Pods-BestELD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestELD.release.xcconfig"; path = "Target Support Files/Pods-BestELD/Pods-BestELD.release.xcconfig"; sourceTree = "<group>"; };
+		F412AD9A5A2F412BACF5CC7B /* Priority.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = Priority.swift; path = amplify/generated/models/Priority.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AACCEB1425C0AB6B00F9AB0A /* libEldBleSdk.a in Frameworks */,
 				137D5707C2C2EC904AD52D25 /* Pods_BestELD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,9 +195,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09A86FD2B0FD4CAE8DAFCE2F /* AmplifyModels */ = {
+			isa = PBXGroup;
+			children = (
+				D566EE50753D4D8C8F45C0FC /* AmplifyModels.swift */,
+				F412AD9A5A2F412BACF5CC7B /* Priority.swift */,
+				7943DE86D57F4A4E8D81ABF9 /* Todo.swift */,
+				465CC1D4D31A4807BE4EC7EE /* Todo+Schema.swift */,
+			);
+			name = AmplifyModels;
+			path = .;
+			sourceTree = "<group>";
+		};
+		3BA9AEE108FC44929BB44671 /* AmplifyConfig */ = {
+			isa = PBXGroup;
+			children = (
+				C9AE857565A446428AAC8546 /* amplifytools.xcconfig */,
+				C686C3EBBBE449F89BE426D5 /* amplifyconfiguration.json */,
+				D23968173F2F464AB60949FD /* awsconfiguration.json */,
+				8A409668DDF64D9D8A520A08 /* schema.graphql */,
+			);
+			name = AmplifyConfig;
+			path = .;
+			sourceTree = "<group>";
+		};
 		A4DBA1A28C60E690CC8E966C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AACCEB1325C0AB6B00F9AB0A /* libEldBleSdk.a */,
 				36A839C35402277F85BA4BBA /* Pods_BestELD.framework */,
 			);
 			name = Frameworks;
@@ -102,6 +235,10 @@
 				AA57D46425B38F6B00269519 /* AppUtility.swift */,
 				AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */,
 				AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */,
+				AAE0A4A725C09EE2006A686E /* BestELD-Bridging-Header.h */,
+				AACCEB0E25C0A8EB00F9AB0A /* EldLibManager.h */,
+				AACCEB0F25C0A8EB00F9AB0A /* EldLibManager.m */,
+				AA6ABB5125C5592C00B3F26F /* EldDeviceManager.swift */,
 			);
 			path = "Utility Files";
 			sourceTree = "<group>";
@@ -112,15 +249,23 @@
 				AA7DAAAD25B754D1001C5F6A /* ViewViewModel.swift */,
 				AA7DAAB325B759D2001C5F6A /* LogBookViewModel.swift */,
 				AABD5EB125BB43A1004A52D8 /* DrivingViewModel.swift */,
-				AABD5EBE25BC1FF8004A52D8 /* DayDataTableViewCell.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AA7EDCDE25C5296D00291DED /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				AABD5EBE25BC1FF8004A52D8 /* DayDataTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		AAB39DA925B48AE500EECA67 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				AAB39DB025B4DC1200EECA67 /* Core Data */,
+				AA7EDCDA25C5169200291DED /* MenuItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +288,8 @@
 		AABEDA7C25B2DA50007C9345 = {
 			isa = PBXGroup;
 			children = (
+				09A86FD2B0FD4CAE8DAFCE2F /* AmplifyModels */,
+				3BA9AEE108FC44929BB44671 /* AmplifyConfig */,
 				AABEDAAB25B38678007C9345 /* Localizable.strings */,
 				AABEDA8725B2DA50007C9345 /* BestELD */,
 				AABEDA8625B2DA50007C9345 /* Products */,
@@ -162,6 +309,9 @@
 		AABEDA8725B2DA50007C9345 /* BestELD */ = {
 			isa = PBXGroup;
 			children = (
+				AA7EDCDE25C5296D00291DED /* Cells */,
+				AACCEB4F25C0B21B00F9AB0A /* AFNetworking */,
+				AACCEB1525C0AC6D00F9AB0A /* include */,
 				AA7DAAAC25B75492001C5F6A /* ViewModel */,
 				AAB39DB425B4DD7300EECA67 /* API Repository */,
 				AAB39DA925B48AE500EECA67 /* Models */,
@@ -179,9 +329,68 @@
 				AABD5EAE25BB40F6004A52D8 /* DrivingViewController.swift */,
 				AABD5EB425BB4D37004A52D8 /* DataHandeler.swift */,
 				AABD5EB725BB8601004A52D8 /* BldLocationManager.swift */,
+				AA7EDCD725C5147800291DED /* MenuViewController.swift */,
+				AA6ABB4A25C534D200B3F26F /* DeviceListViewController.swift */,
+				AAB2CAF825C5B90D00057DE8 /* DaysViewController.swift */,
+				AAB2CAFB25C5B92E00057DE8 /* DutyStatusViewController.swift */,
+				AAB2CAFE25C5B97E00057DE8 /* DailyLogViewController.swift */,
 			);
 			path = BestELD;
 			sourceTree = "<group>";
+		};
+		AACCEB1525C0AC6D00F9AB0A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				AACCEB1625C0AC6D00F9AB0A /* EldFuelRecord.h */,
+				AACCEB1725C0AC6D00F9AB0A /* EldManager.h */,
+				AACCEB1825C0AC6D00F9AB0A /* EldCachedMotionStartRecord.h */,
+				AACCEB1925C0AC6D00F9AB0A /* EldEngineParametersRecord.h */,
+				AACCEB1A25C0AC6D00F9AB0A /* EldDataRecord.h */,
+				AACCEB1B25C0AC6D00F9AB0A /* EldEmissionsParametersRecord.h */,
+				AACCEB1C25C0AC6D00F9AB0A /* LGCentralManager.h */,
+				AACCEB1D25C0AC6D00F9AB0A /* EldCachedEngineoffRecord.h */,
+				AACCEB1E25C0AC6D00F9AB0A /* EldScanObject.h */,
+				AACCEB1F25C0AC6D00F9AB0A /* EldRawDiagnosticRecord.h */,
+				AACCEB2025C0AC6D00F9AB0A /* EldDriverBehaviorRecord.h */,
+				AACCEB2125C0AC6D00F9AB0A /* EldCachedPoweronRecord.h */,
+				AACCEB2225C0AC6D00F9AB0A /* EldBufferRecord.h */,
+				AACCEB2325C0AC6D00F9AB0A /* EldParameter.h */,
+				AACCEB2425C0AC6D00F9AB0A /* EldLatestRecords.h */,
+				AACCEB2525C0AC6D00F9AB0A /* EldBroadcast.h */,
+				AACCEB2625C0AC6D00F9AB0A /* EldCachedPeriodicRecord.h */,
+				AACCEB2725C0AC6D00F9AB0A /* EldCachedDataRecord.h */,
+				AACCEB2825C0AC6D00F9AB0A /* EldCachedMotionStopRecord.h */,
+				AACCEB2925C0AC6D00F9AB0A /* EldCachedNewTimeRecord.h */,
+				AACCEB2A25C0AC6D00F9AB0A /* EldBleConnectionStates.h */,
+				AACCEB2B25C0AC6D00F9AB0A /* EldCachedEngineonRecord.h */,
+				AACCEB2C25C0AC6D00F9AB0A /* EldTransmissionParametersRecord.h */,
+				AACCEB2D25C0AC6D00F9AB0A /* EldErrors.h */,
+				AACCEB2E25C0AC6D00F9AB0A /* EldCachedNewVinRecord.h */,
+				AACCEB2F25C0AC6D00F9AB0A /* EldScanObject_protected.h */,
+				AACCEB3025C0AC6D00F9AB0A /* EldCallbacks.h */,
+			);
+			path = include;
+			sourceTree = SOURCE_ROOT;
+		};
+		AACCEB4F25C0B21B00F9AB0A /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				AACCEB5025C0B21B00F9AB0A /* AFSecurityPolicy.h */,
+				AACCEB5125C0B21B00F9AB0A /* AFNetworkReachabilityManager.h */,
+				AACCEB5225C0B21B00F9AB0A /* AFURLSessionManager.h */,
+				AACCEB5325C0B21B00F9AB0A /* AFURLRequestSerialization.h */,
+				AACCEB5425C0B21B00F9AB0A /* AFURLResponseSerialization.m */,
+				AACCEB5525C0B21B00F9AB0A /* AFHTTPSessionManager.m */,
+				AACCEB5625C0B21B00F9AB0A /* AFURLResponseSerialization.h */,
+				AACCEB5725C0B21B00F9AB0A /* AFURLSessionManager.m */,
+				AACCEB5825C0B21B00F9AB0A /* AFURLRequestSerialization.m */,
+				AACCEB5925C0B21B00F9AB0A /* AFNetworking.h */,
+				AACCEB5A25C0B21B00F9AB0A /* AFNetworkReachabilityManager.m */,
+				AACCEB5B25C0B21B00F9AB0A /* AFSecurityPolicy.m */,
+				AACCEB5C25C0B21B00F9AB0A /* AFHTTPSessionManager.h */,
+			);
+			path = AFNetworking;
+			sourceTree = SOURCE_ROOT;
 		};
 		C8A9837115C54BAC320A602F /* Pods */ = {
 			isa = PBXGroup;
@@ -225,6 +434,7 @@
 				TargetAttributes = {
 					AABEDA8425B2DA50007C9345 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 				};
 			};
@@ -259,6 +469,8 @@
 				AABEDAA925B38678007C9345 /* Localizable.strings in Resources */,
 				AABEDA9525B2DA51007C9345 /* Assets.xcassets in Resources */,
 				AABEDA9025B2DA50007C9345 /* Main.storyboard in Resources */,
+				946F1C348371479291ABCBB3 /* amplifyconfiguration.json in Resources */,
+				3AEC7697EEAB4B86B2B29DC0 /* awsconfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,24 +523,69 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AACCEB3125C0AC7E00F9AB0A /* EldFuelRecord.h in Sources */,
+				AACCEB3225C0AC7E00F9AB0A /* EldManager.h in Sources */,
+				AACCEB3325C0AC7E00F9AB0A /* EldCachedMotionStartRecord.h in Sources */,
+				AACCEB3425C0AC7E00F9AB0A /* EldEngineParametersRecord.h in Sources */,
+				AACCEB3525C0AC7E00F9AB0A /* EldDataRecord.h in Sources */,
+				AACCEB3625C0AC7E00F9AB0A /* EldEmissionsParametersRecord.h in Sources */,
+				AAB2CAFC25C5B92E00057DE8 /* DutyStatusViewController.swift in Sources */,
+				AACCEB3725C0AC7E00F9AB0A /* LGCentralManager.h in Sources */,
+				AACCEB3825C0AC7E00F9AB0A /* EldCachedEngineoffRecord.h in Sources */,
+				AACCEB3925C0AC7E00F9AB0A /* EldScanObject.h in Sources */,
+				AACCEB3A25C0AC7E00F9AB0A /* EldRawDiagnosticRecord.h in Sources */,
+				AACCEB3B25C0AC7E00F9AB0A /* EldDriverBehaviorRecord.h in Sources */,
+				AACCEB3C25C0AC7E00F9AB0A /* EldCachedPoweronRecord.h in Sources */,
+				AACCEB3D25C0AC7E00F9AB0A /* EldBufferRecord.h in Sources */,
+				AA6ABB5225C5592C00B3F26F /* EldDeviceManager.swift in Sources */,
+				AACCEB3E25C0AC7E00F9AB0A /* EldParameter.h in Sources */,
+				AACCEB3F25C0AC7E00F9AB0A /* EldLatestRecords.h in Sources */,
+				AACCEB4025C0AC7E00F9AB0A /* EldBroadcast.h in Sources */,
+				AACCEB4125C0AC7E00F9AB0A /* EldCachedPeriodicRecord.h in Sources */,
+				AACCEB6025C0B21B00F9AB0A /* AFURLRequestSerialization.m in Sources */,
+				AACCEB4225C0AC7E00F9AB0A /* EldCachedDataRecord.h in Sources */,
+				AACCEB4325C0AC7E00F9AB0A /* EldCachedMotionStopRecord.h in Sources */,
+				AACCEB4425C0AC7E00F9AB0A /* EldCachedNewTimeRecord.h in Sources */,
+				AACCEB4525C0AC7E00F9AB0A /* EldBleConnectionStates.h in Sources */,
+				AA7EDCD825C5147800291DED /* MenuViewController.swift in Sources */,
+				AACCEB4625C0AC7E00F9AB0A /* EldCachedEngineonRecord.h in Sources */,
+				AACCEB4725C0AC7E00F9AB0A /* EldTransmissionParametersRecord.h in Sources */,
+				AACCEB4825C0AC7E00F9AB0A /* EldErrors.h in Sources */,
+				AACCEB4925C0AC7E00F9AB0A /* EldCachedNewVinRecord.h in Sources */,
+				AACCEB4A25C0AC7E00F9AB0A /* EldScanObject_protected.h in Sources */,
+				AACCEB4B25C0AC7E00F9AB0A /* EldCallbacks.h in Sources */,
+				AACCEB6125C0B21B00F9AB0A /* AFNetworkReachabilityManager.m in Sources */,
 				AA16AABB25BD5DAE00A6D9CD /* GraphGenerator.swift in Sources */,
 				AABD5EB225BB43A1004A52D8 /* DrivingViewModel.swift in Sources */,
 				AABD5EBF25BC1FF8004A52D8 /* DayDataTableViewCell.swift in Sources */,
 				AABEDA8D25B2DA50007C9345 /* ViewController.swift in Sources */,
+				AACCEB1025C0A8EB00F9AB0A /* EldLibManager.m in Sources */,
 				AABEDAB825B387B0007C9345 /* UserPreferencesViewController.swift in Sources */,
 				AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */,
 				AA57D46125B38DD000269519 /* StringExtension.swift in Sources */,
 				AA7DAAB125B7587D001C5F6A /* LogBookViewController.swift in Sources */,
 				AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */,
 				AABD5EAF25BB40F6004A52D8 /* DrivingViewController.swift in Sources */,
+				AA6ABB4B25C534D200B3F26F /* DeviceListViewController.swift in Sources */,
+				AAB2CAF925C5B90D00057DE8 /* DaysViewController.swift in Sources */,
+				AACCEB5F25C0B21B00F9AB0A /* AFURLSessionManager.m in Sources */,
 				AA7DAAB425B759D2001C5F6A /* LogBookViewModel.swift in Sources */,
+				AACCEB5E25C0B21B00F9AB0A /* AFHTTPSessionManager.m in Sources */,
 				AABD5EB825BB8601004A52D8 /* BldLocationManager.swift in Sources */,
 				AA7DAAAE25B754D1001C5F6A /* ViewViewModel.swift in Sources */,
 				AABEDA8925B2DA50007C9345 /* AppDelegate.swift in Sources */,
 				AABD5EB525BB4D37004A52D8 /* DataHandeler.swift in Sources */,
 				AAB39DB625B4DE6500EECA67 /* DriverApiRepository.swift in Sources */,
+				AACCEB6225C0B21B00F9AB0A /* AFSecurityPolicy.m in Sources */,
 				AA57D46825B3941300269519 /* AppNavigationViewController.swift in Sources */,
+				AAB2CAFF25C5B97E00057DE8 /* DailyLogViewController.swift in Sources */,
+				AACCEB5D25C0B21B00F9AB0A /* AFURLResponseSerialization.m in Sources */,
 				AABEDA9325B2DA50007C9345 /* BestELD.xcdatamodeld in Sources */,
+				19AE7E82FA5B48BD8A9AEE39 /* AmplifyModels.swift in Sources */,
+				3C7AA0A7AD8B49D7B5B4C411 /* Priority.swift in Sources */,
+				AA7EDCDB25C5169200291DED /* MenuItem.swift in Sources */,
+				038C847789E9407188E190D2 /* Todo.swift in Sources */,
+				F783241DAC584F8D87CC00FB /* Todo+Schema.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,21 +754,78 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3EC7AC0FFDA1BF6AE0C8E7BE /* Pods-BestELD.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 823T3VVHXY;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BestELD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AWSAuthCore\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCognitoIdentityProviderASF\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSDynamoDB\"",
+					"-framework",
+					"\"AWSMobileClient\"",
+					"-framework",
+					"\"AWSPinpoint\"",
+					"-framework",
+					"\"AWSPluginsCore\"",
+					"-framework",
+					"\"Amplify\"",
+					"-framework",
+					"\"AmplifyPlugins\"",
+					"-framework",
+					"\"AppSyncRealTimeClient\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"L10n_swift\"",
+					"-framework",
+					"\"SQLite\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Starscream\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"SwiftUI\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eld.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BestELD/Utility Files/BestELD-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
 			};
 			name = Debug;
 		};
@@ -519,21 +833,77 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7B409EDC0D8D11C0EE35ECC /* Pods-BestELD.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 823T3VVHXY;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BestELD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AWSAuthCore\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCognitoIdentityProviderASF\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSDynamoDB\"",
+					"-framework",
+					"\"AWSMobileClient\"",
+					"-framework",
+					"\"AWSPinpoint\"",
+					"-framework",
+					"\"AWSPluginsCore\"",
+					"-framework",
+					"\"Amplify\"",
+					"-framework",
+					"\"AmplifyPlugins\"",
+					"-framework",
+					"\"AppSyncRealTimeClient\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"L10n_swift\"",
+					"-framework",
+					"\"SQLite\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Starscream\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"SwiftUI\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eld.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BestELD/Utility Files/BestELD-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
 			};
 			name = Release;
 		};

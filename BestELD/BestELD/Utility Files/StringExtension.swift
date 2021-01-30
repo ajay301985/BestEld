@@ -86,4 +86,15 @@ extension UIViewController {
     })
   }
 
+  func showDefaultAlert(
+    title: String? = "Error",
+    message: String? = "Error occurred",
+    handler: ((UIAlertAction) -> Void)? = nil)
+  {
+    let alertController = UIAlertController(title: title, message: nil, preferredStyle: UIAlertController.Style.alert)
+    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: handler))
+    DispatchQueue.main.async { [weak self] in
+      self?.present(alertController, animated: true, completion: nil)
+    }
+  }
 }

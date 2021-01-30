@@ -51,14 +51,27 @@ enum DutyStatus: Int16 {
   }
 }
 
-class LogBookViewController: UIViewController {
+class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    1
+  }
+
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    eldList.count
+  }
+
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    eldList[row]
+  }
 
   @IBOutlet weak var dutyStatusStackView: UIStackView!
   @IBOutlet weak var dutyStatusButton: UIButton!
+  @IBOutlet weak var dayButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var graphImageView: UIImageView!
   private var viewModel: LogBookViewModel!  //TODO: fix it
 
+  private var eldList: Array<String> = []
   var currentStatus: DutyStatus = .OffDuty {
     didSet {
       dutyStatusButton.setTitle(currentStatus.title, for: .normal)
@@ -67,6 +80,7 @@ class LogBookViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //navigationController?.navigationBar.isHidden = false
         let currentDriver = viewModel.driverName
         let currentDriver1 = viewModel.currentDay
         print("driver name is = \(currentDriver) and driving on \(currentDriver1)")
@@ -75,11 +89,63 @@ class LogBookViewController: UIViewController {
         dutyStatusStackView.isHidden = true
         performLoggedIn()
 
+//      addButtonToNavationBar()
       if(DataHandeler.shared.currentDayData == nil) {
         DataHandeler.shared.dutyStatusChanged(status: .OffDuty,description: "off duty from start of the day", timeToStart: Date())
       }
     }
 
+  private func addButtonToNavationBar()
+  {
+//    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Connect Eld", style: .done, target: self, action: #selector(connectEld))
+//    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Driving Mode", style: .done, target: self, action: #selector(drivingMode))
+  }
+
+
+  @IBAction func showMenuOptions(_ sender: Any) {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let menuViewControllerObj =  storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+    let menuItems = BLDAppUtility.menuItems(loggedInUser: false)
+    menuViewControllerObj.setup(menuItemArr: menuItems)
+    menuViewControllerObj.didSelectMenuItem = { [weak self] selectMenuItem, itemIndex in
+      //self?.loggedInAsATestUser()
+    }
+    menuViewControllerObj.modalPresentationStyle = .overCurrentContext
+    present(menuViewControllerObj, animated: true, completion: nil)
+  }
+
+  @IBAction func scanEldDevices(_ sender: Any) {
+    EldManager.sharedInstance()?.scan(forElds: { (deviceIds, error) in
+      print("get some devices")
+      if (error != nil) {
+        //self.showDefaultAlert(title: "Error", message: "Unable to find list of Elds", handler: nil)
+        #warning("Debug Mode settings")
+//        return
+        self.eldList = ["ELD1","ELD2","ELD3","ELD4","ELD5","ELD6","ELD7","ELD8","ELD9"]
+      } else {
+        self.eldList = deviceIds as! Array<String>
+      }
+
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      let listController =  storyboard.instantiateViewController(withIdentifier: "DeviceListViewController") as! DeviceListViewController
+      listController.setup(bldDeviceList: self.eldList)
+      listController.didSelectDevice = {[weak self] index in
+        let currentDeviceId = self?.eldList[index]
+        EldManager.sharedInstance()?.connect(toEld: { (dataRecord, type, error) in
+          if (type == .ELD_DATA_RECORD) {
+            EldDeviceManager.shared.currentEldDataRecord = dataRecord as! EldDataRecord
+          }
+        }, .ELD_DATA_RECORD, { (connectionState, error) in
+          print("connection status change ")
+        }, currentDeviceId)
+      }
+      listController.modalPresentationStyle = .overCurrentContext
+      self.present(listController, animated: true, completion: nil)
+    })
+  }
+
+  @IBAction func dutyModeChanged(_ sender: Any) {
+  }
 
   override func viewWillAppear(_ animated: Bool) {
     tableView.reloadData()
@@ -95,6 +161,25 @@ class LogBookViewController: UIViewController {
     viewModel = dataViewModel
   }
 
+  @IBAction func addEditEventClicked(_ sender: Any) {
+  }
+  @IBAction func dateDidSelected(_ sender: Any) {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let dayController =  storyboard.instantiateViewController(withIdentifier: "DaysViewController") as! DaysViewController
+    dayController.loadDays(dateFrom: Date(), numOfDays: 8)
+    dayController.didSelectDate = { itemIndex in
+      //self?.loggedInAsATestUser()
+    }
+    dayController.modalPresentationStyle = .overCurrentContext
+    present(dayController, animated: true, completion: nil)
+    dayController.setTop(yOrigin: (dayButton.frame.origin.y + dayButton.frame.height))
+  }
+
+  @IBAction func violenceOnlyModeClicked(_ sender: Any) {
+  }
+
+  @IBAction func dayProfileClicked(_ sender: Any) {
+  }
   @IBAction func dutyButtonClicked(_ sender: Any) {
     var status: DutyStatus = .OffDuty
     let button = sender as! UIButton

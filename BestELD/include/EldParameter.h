@@ -1,0 +1,11 @@
+#import <Foundation/Foundation.h>
+
+
+typedef NS_ENUM(NSUInteger, EldParameterTypes) {
+	FUEL_PARAMETERS = 0,
+	DIAGNOSTIC_PARAMETERS = 1,
+	DRIVER_BEHAVIOR = 3,
+	ENGINE_PARAMETERS = 4,
+	TRANSMISSION_PARAMETERS = 5,
+	EMISSIONS_PARAMETERS = 6
+};

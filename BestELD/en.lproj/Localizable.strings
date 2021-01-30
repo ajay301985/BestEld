@@ -7,3 +7,10 @@
 */
 
 hello = "Hello";
+username = "USER NAME";
+password = "PASSWORD";
+login = "LOGIN";
+conenct = "CONNECT";
+findingdevice = "FINDING DEVICE";
+discoveringdevice = "Now discoverable your device";
+selectdate = "SELECT A DATE";

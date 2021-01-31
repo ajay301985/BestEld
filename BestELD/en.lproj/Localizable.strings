@@ -14,3 +14,7 @@ conenct = "CONNECT";
 findingdevice = "FINDING DEVICE";
 discoveringdevice = "Now discoverable your device";
 selectdate = "SELECT A DATE";
+starttime = "Start Time";
+endtime = "End Time";
+confirm = "CONFIRM";
+cancel = "CANCEL";

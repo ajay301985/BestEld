@@ -20,6 +20,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>App will use bluetooth to connect eld devices</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>App will use bluetooth to connect eld devices</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>App will use your location to track while you are using the app</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App will use your location to track while you are using the app</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -36,10 +44,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App will use your location to track while you are using the app</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App will use your location to track while you are using the app</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

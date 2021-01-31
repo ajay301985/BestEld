@@ -145,6 +145,10 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   }
 
   @IBAction func dutyModeChanged(_ sender: Any) {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let dutyStatusController =  storyboard.instantiateViewController(withIdentifier: "DutyStatusViewController") as! DutyStatusViewController
+    dutyStatusController.modalPresentationStyle = .overCurrentContext
+    present(dutyStatusController, animated: true, completion: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {

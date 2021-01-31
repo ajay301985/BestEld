@@ -44,7 +44,7 @@ class DaysViewController: UIViewController {
       //if currentDate
       let dateString = BLDAppUtility.textForDate(date: currentDate)
       days.insert(dateString, at: days.count)
-      currentDate = currentDate.dayAfter
+      currentDate = currentDate.dayBefore
       // render the tick mark each minute (60 times)
     }
 

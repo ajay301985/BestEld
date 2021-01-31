@@ -30,8 +30,17 @@ class ViewController: UIViewController {
     let req = AWSSQSSendMessageRequest()
     req?.queueUrl = "https://sqs.us-west-1.amazonaws.com/025273162973/bestsqsqueue"
       //"https://sqs.us-west-1.amazonaws.com/025273162973/fifosqsqueue.fifo"
-      //"https://sqs.us-west-1.amazonaws.com/025273162973/bestsqsqueue"//https://sqs.us-west-1.amazonaws.com/025273162973/bestsqsqueue"
-    req?.messageBody = "hello world"
+      //"https://sqs.us-west-1.amazonaws.com/025273162973/bestsqsqueue"
+    //https://sqs.us-west-1.amazonaws.com/025273162973/bestsqsqueue"
+    req?.messageBody = """
+{
+    "Id": 1,
+    "MessageBody": {
+      "Id": 1,
+      "DL_Number": "ddjjdd",
+    },
+  }
+"""
     sqs.sendMessage(req!) { (result, err) in
       if let result = result {
         print("SQS result: \(result)")

@@ -96,6 +96,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // 4
         assert(false, "Invalid element type")
     }
+    return UICollectionReusableView()
   }
 }
 

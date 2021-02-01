@@ -24,7 +24,7 @@ class GraphGenerator {
 
 
   var imageSize: CGSize? {
-    let imageFrame = graphImageView?.frameForImageInImageViewAspectFit()
+    let imageFrame = graphImageView?.frame //frameForImageInImageViewAspectFit()
     return imageFrame?.size
   }
 
@@ -61,20 +61,20 @@ class GraphGenerator {
       var currentColor: UIColor = .red
       let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus)
       switch currentDutyStatus {
-        case .OnDuty: //4
+        case .OnDuty, .Yard: //4
           print("ON Duty")
-          yPosition = 170
+          yPosition = 175
           currentColor = .green
-        case .OffDuty, .Yard, .Personal: // 1
+        case .OffDuty, .Personal: // 1
           print("Off Duty")
-          yPosition = 55
+          yPosition = 61
         case .Sleeper:  //2
           print("ON sleeper")
-          yPosition = 85
+          yPosition = 90
           currentColor = .blue
         case .Driving:  //3
           print("ON Driving")
-          yPosition = 120
+          yPosition = 115
           currentColor = .yellow
         default:
           currentColor = .black
@@ -100,7 +100,8 @@ class GraphGenerator {
     let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
     let hours = timeObj.hour ?? 0
     let minute = timeObj.minute ?? 1
-    let frameWidthObj = imageSize?.width ?? 120
+    var frameWidthObj = (imageSize?.width ?? 120)
+    frameWidthObj += 20
     if (hours == 0) {
       xPosition = 20
     }else {

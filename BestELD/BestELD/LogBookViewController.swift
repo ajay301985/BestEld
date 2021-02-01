@@ -64,7 +64,6 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     eldList[row]
   }
 
-  @IBOutlet weak var dutyStatusStackView: UIStackView!
   @IBOutlet weak var dutyStatusButton: UIButton!
   @IBOutlet weak var dayButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
@@ -86,7 +85,6 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         print("driver name is = \(currentDriver) and driving on \(currentDriver1)")
 
         GraphGenerator.shared.setupImageView(imageView: graphImageView)
-        dutyStatusStackView.isHidden = true
         performLoggedIn()
 
 //      addButtonToNavationBar()
@@ -108,7 +106,30 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     let menuItems = BLDAppUtility.menuItems(loggedInUser: false)
     menuViewControllerObj.setup(menuItemArr: menuItems)
     menuViewControllerObj.didSelectMenuItem = { [weak self] selectMenuItem, itemIndex in
-      //self?.loggedInAsATestUser()
+      switch itemIndex {
+        case 0:
+          print("")
+        case 1:
+          print("")
+        case 2:
+          print("")
+        case 3:
+          print("")
+        case 4:
+          print("")
+        case 5:
+          print("")
+        case 6:
+          let storyboard = UIStoryboard(name: "Main", bundle: nil)
+          let userSettingsController =  storyboard.instantiateViewController(withIdentifier: "UserPreferencesViewController") as! UserPreferencesViewController
+          self?.navigationController?.pushViewController(userSettingsController, animated: true)
+        case 7:
+          print("")
+        case 8:
+          print("")
+        default:
+          print("dd")
+      }
     }
     menuViewControllerObj.modalPresentationStyle = .overCurrentContext
     present(menuViewControllerObj, animated: true, completion: nil)
@@ -118,10 +139,10 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     EldManager.sharedInstance()?.scan(forElds: { (deviceIds, error) in
       print("get some devices")
       if (error != nil) {
-        //self.showDefaultAlert(title: "Error", message: "Unable to find list of Elds", handler: nil)
+        self.showDefaultAlert(title: "Error", message: "Unable to find list of Elds \(error.debugDescription)", handler: nil)
         #warning("Debug Mode settings")
 //        return
-        self.eldList = ["ELD1","ELD2","ELD3","ELD4","ELD5","ELD6","ELD7","ELD8","ELD9"]
+       // self.eldList = ["ELD1","ELD2","ELD3","ELD4","ELD5","ELD6","ELD7","ELD8","ELD9"]
       } else {
         self.eldList = deviceIds as! Array<String>
       }
@@ -200,7 +221,6 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         status = .Yard
     }
     print("duty status")
-    dutyStatusStackView.isHidden.toggle()
 
     showAlertToUser(
       status: currentStatus,
@@ -222,7 +242,6 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   }
 
   @IBAction func dutyStatusButtonClicked(_ sender: Any) {
-    dutyStatusStackView.isHidden.toggle()
   }
 
 }

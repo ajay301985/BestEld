@@ -69,7 +69,8 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     dismiss(animated: true, completion: {
-      self.didSelectMenuItem(nil, indexPath.row)
+      let rowIndex = (indexPath.section * 3) + indexPath.row
+      self.didSelectMenuItem(nil, rowIndex)
     })
   }
 

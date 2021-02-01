@@ -63,18 +63,18 @@ class GraphGenerator {
       switch currentDutyStatus {
         case .OnDuty: //4
           print("ON Duty")
-          yPosition = 190
+          yPosition = 170
           currentColor = .green
         case .OffDuty, .Yard, .Personal: // 1
           print("Off Duty")
-          yPosition = 75
+          yPosition = 55
         case .Sleeper:  //2
           print("ON sleeper")
-          yPosition = 115
+          yPosition = 85
           currentColor = .blue
         case .Driving:  //3
           print("ON Driving")
-          yPosition = 140
+          yPosition = 120
           currentColor = .yellow
         default:
           currentColor = .black
@@ -96,13 +96,13 @@ class GraphGenerator {
   }
 
   func imageXPosition(for inDate: Date) -> Int {
-    var xPosition: CGFloat = 0.0
+    var xPosition: CGFloat = 20.0
     let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
     let hours = timeObj.hour ?? 0
     let minute = timeObj.minute ?? 1
     let frameWidthObj = imageSize?.width ?? 120
     if (hours == 0) {
-      xPosition = 0
+      xPosition = 20
     }else {
       let position = (hours * 4) + (minute/15)
       var frameWidth = (frameWidthObj/96)

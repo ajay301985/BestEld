@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let configuration = AWSServiceConfiguration(region: .USWest1, credentialsProvider: credentialProvider)
     AWSServiceManager.default().defaultServiceConfiguration = configuration
 
-
     //For cognito ap-south-1
     //For amplify us-west-2
     //For SQS us-west-1

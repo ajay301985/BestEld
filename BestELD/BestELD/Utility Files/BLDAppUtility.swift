@@ -45,31 +45,48 @@ class BLDAppUtility {
     let dmeoMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Demo")
     menuItems.append(dmeoMenuItemObj)
 
-    let testMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Test")
+    let testMenuItemObj = MenuItem(imageName: "testmenuitem", isEnable: loggedInUser, title: "Test")
     menuItems.append(testMenuItemObj)
 
-    let radioMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Radio")
+    let radioMenuItemObj = MenuItem(imageName: "radiomenuitem", isEnable: loggedInUser, title: "Radio")
     menuItems.append(radioMenuItemObj)
 
-    let helpMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Help")
+    let helpMenuItemObj = MenuItem(imageName: "helpmenuitem", isEnable: loggedInUser, title: "Help")
     menuItems.append(helpMenuItemObj)
 
-    let messageMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Message")
+    let messageMenuItemObj = MenuItem(imageName: "messagemenuitem", isEnable: loggedInUser, title: "Message")
     menuItems.append(messageMenuItemObj)
 
-    let dotMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "DOT Ins")
+    let dotMenuItemObj = MenuItem(imageName: "dotmenuitem", isEnable: loggedInUser, title: "DOT Ins")
     menuItems.append(dotMenuItemObj)
 
-    let settingMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Settings")
+    let settingMenuItemObj = MenuItem(imageName: "settingmenuitem", isEnable: loggedInUser, title: "Settings")
     menuItems.append(settingMenuItemObj)
 
-    let logbookMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "Logbook")
+    let logbookMenuItemObj = MenuItem(imageName: "logbookmenuitem", isEnable: loggedInUser, title: "Logbook")
     menuItems.append(logbookMenuItemObj)
 
-    let sosMenuItemObj = MenuItem(imageName: "demo1", isEnable: loggedInUser, title: "SOS")
+    let sosMenuItemObj = MenuItem(imageName: "sosmenuitem", isEnable: loggedInUser, title: "SOS")
     menuItems.append(sosMenuItemObj)
 
     return menuItems
   }
 
+}
+
+
+extension UIViewController {
+  func disableDarkMode() {
+    if #available(iOS 13.0, *) {
+      self.overrideUserInterfaceStyle = .light
+    }
+  }
+
+}
+
+extension UIViewController: UITextFieldDelegate{
+  public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true;
+  }
 }

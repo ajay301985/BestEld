@@ -263,7 +263,7 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
     let currentDayData = sortedData[indexPath.row]
     tableCell.dutyStatusLabel.text = DutyStatus(rawValue: currentDayData.dutyStatus)?.title
     tableCell.descriptionLabel.text = currentDayData.rideDescription
-    tableCell.locationLabel.text = currentDayData.userLocation
+    tableCell.locationLabel.text = currentDayData.startUserLocation
     let eventDate = currentDayData.startTimeStamp
     let eventDateEnd = currentDayData.endTimeStamp
     guard let dutyTime = eventDate else {

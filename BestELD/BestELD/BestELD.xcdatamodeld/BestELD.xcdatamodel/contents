@@ -4,14 +4,19 @@
         <attribute name="day" optional="YES" attributeType="String"/>
         <attribute name="dlNumber" attributeType="String"/>
         <attribute name="dutyStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="endLocation" optional="YES" attributeType="String"/>
+        <attribute name="endLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="endOdometer" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="endTimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isVoilation" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="rideDescription" optional="YES" attributeType="String"/>
+        <attribute name="startLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="startLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="startOdometer" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="startTimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="userLocation" optional="YES" attributeType="String"/>
+        <attribute name="startUserLocation" optional="YES" attributeType="String"/>
         <relationship name="ofDayMetaData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="dayData" inverseEntity="DayMetaData"/>
     </entity>
     <entity name="DayMetaData" representedClassName="DayMetaData" syncable="YES" codeGenerationType="class">
@@ -19,6 +24,7 @@
         <attribute name="dayText" optional="YES" attributeType="String"/>
         <attribute name="dlNumber" attributeType="String"/>
         <relationship name="dayData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DayData" inverseName="ofDayMetaData" inverseEntity="DayData"/>
+        <relationship name="inspection" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Inspection" inverseName="ofDayData" inverseEntity="Inspection"/>
     </entity>
     <entity name="Driver" representedClassName="Driver" syncable="YES" codeGenerationType="class">
         <attribute name="dlBackImageurl" optional="YES" attributeType="String"/>
@@ -38,10 +44,19 @@
         <attribute name="remarks" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Inspection" representedClassName="Inspection" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="ofDayData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="inspection" inverseEntity="DayMetaData"/>
+    </entity>
     <elements>
-        <element name="DayData" positionX="-54" positionY="-18" width="128" height="28"/>
-        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="103"/>
+        <element name="DayData" positionX="-54" positionY="-18" width="128" height="298"/>
+        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="118"/>
         <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
-        <element name="Eld" positionX="-252" positionY="-225" width="128" height="118"/>
+        <element name="Eld" positionX="-447.0625" positionY="12.578125" width="128" height="118"/>
+        <element name="Inspection" positionX="-159.12109375" positionY="-350.734375" width="128" height="133"/>
     </elements>
 </model>

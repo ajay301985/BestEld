@@ -16,6 +16,8 @@ class BldLocationManager: NSObject  {
   let locationManager = CLLocationManager()
 
   var currentLocation: CLLocation?
+  var currentLocationPlacemark: CLPlacemark?
+  var currentLocationVisit: CLVisit?
 
   func requestLocationAccess() {
     locationManager.requestAlwaysAuthorization()
@@ -38,6 +40,14 @@ class BldLocationManager: NSObject  {
 
   var locationLongitude: CLLocationDegrees? {
     currentLocation?.coordinate.longitude
+  }
+
+  var locationText: String {
+    guard let placemark = currentLocationPlacemark, let placeName = placemark.name, let placeLocality = placemark.locality  else {
+      return ""
+    }
+
+    return (placeName + placeLocality)
   }
 
 }
@@ -68,7 +78,7 @@ extension BldLocationManager: CLLocationManagerDelegate {
 
   func newVisitReceived(_ visit: CLVisit, description: String) {
     //let location = Location(visit: visit, descriptionString: description)
-
+    currentLocationVisit = visit
     // Save location to disk
   }
 }

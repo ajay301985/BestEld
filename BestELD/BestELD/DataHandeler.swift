@@ -29,11 +29,13 @@ class DataHandeler {
     dayMetaDataObj.setValue(status.dutyIndex, forKey: "dutyStatus")
     dayMetaDataObj.setValue(end, forKey: "endTimeStamp")
     dayMetaDataObj.setValue("1009", forKey: "id")
-    dayMetaDataObj.setValue(1010101, forKey: "latitude")
-    dayMetaDataObj.setValue(1010505, forKey: "longitude")
+    let currentLocationObj = BldLocationManager.shared.currentLocation
+    dayMetaDataObj.setValue(currentLocationObj?.coordinate.latitude, forKey: "startLatitude")
+    dayMetaDataObj.setValue(currentLocationObj?.coordinate.longitude, forKey: "startLongitude")
     dayMetaDataObj.setValue(desciption ?? "", forKey: "rideDescription")
     dayMetaDataObj.setValue(start, forKey: "startTimeStamp")
-    dayMetaDataObj.setValue("USA, SA", forKey: "userLocation")
+    let userLocation = BldLocationManager.shared.locationText
+    dayMetaDataObj.setValue(userLocation, forKey: "startUserLocation")
     let driverMetaData = dayMetaData(dayStart: Date(), driverDL: driver.dlNumber ?? "xyz12345")
     //driverMetaData.mutableva
     if (driverMetaData?.dayData?.count ?? 0 < 1) {
@@ -167,6 +169,19 @@ extension DataHandeler {
     let currentTime = Date()
     dayData.endTimeStamp = startTime ?? currentTime
     let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Driving, desciption: description ?? "on Duty Now",for: currentDriver)
+    currentDayData = currentDayData1
+//    performDutyStatusChanged(description: description, startTime: startTime,dutyStatus: .Driving)
+  }
+
+  private func performDutyStatusChanged(description: String?, startTime: Date? = nil, dutyStatus: DutyStatus) {
+    guard let dayData = currentDayData else {
+      print("invalid day data")
+      return
+    }
+
+    let currentTime = Date()
+    dayData.endTimeStamp = startTime ?? currentTime
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: dutyStatus, desciption: description ?? "",for: currentDriver)
     currentDayData = currentDayData1
   }
 }

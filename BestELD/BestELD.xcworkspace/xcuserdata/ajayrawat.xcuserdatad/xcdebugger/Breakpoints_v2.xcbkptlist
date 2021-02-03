@@ -34,6 +34,38 @@
             endingLineNumber = "63"
             landmarkName = "locationManager(_:didVisit:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "876AD1A7-BC50-4A93-B66E-FE1242726A53 - bae8754f6d7ed8ed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BestELD.BldLocationManager.locationManager(_: __C.CLLocationManager, didVisit: __C.CLVisit) -&gt; ()"
+                  moduleName = "BestELD"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ajayrawat/Documents/GitHub/BestEld/BestELD/BestELD/BldLocationManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "360">
+               </Location>
+               <Location
+                  uuid = "876AD1A7-BC50-4A93-B66E-FE1242726A53 - f7317b7ffd7aa6c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.CLPlacemark&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in BestELD.BldLocationManager.locationManager(_: __C.CLLocationManager, didVisit: __C.CLVisit) -&gt; ()"
+                  moduleName = "BestELD"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ajayrawat/Documents/GitHub/BestEld/BestELD/BestELD/BldLocationManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "400">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

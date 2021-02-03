@@ -96,18 +96,17 @@ class GraphGenerator {
   }
 
   func imageXPosition(for inDate: Date) -> Int {
-    var xPosition: CGFloat = 20.0
+    var xPosition: CGFloat = 0.0
     let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
     let hours = timeObj.hour ?? 0
     let minute = timeObj.minute ?? 1
     var frameWidthObj = (imageSize?.width ?? 120)
-    frameWidthObj += 20
+ //   frameWidthObj -= 40//20
     if (hours == 0) {
-      xPosition = 20
+      xPosition = 0
     }else {
       let position = (hours * 4) + (minute/15)
       var frameWidth = (frameWidthObj/96)
-     // frameWidth = (frameWidth * 1.12)
       let finalPosition = CGFloat(position) * frameWidth
       xPosition = finalPosition
     }

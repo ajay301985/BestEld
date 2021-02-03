@@ -81,17 +81,17 @@ extension DataHandeler {
 
     switch status {
       case .OnDuty:
-        performOnDutyStatusChanged(description: description, startTime: timeToStart)
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .OnDuty)
       case .OffDuty:
         performOffDutyStatusChanged(description: description, startTime: timeToStart)
       case .Sleeper:
-        performSleeperStatusChanged(description: description, startTime: timeToStart)
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Sleeper)
       case .Yard:
-        performYardStatusChanged(description: description, startTime: timeToStart)
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Yard)
       case .Driving:
-        performDrivingStatusChanged(description: description, startTime: timeToStart)
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Driving)
       default:
-        performPersonalStatusChanged(description: description, startTime: timeToStart)
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Personal)
     }
 
     let dayMetaDataObj = userDayMetaData(dayStart: Date(), driverDL: "xyz12345")
@@ -120,10 +120,9 @@ extension DataHandeler {
       currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OffDuty, desciption: description ?? "off duty",for: currentDriver)
       return
     }
-
-    currentDayData = metaData.dayData?.allObjects[0] as? DayData
+    performDutyStatusChanged(description: description, startTime: startTime,dutyStatus: .OffDuty)
   }
-
+  /*
   private func performSleeperStatusChanged(description: String?, startTime: Date? = nil) {
     guard let dayData = currentDayData else {
       print("invalid day data")
@@ -135,6 +134,7 @@ extension DataHandeler {
     let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Sleeper, desciption: description ?? "on Duty Now",for: currentDriver)
     currentDayData = currentDayData1
   }
+
 
   private func performYardStatusChanged(description: String?, startTime: Date? = nil) {
     guard let dayData = currentDayData else {
@@ -159,19 +159,7 @@ extension DataHandeler {
     let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Personal, desciption: description ?? "on Duty Now",for: currentDriver)
     currentDayData = currentDayData1
   }
-
-  private func performDrivingStatusChanged(description: String?, startTime: Date? = nil) {
-    guard let dayData = currentDayData else {
-      print("invalid day data")
-      return
-    }
-
-    let currentTime = Date()
-    dayData.endTimeStamp = startTime ?? currentTime
-    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .Driving, desciption: description ?? "on Duty Now",for: currentDriver)
-    currentDayData = currentDayData1
-//    performDutyStatusChanged(description: description, startTime: startTime,dutyStatus: .Driving)
-  }
+   */
 
   private func performDutyStatusChanged(description: String?, startTime: Date? = nil, dutyStatus: DutyStatus) {
     guard let dayData = currentDayData else {

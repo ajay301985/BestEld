@@ -49,6 +49,23 @@ enum DutyStatus: Int16 {
         return "Personal"
     }
   }
+
+  var shortTitle: String {
+    switch self {
+      case .OnDuty:
+        return "ON"
+      case .OffDuty:
+        return "OFF"
+      case .Sleeper:
+        return "SB"
+      case .Yard:
+        return "Y"
+      case .Driving:
+        return "D"
+      default:
+        return "P"
+    }
+  }
 }
 
 class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -68,12 +85,14 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBOutlet weak var dayButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var graphImageView: UIImageView!
+  @IBOutlet weak var dutyStatusTextField: UILabel!
+  @IBOutlet weak var deviceTextField: UILabel!
   private var viewModel: LogBookViewModel!  //TODO: fix it
 
   private var eldList: Array<String> = []
   var currentStatus: DutyStatus = .OffDuty {
     didSet {
-      dutyStatusButton.setTitle(currentStatus.title, for: .normal)
+      dutyStatusTextField.text = currentStatus.title 
     }
   }
 
@@ -168,6 +187,16 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBAction func dutyModeChanged(_ sender: Any) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let dutyStatusController =  storyboard.instantiateViewController(withIdentifier: "DutyStatusViewController") as! DutyStatusViewController
+    dutyStatusController.didChangedDutyStatus = { status, notes, location in
+      DataHandeler.shared.dutyStatusChanged(status: status,description: notes, timeToStart: Date())
+      self.currentStatus = status
+      if status == .OnDuty {
+        let drivingController = self.viewModel.drivingStoryboardInstance()
+        drivingController.currentDriver = self.viewModel.currentDriver
+        drivingController.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(drivingController, animated: true)
+      }
+    }
     dutyStatusController.modalPresentationStyle = .overCurrentContext
     present(dutyStatusController, animated: true, completion: nil)
   }
@@ -205,6 +234,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
   @IBAction func dayProfileClicked(_ sender: Any) {
   }
+
   @IBAction func dutyButtonClicked(_ sender: Any) {
     var status: DutyStatus = .OffDuty
     let button = sender as! UIButton
@@ -261,7 +291,8 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
     let tableCell = tableView.dequeueReusableCell(withIdentifier: "dayDataTableCellIdentifier") as! DayDataTableViewCell
     
     let currentDayData = sortedData[indexPath.row]
-    tableCell.dutyStatusLabel.text = DutyStatus(rawValue: currentDayData.dutyStatus)?.title
+    tableCell.dutyStatusLabel.text = DutyStatus(rawValue: currentDayData.dutyStatus)?.shortTitle
+    tableCell.dutyStatusLabel.backgroundColor = bgColor(status: DutyStatus(rawValue: currentDayData.dutyStatus) ?? .OffDuty)
     tableCell.descriptionLabel.text = currentDayData.rideDescription
     tableCell.locationLabel.text = currentDayData.startUserLocation
     let eventDate = currentDayData.startTimeStamp
@@ -280,6 +311,19 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
 
     tableCell.timeLabel.text = "\(currentDateString) - \(endTime)"
     return tableCell
+  }
+
+  private func bgColor(status: DutyStatus) -> UIColor {
+    switch status {
+      case .Driving:
+        return .magenta
+      case .OffDuty,.Personal:
+        return .green
+      case .OnDuty,.Yard:
+        return .red
+      case .Sleeper:
+        return .orange
+    }
   }
 
 

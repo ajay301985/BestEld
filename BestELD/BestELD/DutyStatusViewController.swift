@@ -17,6 +17,18 @@ class DutyStatusViewController: UIViewController {
   @IBOutlet weak var yardPersonalButton: UIButton!
   @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
   @IBOutlet weak var dateHeightConstraint: NSLayoutConstraint!
+
+  @IBOutlet weak var offDutyButton: UIButton!
+  @IBOutlet weak var onDutyButton: UIButton!
+  @IBOutlet weak var sleeperButton: UIButton!
+  
+  var didChangedDutyStatus: ((_ status: DutyStatus, _ notes:String?, _ location:String?) -> ())!
+
+  private var currentDutyStatus: DutyStatus = .OffDuty {
+    didSet {
+      updateButton(status: currentDutyStatus)
+    }
+  }
   override func viewDidLoad() {
         super.viewDidLoad()
         viewBottomConstraint.constant = 0
@@ -38,31 +50,54 @@ class DutyStatusViewController: UIViewController {
     }
   }
 
+  private func updateButton(status: DutyStatus) {
+    switch status {
+      case .OnDuty:
+        print("on duty")
+      case .OffDuty:
+        print("off duty")
+      case .Sleeper:
+        print("sleeper duty")
+      case .Yard:
+        print("yad duty")
+      case .Personal:
+        print("personal duty")
+      case .Driving:
+        print("driving duty")
+    }
+  }
+
   @IBAction func cancelButtonClicked(_ sender: Any) {
     dismiss(animated: true, completion: nil)
   }
 
   @IBAction func submitButtonClicked(_ sender: Any) {
+    dismiss(animated: true, completion: {
+      self.didChangedDutyStatus(self.currentDutyStatus, self.noteTextField.text, self.locationTextField.text)
+    })
   }
 
   @IBAction func offDutyClicked(_ sender: Any) {
+    currentDutyStatus = .OffDuty
     updateViewOnDutyStatusChanged(dStatus: .OffDuty)
   }
 
   @IBAction func onDutyClicked(_ sender: Any) {
+    currentDutyStatus = .OnDuty
     updateViewOnDutyStatusChanged(dStatus: .OnDuty)
   }
 
   @IBAction func sleeperClicked(_ sender: Any) {
+    currentDutyStatus = .Sleeper
     updateViewOnDutyStatusChanged(dStatus: .Sleeper)
   }
 
   @IBAction func yardPersonalClicked(_ sender: Any) {
     let button = sender as! UIButton
     if button.tag == 101 { //yard mode selected
-
+      currentDutyStatus = .Yard
     }else if (button.tag == 102){ //enable personal mode
-
+      currentDutyStatus = .Personal
     }
   }
 

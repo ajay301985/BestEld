@@ -13,14 +13,26 @@ import SwiftKeychainWrapper
 class BLDAppUtility {
 
   static let timeZonedateFormatter = DateFormatter()
-  
+  static let timeZonedateTimeFormatter = DateFormatter()
 
 
-  static func getDateInFormat(inDate: Date) {
-    timeZonedateFormatter.dateFormat = "MMM dd @hh:mm aa"
-    timeZonedateFormatter.timeZone = TimeZone(abbreviation: "PTC")
-    let dateString = timeZonedateFormatter.string(from: inDate)
-    print(dateString)
+  static func timezoneDate(from dayDate: Date) -> Date {
+
+
+/*    let utcTimeZone = TimeZone(abbreviation: "UTC")!
+    let dateString = "2020-06-03T01:43:44.888Z"
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    let date = dateFormatter.date(from: dateString)
+
+    print(date)
+    print(date?.to(timeZone: .autoupdatingCurrent, from: utcTimeZone))
+    print(date?.to(timeZone: .current, from: utcTimeZone))
+    print(date?.to(timeZone: TimeZone(abbreviation: "PDT")!, from: utcTimeZone)) */
+    let utcTimeZone = TimeZone(abbreviation: "UTC")!
+    let currentDate = dayDate.to(timeZone: TimeZone(abbreviation: UserPreferences.shared.currentTimeZone)!, from: utcTimeZone)
+    print(currentDate)
+    return currentDate ?? Date()
 /*    NSDate *localDate = [formatter dateFromString:utcDateStr]; // get the date
     NSTimeInterval timeZoneOffset = [[NSTimeZone defaultTimeZone] secondsFromGMT]; // You could also use the systemTimeZone method
     NSTimeInterval utcTimeInterval = [localDate timeIntervalSinceReferenceDate] - timeZoneOffset;
@@ -28,11 +40,26 @@ class BLDAppUtility {
     return [formatter stringFromDate:utcCurrentDate]; */
   }
 
+  static func timeString(from dayDate: Date) -> String {
+    timeZonedateTimeFormatter.timeZone = TimeZone(abbreviation: UserPreferences.shared.currentTimeZone)
+    timeZonedateTimeFormatter.dateFormat = "HH:mm"
+    let currentDateString = timeZonedateTimeFormatter.string(from: dayDate)
+    return currentDateString
+  }
 
   static func dataContext() -> NSManagedObjectContext {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let context = appDelegate.persistentContainer.viewContext
     return context
+  }
+
+  static func timezoneTextForDate(date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation:UserPreferences.shared.currentTimeZone)
+    dateFormatter.dateStyle = .medium
+    dateFormatter.timeStyle = .none
+    let dateString = dateFormatter.string(from: date)
+    return dateString
   }
 
 
@@ -123,8 +150,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-06 00:05:50 +0000"
-    dayData["endtime"] = "2021-02-06 11:05:50 +0000"
+    dayData["starttime"] = "2021-02-07 00:05:50 +0000"
+    dayData["endtime"] = "2021-02-07 11:05:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description off duty"
     var dayMetaData: Array<[String: Any]> = []
@@ -139,8 +166,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-06 11:05:50 +0000"
-    dayData["endtime"] = "2021-02-06 13:05:50 +0000"
+    dayData["starttime"] = "2021-02-07 11:05:50 +0000"
+    dayData["endtime"] = "2021-02-07 13:05:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description On duty"
     dayMetaData.append(dayData)
@@ -154,8 +181,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-06 13:05:50 +0000"
-    dayData["endtime"] = "2021-02-06 19:00:50 +0000"
+    dayData["starttime"] = "2021-02-07 13:05:50 +0000"
+    dayData["endtime"] = "2021-02-07 19:00:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description Driving duty"
     dayMetaData.append(dayData)
@@ -169,8 +196,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-06 19:00:50 +0000"
-    dayData["endtime"] = "2021-02-06 23:59:50 +0000"
+    dayData["starttime"] = "2021-02-07 19:00:50 +0000"
+    dayData["endtime"] = "2021-02-07 23:59:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description Sleeper"
     dayMetaData.append(dayData)
@@ -179,103 +206,25 @@ class BLDAppUtility {
     return dic
   }
 
-  static func testJsonData() ->String {
-    """
-    {
-    "06-feb-2021":{
-    "daydata":[{
-    "id":"",
-    "dlnumber":"xyz",
-    "dutystatus":"OFFDUTY",
-    "startlocation":"US,NY",
-    "endlocation":"US,NY",
-    "startlocationlatitude":"US,NY",
-    "startlocationlongitude":"US,NY",
-    "endlocationlatitude":"US,NY",
-    "endlocationlongitude":"US,NY",
-    "startodometer":"34234324",
-    "starttime":"2021-02-06 00:05:50 +0000",
-    "endtime":"2021-02-06 11:05:50 +0000",
-    "endodometer":"78787878",
-    "ridedescription":"ride description off duty"},
-    {
-    "id":"",
-    "dlnumber":"xyz",
-    "dutystatus":"ONDUTY",
-    "startlocation":"US,NY",
-    "endlocation":"US,NY",
-    "startlocationlatitude":"US,NY",
-    "startlocationlongitude":"US,NY",
-    "endlocationlatitude":"US,NY",
-    "endlocationlongitude":"US,NY",
-    "startodometer":"34234324",
-    "starttime":"2021-02-06 11:05:50 +0000",
-    "endtime":"2021-02-06 13:05:50 +0000",
-    "endodometer":"78787878",
-    "ridedescription":"ride description on duty"},
-    {
-    "id":"",
-    "dlnumber":"xyz",
-    "dutystatus":"DRIVING",
-    "startlocation":"US,NY",
-    "endlocation":"US,NY",
-    "startlocationlatitude":"US,NY",
-    "startlocationlongitude":"US,NY",
-    "endlocationlatitude":"US,NY",
-    "endlocationlongitude":"US,NY",
-    "startodometer":"34234324",
-    "starttime":"2021-02-06 13:05:50 +0000",
-    "endtime":"2021-02-06 19:00:50 +0000",
-    "endodometer":"78787878",
-    "ridedescription":"ride description"},
-    {
-    "id":"",
-    "dlnumber":"xyz",
-    "dutystatus":"SLEEPER",
-    "startlocation":"US,NY",
-    "endlocation":"US,NY",
-    "startlocationlatitude":"US,NY",
-    "startlocationlongitude":"US,NY",
-    "endlocationlatitude":"US,NY",
-    "endlocationlongitude":"US,NY",
-    "startodometer":"34234324",
-    "starttime":"2021-02-06 19:00:50 +0000",
-    "endtime":"2021-02-06 11:59:50 +0000",
-    "endodometer":"78787878",
-    "ridedescription":"ride description"},{
-    "id":"",
-    "dlnumber":"xyz",
-    "dutystatus":"ONDUTY",
-    "startlocation":"US,NY",
-    "endlocation":"US,NY",
-    "startlocationlatitude":"US,NY",
-    "startlocationlongitude":"US,NY",
-    "endlocationlatitude":"US,NY",
-    "endlocationlongitude":"US,NY",
-    "startodometer":"34234324",
-    "starttime":"2021-02-06 17:05:50 +0000",
-    "endtime":"2021-02-06 17:05:50 +0000",
-    "endodometer":"78787878",
-    "ridedescription":"ride description"}
-    ],
-    "inspection":[{
-    "notes":"note for inspection",
-    "location":"usa",
-    "latitude":"110101",
-    "longitude":"110101",
-    "accepted":'true',
-    }]},
-    "inspection":[{
-    "notes":"note for inspection",
-    "location":"usa",
-    "latitude":"38.8951",
-    "longitude":"-77.0364",
-    "accepted":'true',
-    }]},
-    }
-"""
-  }
+  static func generateDataSource(dateFrom: Date, numOfDays: Int = 8) -> [DateData] {
 
+    var currentDate = dateFrom
+    var days:  [DateData] = []
+    for index in 0..<numOfDays {
+      //if currentDate
+      var dateString = BLDAppUtility.timezoneTextForDate(date: currentDate)
+      if index == 0 {
+        dateString = "Today"
+      }else if (index == 1) {
+        dateString = "Yesterday"
+      }
+      let dayData = DateData(displayDate: dateString, actualDate: dateString, dateValue: currentDate)
+      days.insert(dayData, at: days.count)
+      currentDate = currentDate.dayBefore
+    }
+
+    return days
+  }
 }
 
 

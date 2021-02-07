@@ -128,6 +128,12 @@ extension Date {
     return Date(timeInterval: TimeInterval(seconds), since: self)
   }
 
+
+    func to(timeZone outputTimeZone: TimeZone, from inputTimeZone: TimeZone) -> Date {
+      let delta = TimeInterval(outputTimeZone.secondsFromGMT(for: self) - inputTimeZone.secondsFromGMT(for: self))
+      return addingTimeInterval(delta)
+    }
+
 /*  -(NSDate *) toGlobalTime
   {
     NSTimeZone *tz = [NSTimeZone localTimeZone];

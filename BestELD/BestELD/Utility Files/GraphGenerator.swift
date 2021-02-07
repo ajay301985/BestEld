@@ -49,14 +49,30 @@ class GraphGenerator {
 
     var lastPoint: CGPoint = CGPoint.zero
     for dayData in dayDataArr {
-      guard let startTime = dayData.startTime else {
+      guard let startTimeObj = dayData.startTime else {
         assertionFailure("In valid object")
         return
       }
-      var endTime = dayData.endTime ?? Date()
+      let startTime = BLDAppUtility.timezoneDate(from: startTimeObj)
 
+      guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+        return
+      }
+
+      let currentDateText = BLDAppUtility.textForDate(date: currentDateData.dateValue)
+      let currentStartText = BLDAppUtility.textForDate(date: startTime)
+
+      let endTimeObj = dayData.endTime ?? Date()
+      let endTime = BLDAppUtility.timezoneDate(from: endTimeObj)
       var yPosition = 75
-      var xPosition = 0
+      var xPositionInGraph = imageXPosition(for: startTime)
+
+      if (currentDateText != currentStartText) {
+        let currentDateText1 = BLDAppUtility.textForDate(date: currentDateData.dateValue.dayBefore)
+        if (currentDateText1 == currentStartText) {
+          xPositionInGraph = 0 //start time is on previous day
+        }
+      }
 
       var currentColor: UIColor = .blue
   //    let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
@@ -103,7 +119,7 @@ class GraphGenerator {
           print("ON Duty")
       } */
 
-      let xPositionInGraph = imageXPosition(for: startTime)
+
       let startPoint = CGPoint(x: xPositionInGraph, y: yPosition)
 
       if (!lastPoint.equalTo(CGPoint.zero)) {
@@ -146,7 +162,7 @@ class GraphGenerator {
     let shapeLayer = CAShapeLayer()
     shapeLayer.path = path.cgPath
     shapeLayer.strokeColor = lineColor.cgColor
-    shapeLayer.lineWidth = 1.0
+    shapeLayer.lineWidth = 1.3
 
     view.layer.addSublayer(shapeLayer)
   }

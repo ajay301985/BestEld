@@ -9,9 +9,15 @@ import Foundation
 
 class UserPreferences {
   static let shared = UserPreferences()
+  var currentSelectedDayData: DateData?
 
-  func currentTimeZone() -> String {
-    return "America/Los_Angeles"
+  var currentTimeZone: String {
+    return "PST"
+  }
+
+
+  var selecteDayDate: DateData? {
+    return currentSelectedDayData
   }
 
 

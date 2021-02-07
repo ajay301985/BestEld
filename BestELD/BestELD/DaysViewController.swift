@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct DateData {
+  var displayDate: String
+  var actualDate: String
+  var dateValue: Date
+}
+
 class DaysViewController: UIViewController {
 
   @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -14,7 +20,7 @@ class DaysViewController: UIViewController {
 
   private var numberOfDays = 7
 
-  var dayArray: [String] = []
+  var dayArray: [DateData] = []
 
   var didSelectDate: ((_ index: Int) -> ())!
   override func viewDidLoad() {
@@ -29,27 +35,13 @@ class DaysViewController: UIViewController {
 
   func loadDays(dateFrom: Date, numOfDays: Int = 8) {
     numberOfDays = numOfDays
-    dayArray = generateDataSource(dateFrom: dateFrom, numOfDays: numOfDays)
+    dayArray = BLDAppUtility.generateDataSource(dateFrom: dateFrom, numOfDays: numOfDays)
   }
 
   @IBAction func closeButtonClicked(_ sender: Any) {
     dismiss(animated: true, completion: nil)
   }
 
-  private func generateDataSource(dateFrom: Date, numOfDays: Int = 8) -> [String] {
-
-    var currentDate = dateFrom
-    var days:  [String] = []
-    for _ in 0..<numberOfDays {
-      //if currentDate
-      let dateString = BLDAppUtility.textForDate(date: currentDate)
-      days.insert(dateString, at: days.count)
-      currentDate = currentDate.dayBefore
-      // render the tick mark each minute (60 times)
-    }
-
-    return days
-  }
     /*
     // MARK: - Navigation
 
@@ -73,7 +65,7 @@ extension DaysViewController: UITableViewDelegate, UITableViewDataSource {
       tableCell = UITableViewCell(style: .value1, reuseIdentifier: "daylistidentifier")
     }
 
-    tableCell?.textLabel?.text = dayArray[indexPath.row]
+    tableCell?.textLabel?.text = dayArray[indexPath.row].displayDate
     tableCell?.textLabel?.textAlignment = .left
 //    tableCell?.detailTextLabel?.text = "Connected"
 //    tableCell?.detailTextLabel?.textAlignment = .right

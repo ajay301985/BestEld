@@ -8,7 +8,7 @@
 import UIKit
 
 
-enum DutyStatus: Int16 {
+enum DutyStatus: String {
   case OnDuty
   case OffDuty
   case Sleeper
@@ -106,9 +106,11 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         GraphGenerator.shared.setupImageView(imageView: graphImageView)
         performLoggedIn()
 
+        AuthenicationService.shared.fetchUserLogbookData(user: "")
+
 //      addButtonToNavationBar()
       if(DataHandeler.shared.currentDayData == nil) {
-        DataHandeler.shared.dutyStatusChanged(status: .OffDuty,description: "off duty from start of the day", timeToStart: Date())
+//        DataHandeler.shared.dutyStatusChanged(status: .OffDuty,description: "off duty from start of the day", timeToStart: Date())
       }
     }
 
@@ -202,6 +204,14 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   }
 
   override func viewWillAppear(_ animated: Bool) {
+    //tableView.reloadData()
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    let dayMetaDataObj = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
+    let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date()})
+    GraphGenerator.shared.generatePath(dayDataArr: sortedData)
     tableView.reloadData()
   }
 
@@ -279,24 +289,26 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
 extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? "xyz12345")
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     return driverMetaData?.dayData?.count ?? 0
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? "xyz12345")
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     let dayDataArr = driverMetaData?.dayData?.allObjects as! [DayData]
-    let sortedData = dayDataArr.sorted(by: { $0.startTimeStamp ?? Date() < $1.startTimeStamp ?? Date()})
+    let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date()})
 
     let tableCell = tableView.dequeueReusableCell(withIdentifier: "dayDataTableCellIdentifier") as! DayDataTableViewCell
     
     let currentDayData = sortedData[indexPath.row]
-    tableCell.dutyStatusLabel.text = DutyStatus(rawValue: currentDayData.dutyStatus)?.shortTitle
-    tableCell.dutyStatusLabel.backgroundColor = bgColor(status: DutyStatus(rawValue: currentDayData.dutyStatus) ?? .OffDuty)
+    let status = currentDayData.dutyStatus
+    let sortTitleText = shortTitle(status: currentDayData.dutyStatus ?? "OFFDUTY")
+    tableCell.dutyStatusLabel.text = sortTitleText//DutyStatus(rawValue: currentDayData.dutyStatus ?? "OFFDUTY")?.shortTitle
+    tableCell.dutyStatusLabel.backgroundColor = bgColorDuty(status: currentDayData.dutyStatus ?? "OFFDUTY")  //bgColor(status: DutyStatus(rawValue: currentDayData.dutyStatus ?? "OFFDUTY") ?? .OffDuty)
     tableCell.descriptionLabel.text = currentDayData.rideDescription
-    tableCell.locationLabel.text = currentDayData.startUserLocation
-    let eventDate = currentDayData.startTimeStamp
-    let eventDateEnd = currentDayData.endTimeStamp
+    tableCell.locationLabel.text = currentDayData.startLocation
+    let eventDate = currentDayData.startTime
+    let eventDateEnd = currentDayData.endTime
     guard let dutyTime = eventDate else {
       tableCell.timeLabel.text = "Invalid date"
       return tableCell
@@ -311,6 +323,38 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
 
     tableCell.timeLabel.text = "\(currentDateString) - \(endTime)"
     return tableCell
+  }
+
+  func shortTitle(status: String)-> String {
+    switch status {
+      case "ONDUTY":
+        return "ON"
+      case "OFFDUTY":
+        return "OFF"
+      case "SLEEPER":
+        return "SB"
+      case "YARD":
+        return "Y"
+      case "DRIVING":
+        return "D"
+      default:
+        return "P"
+    }
+  }
+
+  private func bgColorDuty(status: String) -> UIColor {
+    switch status {
+      case "DRIVING":
+        return .magenta
+      case "OFFDUTY","PERSONAL":
+        return .green
+      case "ONDUTY","YARD":
+        return .red
+      case "SLEEPER":
+        return .orange
+      default:
+        return .orange
+    }
   }
 
   private func bgColor(status: DutyStatus) -> UIColor {

@@ -14,6 +14,8 @@ import AWSSQS
 class ViewController: UIViewController {
 
   @IBOutlet weak var loginLabel: UILabel!
+  @IBOutlet weak var userEmailTextField: UITextField!
+  @IBOutlet weak var userPasswordTextField: UITextField!
 
   var viewModel = ViewViewModel()
   override func viewDidLoad() {
@@ -78,6 +80,54 @@ class ViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
   }
+  @IBAction func loginClicked(_ sender: Any) {
+    #warning("Aj temporary disable")
+/*    AuthenicationService.shared.loginUser(emailId: "userEmail", password: "userPassword") { [weak self] result in
+      guard let self = self else { return }
+      switch result {
+        case .success(let driverObj):
+          print("dddd")
+        case .failure(_):
+          print("ddd")
+      }
+
+      }
+   
+    guard let userEmail = userEmailTextField.text, let userPassword = userPasswordTextField.text else {
+      showDefaultAlert(title: "Error", message: "Email and password should not be empty", handler: nil)
+      return
+    }
+    if (!isValidEmail(userEmail) || userPassword.count < 5) {
+      showDefaultAlert(title: "Error", message: "User email and password is not valid", handler: nil)
+      return
+    } */
+    AuthenicationService.shared.loginUser(emailId: "userEmail", password: "userPassword") { [weak self] result in
+      guard let self = self else { return }
+      switch result {
+        case .success(let driverObj):
+          print("drive")
+          guard let driver = driverObj, let dlNumber = driverObj?.dlNumber else {
+            return
+          }
+          DispatchQueue.main.async {
+            DataHandeler.shared.setupData(for: dlNumber)
+            self.loggedIn(user: driver)
+          }
+        case .failure(let error):
+          print(error.localizedDescription)
+          DispatchQueue.main.async {
+            self.showDefaultAlert(title: "Error", message: error.localizedDescription, handler: nil)
+          }
+      }
+    }
+}
+
+  private func isValidEmail(_ email: String) -> Bool {
+    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+    let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+    return emailPred.evaluate(with: email)
+  }
 
   @IBAction func showExtraOptions(_ sender: Any) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -85,31 +135,85 @@ class ViewController: UIViewController {
     let menuItems = BLDAppUtility.menuItems(loggedInUser: false)
     menuViewControllerObj.setup(menuItemArr: menuItems)
     menuViewControllerObj.didSelectMenuItem = { [weak self] selectMenuItem, itemIndex in
-      self?.loggedInAsATestUser()
+      self?.itemDidSelect(index: itemIndex)
     }
     menuViewControllerObj.modalPresentationStyle = .overCurrentContext
     present(menuViewControllerObj, animated: true, completion: nil)
   }
 
-  func loggedInAsATestUser() {
 
+  func itemDidSelect(index: Int) {
+    switch index {
+      case 0:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
+      case 1:
+        loggedInAsATestUser()
+      case 2:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
+      case 3:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
+      case 4:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
+      case 5:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
+      case 6:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
+      case 7:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
+      case 8:
+        print("item")
+        showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
+
+      default:
+        print("default")
+    }
+  }
+
+  func loggedInAsATestUser() {
     addItemSQS()
-    DataHandeler.shared.setupData(for: "xyz12345")
-    var currentDriver = DataHandeler.shared.currentDriver
-    DataHandeler.shared.cleanupData(for: "xyz12345") //clean up existing data
+    DataHandeler.shared.cleanupData(for: testDriverDLNumber) //clean up existing data
+
+    var currentDriver = DataHandeler.shared.getDriverData(for: testDriverDLNumber)
     if (currentDriver == nil) {
       currentDriver = DataHandeler.shared.createTestDriverData()
     }
-    var driverMetaData = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: currentDriver?.dlNumber ?? "xyz12345")
+    DataHandeler.shared.setupData(for: testDriverDLNumber)
+    loggedIn(user: DataHandeler.shared.currentDriver)
+/*    var driverMetaData = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: currentDriver?.dlNumber ?? testDriverDLNumber)
     if ((driverMetaData == nil)) {
-      driverMetaData = DataHandeler.shared.createTestUserMetaData(for: "xyz12345", data: Date())
+      driverMetaData = DataHandeler.shared.createTestUserMetaData(for: currentDriver?.dlNumber ?? testDriverDLNumber, data: Date())
     }
     guard  let driver = currentDriver, let metaData = driverMetaData else {
       assertionFailure("failed to create objects")
       return
     }
+
     DataHandeler.shared.currentDriver = driver
     let bookViewModel = LogBookViewModel(driver: driver, metaData: [metaData])
+    let logBookViewController = viewModel.logBookStoryboardInstance()
+    logBookViewController.setViewModel(dataViewModel: bookViewModel)
+    navigationController?.pushViewController(logBookViewController, animated: true) */
+  }
+
+
+  func loggedIn(user: Driver) {
+    var driverMetaData = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: user.dlNumber ?? testDriverDLNumber)
+    if ((driverMetaData == nil)) {
+      driverMetaData = DataHandeler.shared.createTestUserMetaData(for: user.dlNumber ?? testDriverDLNumber, data: Date())
+    }
+    guard  let metaData = driverMetaData else {
+      assertionFailure("failed to create objects")
+      return
+    }
+
+    let bookViewModel = LogBookViewModel(driver: user, metaData: [metaData])
     let logBookViewController = viewModel.logBookStoryboardInstance()
     logBookViewController.setViewModel(dataViewModel: bookViewModel)
     navigationController?.pushViewController(logBookViewController, animated: true)

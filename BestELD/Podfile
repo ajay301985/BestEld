@@ -14,6 +14,6 @@ target 'BestELD' do
   pod 'AWSSQS'
   pod 'AmplifyPlugins/AWSAPIPlugin'
   pod 'AmplifyPlugins/AWSDataStorePlugin'
-
+  pod 'SwiftKeychainWrapper', '~> 4.0'
 
 end

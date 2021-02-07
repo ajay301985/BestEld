@@ -91,7 +91,7 @@ extension UIViewController {
     message: String? = "Error occurred",
     handler: ((UIAlertAction) -> Void)? = nil)
   {
-    let alertController = UIAlertController(title: title, message: nil, preferredStyle: UIAlertController.Style.alert)
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
     alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: handler))
     DispatchQueue.main.async { [weak self] in
       self?.present(alertController, animated: true, completion: nil)

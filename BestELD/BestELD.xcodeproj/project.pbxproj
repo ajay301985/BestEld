@@ -13,7 +13,10 @@
 		3AEC7697EEAB4B86B2B29DC0 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = D23968173F2F464AB60949FD /* awsconfiguration.json */; };
 		3C7AA0A7AD8B49D7B5B4C411 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F412AD9A5A2F412BACF5CC7B /* Priority.swift */; };
 		946F1C348371479291ABCBB3 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C686C3EBBBE449F89BE426D5 /* amplifyconfiguration.json */; };
+		AA0A9F1925CEEF580050FF4E /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A9F1825CEEF580050FF4E /* UserPreferences.swift */; };
 		AA16AABB25BD5DAE00A6D9CD /* GraphGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */; };
+		AA27E8F825CC54F1009B449F /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */; };
+		AA27E8FC25CC80C9009B449F /* AuthenicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27E8FB25CC80C9009B449F /* AuthenicationService.swift */; };
 		AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */; };
 		AA57D46125B38DD000269519 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46025B38DD000269519 /* StringExtension.swift */; };
 		AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46425B38F6B00269519 /* AppUtility.swift */; };
@@ -86,7 +89,10 @@
 		465CC1D4D31A4807BE4EC7EE /* Todo+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "Todo+Schema.swift"; path = "amplify/generated/models/Todo+Schema.swift"; sourceTree = "<group>"; };
 		7943DE86D57F4A4E8D81ABF9 /* Todo.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = Todo.swift; path = amplify/generated/models/Todo.swift; sourceTree = "<group>"; };
 		8A409668DDF64D9D8A520A08 /* schema.graphql */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text; name = schema.graphql; path = amplify/backend/api/amplifyDatasource/schema.graphql; sourceTree = "<group>"; };
+		AA0A9F1825CEEF580050FF4E /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphGenerator.swift; sourceTree = "<group>"; };
+		AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
+		AA27E8FB25CC80C9009B449F /* AuthenicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenicationService.swift; sourceTree = "<group>"; };
 		AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLDAppUtility.swift; sourceTree = "<group>"; };
 		AA57D46025B38DD000269519 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		AA57D46425B38F6B00269519 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
@@ -228,6 +234,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AA27E8FA25CC80B3009B449F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA27E8FB25CC80C9009B449F /* AuthenicationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		AA57D45E25B38DB400269519 /* Utility Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +323,7 @@
 		AABEDA8725B2DA50007C9345 /* BestELD */ = {
 			isa = PBXGroup;
 			children = (
+				AA27E8FA25CC80B3009B449F /* Services */,
 				AA7EDCDE25C5296D00291DED /* Cells */,
 				AACCEB4F25C0B21B00F9AB0A /* AFNetworking */,
 				AACCEB1525C0AC6D00F9AB0A /* include */,
@@ -334,6 +349,8 @@
 				AAB2CAF825C5B90D00057DE8 /* DaysViewController.swift */,
 				AAB2CAFB25C5B92E00057DE8 /* DutyStatusViewController.swift */,
 				AAB2CAFE25C5B97E00057DE8 /* DailyLogViewController.swift */,
+				AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */,
+				AA0A9F1825CEEF580050FF4E /* UserPreferences.swift */,
 			);
 			path = BestELD;
 			sourceTree = "<group>";
@@ -524,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACCEB3125C0AC7E00F9AB0A /* EldFuelRecord.h in Sources */,
+				AA27E8FC25CC80C9009B449F /* AuthenicationService.swift in Sources */,
 				AACCEB3225C0AC7E00F9AB0A /* EldManager.h in Sources */,
 				AACCEB3325C0AC7E00F9AB0A /* EldCachedMotionStartRecord.h in Sources */,
 				AACCEB3425C0AC7E00F9AB0A /* EldEngineParametersRecord.h in Sources */,
@@ -542,6 +560,7 @@
 				AACCEB3F25C0AC7E00F9AB0A /* EldLatestRecords.h in Sources */,
 				AACCEB4025C0AC7E00F9AB0A /* EldBroadcast.h in Sources */,
 				AACCEB4125C0AC7E00F9AB0A /* EldCachedPeriodicRecord.h in Sources */,
+				AA27E8F825CC54F1009B449F /* CircularProgressBar.swift in Sources */,
 				AACCEB6025C0B21B00F9AB0A /* AFURLRequestSerialization.m in Sources */,
 				AACCEB4225C0AC7E00F9AB0A /* EldCachedDataRecord.h in Sources */,
 				AACCEB4325C0AC7E00F9AB0A /* EldCachedMotionStopRecord.h in Sources */,
@@ -564,6 +583,7 @@
 				AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */,
 				AA57D46125B38DD000269519 /* StringExtension.swift in Sources */,
 				AA7DAAB125B7587D001C5F6A /* LogBookViewController.swift in Sources */,
+				AA0A9F1925CEEF580050FF4E /* UserPreferences.swift in Sources */,
 				AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */,
 				AABD5EAF25BB40F6004A52D8 /* DrivingViewController.swift in Sources */,
 				AA6ABB4B25C534D200B3F26F /* DeviceListViewController.swift in Sources */,

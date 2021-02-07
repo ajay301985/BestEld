@@ -49,28 +49,50 @@ class GraphGenerator {
 
     var lastPoint: CGPoint = CGPoint.zero
     for dayData in dayDataArr {
-      guard let startTime = dayData.startTimeStamp else {
+      guard let startTime = dayData.startTime else {
         assertionFailure("In valid object")
         return
       }
-      var endTime = dayData.endTimeStamp ?? Date()
+      var endTime = dayData.endTime ?? Date()
 
       var yPosition = 75
       var xPosition = 0
 
-      var currentColor: UIColor = .red
-      let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus)
+      var currentColor: UIColor = .blue
+  //    let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
+      let currentDutyStatus = dayData.dutyStatus ?? "OFFDUTY"
+      switch currentDutyStatus {
+        case "ONDUTY", "YARD": //4
+          print("ON Duty")
+          yPosition = 165
+          currentColor = .blue
+        case "OFFDUTY", "PERSONAL": // 1
+          print("Off Duty")
+          yPosition = 61
+        case "SLEEPER":  //2
+          print("ON sleeper")
+          yPosition = 100
+          currentColor = .blue
+        case "DRIVING":  //3
+          print("ON Driving")
+          yPosition = 135
+          currentColor = .blue
+        default:
+          currentColor = .blue
+          print("ON Duty")
+      }
+      /*
       switch currentDutyStatus {
         case .OnDuty, .Yard: //4
           print("ON Duty")
-          yPosition = 175
+          yPosition = 155
           currentColor = .green
         case .OffDuty, .Personal: // 1
           print("Off Duty")
           yPosition = 61
         case .Sleeper:  //2
           print("ON sleeper")
-          yPosition = 90
+          yPosition = 100
           currentColor = .blue
         case .Driving:  //3
           print("ON Driving")
@@ -79,13 +101,13 @@ class GraphGenerator {
         default:
           currentColor = .black
           print("ON Duty")
-      }
+      } */
 
       let xPositionInGraph = imageXPosition(for: startTime)
       let startPoint = CGPoint(x: xPositionInGraph, y: yPosition)
 
       if (!lastPoint.equalTo(CGPoint.zero)) {
-        drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .orange, inView: currentImageView)
+        drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .blue, inView: currentImageView)
       }
 
       let xPositionInGraph1 = imageXPosition(for: endTime)

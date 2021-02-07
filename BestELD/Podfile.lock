@@ -46,6 +46,7 @@ PODS:
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
   - Starscream (3.1.1)
+  - SwiftKeychainWrapper (4.0.1)
 
 DEPENDENCIES:
   - Amplify
@@ -56,6 +57,7 @@ DEPENDENCIES:
   - AWSPinpoint
   - AWSSQS
   - L10n-swift (~> 5.7)
+  - SwiftKeychainWrapper (~> 4.0)
 
 SPEC REPOS:
   trunk:
@@ -74,6 +76,7 @@ SPEC REPOS:
     - L10n-swift
     - SQLite.swift
     - Starscream
+    - SwiftKeychainWrapper
 
 SPEC CHECKSUMS:
   Amplify: 9250284b62605d1df4dd127db418c5f5fd564765
@@ -91,7 +94,8 @@ SPEC CHECKSUMS:
   L10n-swift: 5895718b0534335a3af0e91e80f0d23dad4d5c30
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
+  SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
 
-PODFILE CHECKSUM: 29c239c02882c99de052eb2d80f3302386086daa
+PODFILE CHECKSUM: 356acfd5834eed947288dd82e15640cc1b7caaab
 
 COCOAPODS: 1.9.3

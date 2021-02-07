@@ -22,7 +22,7 @@ class BldLocationManager: NSObject  {
   func requestLocationAccess() {
     locationManager.requestAlwaysAuthorization()
     locationManager.delegate = self
-    locationManager.distanceFilter = 35
+    locationManager.distanceFilter = 1
     // 2
     //locationManager.allowsBackgroundLocationUpdates = true
     // 3

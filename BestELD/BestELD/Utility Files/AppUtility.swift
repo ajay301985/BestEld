@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+let testDriverDLNumber = "xyz12345"
+
 enum Storyboards: String {
   case Main
 
@@ -116,4 +118,20 @@ extension UIView {
       layer.borderColor = newValue?.cgColor
     }
   }
+}
+
+
+extension Date {
+  func toLocalTime() -> Date {
+    let tz = NSTimeZone.local
+    let seconds = tz.secondsFromGMT(for: self)
+    return Date(timeInterval: TimeInterval(seconds), since: self)
+  }
+
+/*  -(NSDate *) toGlobalTime
+  {
+    NSTimeZone *tz = [NSTimeZone localTimeZone];
+    NSInteger seconds = -[tz secondsFromGMTForDate: self];
+    return [NSDate dateWithTimeInterval: seconds sinceDate: self];
+  } */
 }

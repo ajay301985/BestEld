@@ -19,7 +19,7 @@ class DrivingViewController: UIViewController {
   @IBOutlet weak var locationTextField: UILabel!
   var currentDriver: Driver?
   var isEnterDrivingStatus = false
-  var currentStatus: DutyStatus = .OnDuty {
+  var currentStatus: DutyStatus = .ONDUTY {
     didSet {
       dutyStatusTextField.text = currentStatus.title
     }
@@ -29,7 +29,7 @@ class DrivingViewController: UIViewController {
         navigationController?.navigationController?.navigationBar.isHidden = true
         drivingStatusText.text = "Stationary"
         disableButton(for: currentStatus)
-        currentStatus = .OnDuty
+        currentStatus = .ONDUTY
         locationTextField.text = "SA, USA"
         tempratureTextField.isEnabled = false
         tempratureTextField.setTitle("56 F", for: .normal)
@@ -70,7 +70,7 @@ class DrivingViewController: UIViewController {
 
     if !isEnterDrivingStatus {
       isEnterDrivingStatus.toggle()
-      currentStatus = .Driving
+      currentStatus = .DRIVING
       //enter driving into database
       guard let driverObj = currentDriver else {
         assertionFailure("Invalid driver object")
@@ -82,25 +82,25 @@ class DrivingViewController: UIViewController {
         return
       }
       let startDate = Date()
-      let currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .Driving, desciption: "Driving On Fly",for: driverObj)
+      let currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .DRIVING, desciption: "Driving On Fly",for: driverObj)
 
     }
   }
 
   @IBAction func dutyButtonClicked(_ sender: Any) {
-    var status: DutyStatus = .OffDuty
+    var status: DutyStatus = .OFFDUTY
     let button = sender as! UIButton
     switch button.tag {
       case 0:
-        status = .OffDuty
+        status = .OFFDUTY
       case 1:
-        status = .OnDuty
+        status = .ONDUTY
       case 2:
-        status = .Sleeper
+        status = .SLEEPER
       case 3:
-        status = .Personal
+        status = .PERSONAL
       default:
-        status = .Yard
+        status = .YARD
     }
     print("duty status")
     showAlertToUser(

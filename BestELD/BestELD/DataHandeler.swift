@@ -79,18 +79,18 @@ extension DataHandeler {
     }
 
     switch status {
-      case .OnDuty:
-        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .OnDuty)
-      case .OffDuty:
+      case .ONDUTY:
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .ONDUTY)
+      case .OFFDUTY:
         performOffDutyStatusChanged(description: description, startTime: timeToStart)
-      case .Sleeper:
-        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Sleeper)
-      case .Yard:
-        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Yard)
-      case .Driving:
-        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Driving)
+      case .SLEEPER:
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .SLEEPER)
+      case .YARD:
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .YARD)
+      case .DRIVING:
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .DRIVING)
       default:
-        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .Personal)
+        performDutyStatusChanged(description: description, startTime: timeToStart,dutyStatus: .PERSONAL)
     }
 
     let dayMetaDataObj = userDayMetaData(dayStart: Date(), driverDL: currentDriver.dlNumber ?? testDriverDLNumber)
@@ -108,7 +108,7 @@ extension DataHandeler {
 
     let currentTime = Date()
     dayData.endTime = startTime ?? currentTime
-    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .OnDuty, desciption: description ?? "on Duty Now", for: currentDriver)
+    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .ONDUTY, desciption: description ?? "on Duty Now", for: currentDriver)
     currentDayData = currentDayData1
   }
 
@@ -116,10 +116,10 @@ extension DataHandeler {
     let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: currentDriver.dlNumber ?? testDriverDLNumber)
     guard let metaData = driverMetaData, (metaData.dayData?.count ?? 0 > 0) else {
       let startDate = Date().startOfDay //enter a test object
-      currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OffDuty, desciption: description ?? "off duty",for: currentDriver)
+      currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OFFDUTY, desciption: description ?? "off duty",for: currentDriver)
       return
     }
-    performDutyStatusChanged(description: description, startTime: startTime,dutyStatus: .OffDuty)
+    performDutyStatusChanged(description: description, startTime: startTime,dutyStatus: .OFFDUTY)
   }
 
   private func performDutyStatusChanged(description: String?, startTime: Date? = nil, dutyStatus: DutyStatus) {

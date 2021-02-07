@@ -24,7 +24,7 @@ class DutyStatusViewController: UIViewController {
   
   var didChangedDutyStatus: ((_ status: DutyStatus, _ notes:String?, _ location:String?) -> ())!
 
-  private var currentDutyStatus: DutyStatus = .OffDuty {
+  private var currentDutyStatus: DutyStatus = .OFFDUTY {
     didSet {
       updateButton(status: currentDutyStatus)
     }
@@ -52,17 +52,17 @@ class DutyStatusViewController: UIViewController {
 
   private func updateButton(status: DutyStatus) {
     switch status {
-      case .OnDuty:
+      case .ONDUTY:
         print("on duty")
-      case .OffDuty:
+      case .OFFDUTY:
         print("off duty")
-      case .Sleeper:
+      case .SLEEPER:
         print("sleeper duty")
-      case .Yard:
+      case .YARD:
         print("yad duty")
-      case .Personal:
+      case .PERSONAL:
         print("personal duty")
-      case .Driving:
+      case .DRIVING:
         print("driving duty")
     }
   }
@@ -78,39 +78,39 @@ class DutyStatusViewController: UIViewController {
   }
 
   @IBAction func offDutyClicked(_ sender: Any) {
-    currentDutyStatus = .OffDuty
-    updateViewOnDutyStatusChanged(dStatus: .OffDuty)
+    currentDutyStatus = .OFFDUTY
+    updateViewOnDutyStatusChanged(dStatus: .OFFDUTY)
   }
 
   @IBAction func onDutyClicked(_ sender: Any) {
-    currentDutyStatus = .OnDuty
-    updateViewOnDutyStatusChanged(dStatus: .OnDuty)
+    currentDutyStatus = .ONDUTY
+    updateViewOnDutyStatusChanged(dStatus: .ONDUTY)
   }
 
   @IBAction func sleeperClicked(_ sender: Any) {
-    currentDutyStatus = .Sleeper
-    updateViewOnDutyStatusChanged(dStatus: .Sleeper)
+    currentDutyStatus = .SLEEPER
+    updateViewOnDutyStatusChanged(dStatus: .SLEEPER)
   }
 
   @IBAction func yardPersonalClicked(_ sender: Any) {
     let button = sender as! UIButton
     if button.tag == 101 { //yard mode selected
-      currentDutyStatus = .Yard
+      currentDutyStatus = .YARD
     }else if (button.tag == 102){ //enable personal mode
-      currentDutyStatus = .Personal
+      currentDutyStatus = .PERSONAL
     }
   }
 
   private func updateViewOnDutyStatusChanged(dStatus: DutyStatus) {
     switch dStatus {
-      case .Sleeper:
+      case .SLEEPER:
         yardPersonalButton.isHidden = true
-      case .OnDuty:
+      case .ONDUTY:
         yardPersonalButton.isHidden = false
         yardPersonalButton.setTitle("Enable Yard Mode", for: .normal)
         yardPersonalButton.setImage(UIImage(named: "yardmode"), for: .normal)
         yardPersonalButton.tag = 101
-      case .OffDuty:
+      case .OFFDUTY:
         yardPersonalButton.isHidden = false
         yardPersonalButton.tag = 102
         yardPersonalButton.setTitle("Enable Personal Mode", for: .normal)

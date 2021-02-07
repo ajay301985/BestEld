@@ -64,7 +64,7 @@ class GraphGenerator {
 
       let endTimeObj = dayData.endTime ?? Date()
       let endTime = BLDAppUtility.timezoneDate(from: endTimeObj)
-      var yPosition = 75
+      var yPosition: CGFloat = 75
       var xPositionInGraph = imageXPosition(for: startTime)
 
       if (currentDateText != currentStartText) {
@@ -74,51 +74,20 @@ class GraphGenerator {
         }
       }
 
-      var currentColor: UIColor = .blue
-  //    let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
-      let currentDutyStatus = dayData.dutyStatus ?? "OFFDUTY"
+      let currentColor: UIColor = .blue
+      let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
       switch currentDutyStatus {
-        case "ONDUTY", "YARD": //4
-          print("ON Duty")
+        case .ONDUTY, .YARD: //4
           yPosition = 165
-          currentColor = .blue
-        case "OFFDUTY", "PERSONAL": // 1
-          print("Off Duty")
+        case .OFFDUTY, .PERSONAL: // 1
           yPosition = 61
-        case "SLEEPER":  //2
-          print("ON sleeper")
+        case .SLEEPER:  //2
           yPosition = 100
-          currentColor = .blue
-        case "DRIVING":  //3
-          print("ON Driving")
+        case .DRIVING:  //3
           yPosition = 135
-          currentColor = .blue
         default:
-          currentColor = .blue
           print("ON Duty")
       }
-      /*
-      switch currentDutyStatus {
-        case .OnDuty, .Yard: //4
-          print("ON Duty")
-          yPosition = 155
-          currentColor = .green
-        case .OffDuty, .Personal: // 1
-          print("Off Duty")
-          yPosition = 61
-        case .Sleeper:  //2
-          print("ON sleeper")
-          yPosition = 100
-          currentColor = .blue
-        case .Driving:  //3
-          print("ON Driving")
-          yPosition = 115
-          currentColor = .yellow
-        default:
-          currentColor = .black
-          print("ON Duty")
-      } */
-
 
       let startPoint = CGPoint(x: xPositionInGraph, y: yPosition)
 
@@ -133,22 +102,21 @@ class GraphGenerator {
     }
   }
 
-  func imageXPosition(for inDate: Date) -> Int {
+  func imageXPosition(for inDate: Date) -> CGFloat {
     var xPosition: CGFloat = 0.0
     let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
     let hours = timeObj.hour ?? 0
     let minute = timeObj.minute ?? 1
-    var frameWidthObj = (imageSize?.width ?? 120)
- //   frameWidthObj -= 40//20
+    let frameWidthObj = (imageSize?.width ?? 120)
     if (hours == 0) {
       xPosition = 0
     }else {
       let position = (hours * 4) + (minute/15)
-      var frameWidth = (frameWidthObj/96)
+      let frameWidth = (frameWidthObj/95)
       let finalPosition = CGFloat(position) * frameWidth
       xPosition = finalPosition
     }
-    return Int(xPosition)
+    return xPosition
   }
 
   func drawLineFromPoint(start : CGPoint, toPoint end:CGPoint, ofColor lineColor: UIColor, inView view:UIView) {

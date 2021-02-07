@@ -8,26 +8,26 @@
 import UIKit
 
 enum DutyStatus: String {
-  case OnDuty
-  case OffDuty
-  case Sleeper
-  case Yard
-  case Driving
-  case Personal
+  case ONDUTY
+  case OFFDUTY
+  case SLEEPER
+  case YARD
+  case DRIVING
+  case PERSONAL
 
   // MARK: Internal
 
   var dutyIndex: Int16 {
     switch self {
-      case .OnDuty:
+      case .ONDUTY:
         return 0
-      case .OffDuty:
+      case .OFFDUTY:
         return 1
-      case .Sleeper:
+      case .SLEEPER:
         return 2
-      case .Yard:
+      case .YARD:
         return 3
-      case .Driving:
+      case .DRIVING:
         return 4
       default:
         return 5
@@ -36,15 +36,15 @@ enum DutyStatus: String {
 
   var title: String {
     switch self {
-      case .OnDuty:
+      case .ONDUTY:
         return "On Duty"
-      case .OffDuty:
+      case .OFFDUTY:
         return "Off Duty"
-      case .Sleeper:
+      case .SLEEPER:
         return "Sleeper"
-      case .Yard:
+      case .YARD:
         return "Yard"
-      case .Driving:
+      case .DRIVING:
         return "Driving"
       default:
         return "Personal"
@@ -53,15 +53,15 @@ enum DutyStatus: String {
 
   var shortTitle: String {
     switch self {
-      case .OnDuty:
+      case .ONDUTY:
         return "ON"
-      case .OffDuty:
+      case .OFFDUTY:
         return "OFF"
-      case .Sleeper:
+      case .SLEEPER:
         return "SB"
-      case .Yard:
+      case .YARD:
         return "Y"
-      case .Driving:
+      case .DRIVING:
         return "D"
       default:
         return "P"
@@ -79,7 +79,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBOutlet var dutyStatusTextField: UILabel!
   @IBOutlet var deviceTextField: UILabel!
 
-  var currentStatus: DutyStatus = .OffDuty {
+  var currentStatus: DutyStatus = .OFFDUTY {
     didSet {
       dutyStatusTextField.text = currentStatus.title
     }
@@ -189,7 +189,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     dutyStatusController.didChangedDutyStatus = { status, notes, _ in
       DataHandeler.shared.dutyStatusChanged(status: status, description: notes, timeToStart: Date())
       self.currentStatus = status
-      if status == .OnDuty {
+      if status == .ONDUTY {
         let drivingController = self.viewModel.drivingStoryboardInstance()
         drivingController.currentDriver = self.viewModel.currentDriver
         drivingController.modalPresentationStyle = .fullScreen
@@ -282,19 +282,19 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBAction func dayProfileClicked(_ sender: Any) {}
 
   @IBAction func dutyButtonClicked(_ sender: Any) {
-    var status: DutyStatus = .OffDuty
+    var status: DutyStatus = .OFFDUTY
     let button = sender as! UIButton
     switch button.tag {
       case 0:
-        status = .OffDuty
+        status = .OFFDUTY
       case 1:
-        status = .OnDuty
+        status = .ONDUTY
       case 2:
-        status = .Sleeper
+        status = .SLEEPER
       case 3:
-        status = .Personal
+        status = .PERSONAL
       default:
-        status = .Yard
+        status = .YARD
     }
     print("duty status")
 
@@ -303,7 +303,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
       continueAction: (title: nil, handler: { description, date in
         DataHandeler.shared.dutyStatusChanged(status: status, description: description, timeToStart: date)
         self.currentStatus = status
-        if status == .OnDuty {
+        if status == .ONDUTY {
           let drivingController = self.viewModel.drivingStoryboardInstance()
           drivingController.currentDriver = self.viewModel.currentDriver
           drivingController.modalPresentationStyle = .fullScreen
@@ -344,10 +344,10 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
     let tableCell = tableView.dequeueReusableCell(withIdentifier: "dayDataTableCellIdentifier") as! DayDataTableViewCell
 
     let currentDayData = sortedData[indexPath.row]
-    let status = currentDayData.dutyStatus ?? "OFFDUTY"
-    let sortTitleText = shortTitle(status: status)
-    tableCell.dutyStatusLabel.text = sortTitleText // DutyStatus(rawValue: currentDayData.dutyStatus ?? "OFFDUTY")?.shortTitle
-    tableCell.dutyStatusLabel.backgroundColor = bgColorDuty(status: status) // bgColor(status: DutyStatus(rawValue: currentDayData.dutyStatus ?? "OFFDUTY") ?? .OffDuty)
+    let status = DutyStatus(rawValue: currentDayData.dutyStatus ?? "OFFDUTY")
+    let sortTitleText = shortTitle(status: status ?? .OFFDUTY)
+    tableCell.dutyStatusLabel.text = sortTitleText //
+    tableCell.dutyStatusLabel.backgroundColor = bgColor(status: status ?? .OFFDUTY)
     tableCell.descriptionLabel.text = currentDayData.rideDescription
     tableCell.locationLabel.text = currentDayData.startLocation
     let eventDate = currentDayData.startTime
@@ -366,51 +366,34 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
     return tableCell
   }
 
-  func shortTitle(status: String) -> String {
+  func shortTitle(status: DutyStatus) -> String {
     switch status {
-      case "ONDUTY":
+      case .ONDUTY:
         return "ON"
-      case "OFFDUTY":
+      case .OFFDUTY:
         return "OFF"
-      case "SLEEPER":
+      case .SLEEPER:
         return "SB"
-      case "YARD":
+      case .YARD:
         return "Y"
-      case "DRIVING":
+      case .DRIVING:
         return "D"
       default:
         return "P"
     }
   }
 
-  private func bgColorDuty(status: String) -> UIColor {
-    switch status {
-      case "DRIVING":
-        return .magenta
-      case "OFFDUTY",
-           "PERSONAL":
-        return .green
-      case "ONDUTY",
-           "YARD":
-        return .red
-      case "SLEEPER":
-        return .orange
-      default:
-        return .orange
-    }
-  }
-
   private func bgColor(status: DutyStatus) -> UIColor {
     switch status {
-      case .Driving:
+      case .DRIVING:
         return .magenta
-      case .OffDuty,
-           .Personal:
+      case .OFFDUTY,
+           .PERSONAL:
         return .green
-      case .OnDuty,
-           .Yard:
+      case .ONDUTY,
+           .YARD:
         return .red
-      case .Sleeper:
+      case .SLEEPER:
         return .orange
     }
   }

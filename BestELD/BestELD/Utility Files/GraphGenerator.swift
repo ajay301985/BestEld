@@ -14,7 +14,7 @@ import UIKit
 class GraphGenerator {
 
   struct imageConstants {
-    static let imageColumn = 96
+    static let imageColumn = 95
     static let imageRow = 4
   }
 
@@ -64,6 +64,7 @@ class GraphGenerator {
 
       let endTimeObj = dayData.endTime ?? Date()
       let endTime = BLDAppUtility.timezoneDate(from: endTimeObj)
+      let currentEndText = BLDAppUtility.textForDate(date: endTime)
       var yPosition: CGFloat = 75
       var xPositionInGraph = imageXPosition(for: startTime)
 
@@ -95,7 +96,12 @@ class GraphGenerator {
         drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .blue, inView: currentImageView)
       }
 
-      let xPositionInGraph1 = imageXPosition(for: endTime)
+      var xPositionInGraph1 = imageXPosition(for: endTime)
+      //if (currentDateText != currentStartText) {
+        if (currentDateText != currentEndText) {
+          xPositionInGraph1 = imageSize?.width ?? 120
+        }
+      //}
       let endPoint = CGPoint(x: xPositionInGraph1, y: yPosition)
       lastPoint = endPoint
       drawLineFromPoint(start: startPoint, toPoint: endPoint, ofColor: currentColor, inView: currentImageView)

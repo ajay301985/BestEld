@@ -79,6 +79,9 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBOutlet var dutyStatusTextField: UILabel!
   @IBOutlet var deviceTextField: UILabel!
 
+
+  var userTripDataArray: [DayData] = []
+
   var currentStatus: DutyStatus = .OFFDUTY {
     didSet {
       dutyStatusTextField.text = currentStatus.title
@@ -205,18 +208,16 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   }
 
   override func viewDidAppear(_ animated: Bool) {
-    //let dayMetaDataObj = DataHandeler.shared.userDayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
-    //let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
-    //let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
     guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
       return
     }
-    generateData(for: currentDateData)
-    // GraphGenerator.shared.generatePath(dayDataArr: sortedData)
-    // tableView.reloadData()
+    let dayDataArray = generateData(for: currentDateData)
+    GraphGenerator.shared.generatePath(dayDataArr: dayDataArray)
+    userTripDataArray = dayDataArray
+    tableView.reloadData()
   }
 
-  func generateData(for dayDate: DateData) {
+  func generateData(for dayDate: DateData) -> [DayData] {
     var dayDataArray: [DayData] = []
     let dayMetaDataObj = DataHandeler.shared.userDayMetaData(dayStart: dayDate.dateValue, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData] {
@@ -249,8 +250,8 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
       }
     }
-    GraphGenerator.shared.generatePath(dayDataArr: currentDayDataArray)
-    print("data")
+
+    return currentDayDataArray
   }
 
   func performLoggedIn() {
@@ -270,7 +271,16 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     let dayController = storyboard.instantiateViewController(withIdentifier: "DaysViewController") as! DaysViewController
     dayController.loadDays(dateFrom: Date(), numOfDays: 8)
     dayController.didSelectDate = { _ in
-      // self?.loggedInAsATestUser()
+      guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+        return
+      }
+      DispatchQueue.main.async {
+        self.dayButton.setTitle(currentDateData.displayDate, for: .normal)
+        let dayDataArray = self.generateData(for: currentDateData)
+        GraphGenerator.shared.generatePath(dayDataArr: dayDataArray)
+        self.userTripDataArray = dayDataArray
+        self.tableView.reloadData()
+      }
     }
     dayController.modalPresentationStyle = .overCurrentContext
     present(dayController, animated: true, completion: nil)
@@ -332,21 +342,16 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
 extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
-    return driverMetaData?.dayData?.count ?? 0
+    return userTripDataArray.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
-    let dayDataArr = driverMetaData?.dayData?.allObjects as! [DayData]
-    let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
-
     let tableCell = tableView.dequeueReusableCell(withIdentifier: "dayDataTableCellIdentifier") as! DayDataTableViewCell
 
-    let currentDayData = sortedData[indexPath.row]
+    let currentDayData = userTripDataArray[indexPath.row]
     let status = DutyStatus(rawValue: currentDayData.dutyStatus ?? "OFFDUTY")
     let sortTitleText = shortTitle(status: status ?? .OFFDUTY)
-    tableCell.dutyStatusLabel.text = sortTitleText //
+    tableCell.dutyStatusLabel.text = sortTitleText
     tableCell.dutyStatusLabel.backgroundColor = bgColor(status: status ?? .OFFDUTY)
     tableCell.descriptionLabel.text = currentDayData.rideDescription
     tableCell.locationLabel.text = currentDayData.startLocation

@@ -56,8 +56,8 @@ class DataHandeler {
     let context = BLDAppUtility.dataContext()
 
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "DayMetaData")
-    let startDay = dayStart.startOfDay
-    fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (day == %@)", driverDL,startDay as CVarArg)
+    let currentDateAsText = BLDAppUtility.textForDate(date: dayStart)
+    fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (dayText == %@)", driverDL,currentDateAsText)
 
     do {
       let testDriverMetaData = try context.fetch(fetchRequest)
@@ -263,17 +263,18 @@ extension DataHandeler {
     }
 //DJHDS324234
     DispatchQueue.main.async {
-      self.deleteDayMetaData(dayStart: "Feb 7, 2021", driverDL: "DJHDS324234")
+      let currentDateAsText = BLDAppUtility.textForDate(date: Date())
+      self.deleteDayMetaData(dayStart: currentDateAsText, driverDL: self.currentDriver.dlNumber ?? "")
 
-      if let userMetaData = self.getDayMetadata(for: "Feb 7, 2021", driverDL: "DJHDS324234") {
-        let dataArray = logbookData["Feb 7, 2021"] as! Array<[String : Any]>
+      if let userMetaData = self.getDayMetadata(for: currentDateAsText, driverDL: self.currentDriver.dlNumber ?? "") {
+        let dataArray = logbookData[currentDateAsText] as! Array<[String : Any]>
         for data in dataArray {
           let currentDayData = data as! [String : Any]
           self.storeDayData(dataDict: currentDayData, for: self.currentDriver)
         }
       }else {
-        self.createUserMetaData(for: "DJHDS324234", data: Date(), dayText: "Feb 7, 2021")
-        let dataArray = logbookData["Feb 7, 2021"] as! Array<[String : Any]>
+        self.createUserMetaData(for: self.currentDriver.dlNumber ?? "", data: Date(), dayText: currentDateAsText)
+        let dataArray = logbookData[currentDateAsText] as! Array<[String : Any]>
         for data in dataArray {
           let currentDayData = data as! [String : Any]
           self.storeDayData(dataDict: currentDayData, for: self.currentDriver)
@@ -283,10 +284,11 @@ extension DataHandeler {
   }
 
   func storeDayData(dataDict: [String: Any], for driver: Driver) -> DayData? {
+    let currentDateAsText = BLDAppUtility.textForDate(date: Date())
     let context = BLDAppUtility.dataContext()
     let entity = NSEntityDescription.entity(forEntityName: "DayData", in: context)
     let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context)
-    dayMetaDataObj.setValue("Feb 7, 2021", forKey: "day")
+    dayMetaDataObj.setValue(currentDateAsText, forKey: "day")
     dayMetaDataObj.setValue(dataDict["dlnumber"], forKey: "dlNumber")
     dayMetaDataObj.setValue(dataDict["dutystatus"], forKey: "dutyStatus")
     let endTimeString = dataDict["endtime"] as! String
@@ -311,7 +313,7 @@ extension DataHandeler {
     dayMetaDataObj.setValue(Int(dataDict["startodometer"] as! String), forKey: "startOdometer")
     dayMetaDataObj.setValue(Int(dataDict["endodometer"] as! String), forKey: "endOdometer")
     //let driverMetaData = dayMetaData(dayStart: Date(), driverDL: driver.dlNumber ?? testDriverDLNumber)
-    let driverMetaData = self.getDayMetadata(for: "Feb 7, 2021", driverDL: "DJHDS324234")
+    let driverMetaData = self.getDayMetadata(for: currentDateAsText, driverDL: driver.dlNumber ?? "")
     if (driverMetaData?.dayData?.count ?? 0 < 1) {
       driverMetaData?.setValue(NSSet(object: dayMetaDataObj), forKey: "DayData")
     } else {
@@ -459,8 +461,8 @@ extension DataHandeler {
     let context = BLDAppUtility.dataContext()
 
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "DayMetaData")
-    let startDay = dayStart.startOfDay
-    fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (day == %@)", driverDL,startDay as CVarArg)
+    let currentDateAsText = BLDAppUtility.textForDate(date: dayStart)
+    fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (dayText == %@)", driverDL,currentDateAsText)
 
     do {
       let testDriverMetaData = try context.fetch(fetchRequest)

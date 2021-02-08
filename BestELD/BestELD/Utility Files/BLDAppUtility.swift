@@ -29,7 +29,7 @@ class BLDAppUtility {
     print(date?.to(timeZone: .autoupdatingCurrent, from: utcTimeZone))
     print(date?.to(timeZone: .current, from: utcTimeZone))
     print(date?.to(timeZone: TimeZone(abbreviation: "PDT")!, from: utcTimeZone)) */
-    let utcTimeZone = TimeZone(abbreviation: "UTC")!
+    let utcTimeZone = TimeZone(abbreviation: "GMT")!
     let currentDate = dayDate.to(timeZone: TimeZone(abbreviation: UserPreferences.shared.currentTimeZone)!, from: utcTimeZone)
     print(currentDate)
     return currentDate ?? Date()
@@ -150,8 +150,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-07 00:05:50 +0000"
-    dayData["endtime"] = "2021-02-07 11:05:50 +0000"
+    dayData["starttime"] = "2021-02-08 00:05:50 +0000"
+    dayData["endtime"] = "2021-02-08 11:05:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description off duty"
     var dayMetaData: Array<[String: Any]> = []
@@ -166,8 +166,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-07 11:05:50 +0000"
-    dayData["endtime"] = "2021-02-07 13:05:50 +0000"
+    dayData["starttime"] = "2021-02-08 11:05:50 +0000"
+    dayData["endtime"] = "2021-02-08 13:05:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description On duty"
     dayMetaData.append(dayData)
@@ -181,8 +181,8 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-07 13:05:50 +0000"
-    dayData["endtime"] = "2021-02-07 19:00:50 +0000"
+    dayData["starttime"] = "2021-02-08 13:05:50 +0000"
+    dayData["endtime"] = "2021-02-08 19:00:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description Driving duty"
     dayMetaData.append(dayData)
@@ -196,13 +196,13 @@ class BLDAppUtility {
     dayData["startlocationlatitude"] = "US,NY"
     dayData["startlocationlongitude"] = "US,NY"
     dayData["startodometer"] = "34234324"
-    dayData["starttime"] = "2021-02-07 19:00:50 +0000"
-    dayData["endtime"] = "2021-02-07 23:59:50 +0000"
+    dayData["starttime"] = "2021-02-08 19:00:50 +0000"
+    dayData["endtime"] = "2021-02-08 23:59:50 +0000"
     dayData["endodometer"] = "78787878"
     dayData["ridedescription"] = "ride description Sleeper"
     dayMetaData.append(dayData)
 
-    dic["Feb 7, 2021"] = dayMetaData
+    dic["Feb 8, 2021"] = dayMetaData
     return dic
   }
 

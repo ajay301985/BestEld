@@ -72,5 +72,12 @@ extension DaysViewController: UITableViewDelegate, UITableViewDataSource {
     return tableCell ?? UITableViewCell()
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let dayDataObj = dayArray[indexPath.row]
+    UserPreferences.shared.currentSelectedDayData = dayDataObj
+    self.didSelectDate(indexPath.row)
+    dismiss(animated: true, completion: nil)
+  }
+
 
 }

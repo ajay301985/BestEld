@@ -130,7 +130,9 @@ extension Date {
 
 
     func to(timeZone outputTimeZone: TimeZone, from inputTimeZone: TimeZone) -> Date {
-      let delta = TimeInterval(outputTimeZone.secondsFromGMT(for: self) - inputTimeZone.secondsFromGMT(for: self))
+      let teset = outputTimeZone.secondsFromGMT(for: self)
+      let fdfd = inputTimeZone.secondsFromGMT(for: self)
+      let delta = TimeInterval(outputTimeZone.secondsFromGMT(for: self))
       return addingTimeInterval(delta)
     }
 

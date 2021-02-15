@@ -49,6 +49,13 @@ struct StoryboardItems {
 }
 
 extension Date {
+
+  var startOfDayWithTimezone: Date {
+    var currentCal = Calendar.current
+    currentCal.timeZone = TimeZone(abbreviation: UserPreferences.shared.currentTimeZone)!
+    return currentCal.startOfDay(for: self)
+  }
+
   var startOfDay: Date {
     return Calendar.current.startOfDay(for: self)
   }
@@ -60,17 +67,14 @@ extension Date {
     return Calendar.current.date(byAdding: components, to: startOfDay)!
   }
 
-  var startOfMonth: Date {
-    let components = Calendar.current.dateComponents([.year, .month], from: startOfDay)
-    return Calendar.current.date(from: components)!
+  var dayBeforeWithTimezone: Date {
+    var currentCal = Calendar.current
+    currentCal.timeZone = TimeZone(abbreviation: UserPreferences.shared.currentTimeZone)!
+    //return currentCal.startOfDay(for: self)
+    let noonDate = currentCal.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
+    return currentCal.date(byAdding: .day, value: -1, to: noonDate)!
   }
 
-  var endOfMonth: Date {
-    var components = DateComponents()
-    components.month = 1
-    components.second = -1
-    return Calendar.current.date(byAdding: components, to: startOfMonth)!
-  }
 
   var dayBefore: Date {
     return Calendar.current.date(byAdding: .day, value: -1, to: noon)!

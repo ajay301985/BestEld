@@ -30,7 +30,7 @@ class DrivingViewController: UIViewController {
         drivingStatusText.text = "Stationary"
         disableButton(for: currentStatus)
         currentStatus = .ONDUTY
-        locationTextField.text = "SA, USA"
+        locationTextField.text = BldLocationManager.shared.locationText
         tempratureTextField.isEnabled = false
         tempratureTextField.setTitle("56 F", for: .normal)
         circularProgressBar.lineWidth = 20
@@ -82,8 +82,7 @@ class DrivingViewController: UIViewController {
         return
       }
       let startDate = Date()
-      let currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .DRIVING, desciption: "Driving On Fly",for: driverObj)
-
+      DataHandeler.shared.dutyStatusChanged(status: .DRIVING, description: "Driving", timeToStart: startDate)
     }
   }
 
@@ -102,7 +101,6 @@ class DrivingViewController: UIViewController {
       default:
         status = .YARD
     }
-    print("duty status")
     showAlertToUser(
       status: currentStatus,
       continueAction: (title: nil, handler: { description,date in
@@ -121,14 +119,5 @@ class DrivingViewController: UIViewController {
 
   @IBAction func dutyStatusButtonClicked(_ sender: Any) {
   }
-  /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

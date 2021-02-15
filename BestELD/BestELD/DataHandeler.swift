@@ -26,16 +26,19 @@ class DataHandeler {
     let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context)
     dayMetaDataObj.setValue("string", forKey: "day")
     dayMetaDataObj.setValue(driver.dlNumber, forKey: "dlNumber")
-    dayMetaDataObj.setValue(status.dutyIndex, forKey: "dutyStatus")
-    dayMetaDataObj.setValue(end, forKey: "endTimeStamp")
-    dayMetaDataObj.setValue("1009", forKey: "id")
+    dayMetaDataObj.setValue(status.rawValue, forKey: "dutyStatus")
+    dayMetaDataObj.setValue(end, forKey: "endTime")
+    dayMetaDataObj.setValue(end.description, forKey: "endTimeString")
+    //#warning generate Id
+    dayMetaDataObj.setValue("1009", forKey: "id") //
     let currentLocationObj = BldLocationManager.shared.currentLocation
     dayMetaDataObj.setValue(currentLocationObj?.coordinate.latitude, forKey: "startLatitude")
     dayMetaDataObj.setValue(currentLocationObj?.coordinate.longitude, forKey: "startLongitude")
     dayMetaDataObj.setValue(desciption ?? "", forKey: "rideDescription")
-    dayMetaDataObj.setValue(start, forKey: "startTimeStamp")
+    dayMetaDataObj.setValue(start, forKey: "startTime")
+    dayMetaDataObj.setValue(start.description, forKey: "startTimeString")
     let userLocation = BldLocationManager.shared.locationText
-    dayMetaDataObj.setValue(userLocation, forKey: "startUserLocation")
+    dayMetaDataObj.setValue(userLocation, forKey: "startLocation")
     let driverMetaData = dayMetaData(dayStart: Date(), driverDL: driver.dlNumber ?? testDriverDLNumber)
     if (driverMetaData?.dayData?.count ?? 0 < 1) {
       driverMetaData?.setValue(NSSet(object: dayMetaDataObj), forKey: "DayData")
@@ -73,7 +76,7 @@ class DataHandeler {
 extension DataHandeler {
   func dutyStatusChanged(status: DutyStatus, description:String? = nil, timeToStart: Date? = nil) {
     let dutyStatus = DutyStatus(rawValue: currentDayData?.dutyStatus ?? "OFFDUTY")
-    if (dutyStatus == status) {
+    if ((currentDayData != nil) && dutyStatus == status) {
       print("Status is same")
       return
     }
@@ -119,6 +122,13 @@ extension DataHandeler {
       currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OFFDUTY, desciption: description ?? "off duty",for: currentDriver)
       return
     }
+
+    guard let dayData = currentDayData else {
+      print("invalid day data")
+      return
+    }
+
+    dayData.endTime = startTime ?? Date()
     performDutyStatusChanged(description: description, startTime: startTime,dutyStatus: .OFFDUTY)
   }
 
@@ -274,7 +284,9 @@ extension DataHandeler {
         }
       }else {
         self.createUserMetaData(for: self.currentDriver.dlNumber ?? "", data: Date(), dayText: currentDateAsText)
-        let dataArray = logbookData[currentDateAsText] as! Array<[String : Any]>
+        guard let dataArray = logbookData[currentDateAsText] as? Array<[String : Any]> else {
+          return
+        }
         for data in dataArray {
           let currentDayData = data as! [String : Any]
           self.storeDayData(dataDict: currentDayData, for: self.currentDriver)

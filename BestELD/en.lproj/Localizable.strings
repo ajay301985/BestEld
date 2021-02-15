@@ -23,3 +23,5 @@ offduty = "OFF DUTY";
 sleeper = "SLEEPER";
 notes = "Notes";
 location = "Location";
+dailylog = "DAILY LOG";
+inspection = "INSPECTION";

@@ -80,6 +80,7 @@
 		AACCEB6025C0B21B00F9AB0A /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5825C0B21B00F9AB0A /* AFURLRequestSerialization.m */; };
 		AACCEB6125C0B21B00F9AB0A /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5A25C0B21B00F9AB0A /* AFNetworkReachabilityManager.m */; };
 		AACCEB6225C0B21B00F9AB0A /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = AACCEB5B25C0B21B00F9AB0A /* AFSecurityPolicy.m */; };
+		AAE88EF625D4F2A400AAEEE1 /* DailyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE88EF525D4F2A400AAEEE1 /* DailyInfoViewController.swift */; };
 		F783241DAC584F8D87CC00FB /* Todo+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465CC1D4D31A4807BE4EC7EE /* Todo+Schema.swift */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +181,7 @@
 		AACCEB5B25C0B21B00F9AB0A /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
 		AACCEB5C25C0B21B00F9AB0A /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		AAE0A4A725C09EE2006A686E /* BestELD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BestELD-Bridging-Header.h"; sourceTree = "<group>"; };
+		AAE88EF525D4F2A400AAEEE1 /* DailyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyInfoViewController.swift; sourceTree = "<group>"; };
 		C686C3EBBBE449F89BE426D5 /* amplifyconfiguration.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		C9AE857565A446428AAC8546 /* amplifytools.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; path = amplifytools.xcconfig; sourceTree = "<group>"; };
 		D23968173F2F464AB60949FD /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = awsconfiguration.json; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				AAB2CAFE25C5B97E00057DE8 /* DailyLogViewController.swift */,
 				AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */,
 				AA0A9F1825CEEF580050FF4E /* UserPreferences.swift */,
+				AAE88EF525D4F2A400AAEEE1 /* DailyInfoViewController.swift */,
 			);
 			path = BestELD;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				AACCEB3B25C0AC7E00F9AB0A /* EldDriverBehaviorRecord.h in Sources */,
 				AACCEB3C25C0AC7E00F9AB0A /* EldCachedPoweronRecord.h in Sources */,
 				AACCEB3D25C0AC7E00F9AB0A /* EldBufferRecord.h in Sources */,
+				AAE88EF625D4F2A400AAEEE1 /* DailyInfoViewController.swift in Sources */,
 				AA6ABB5225C5592C00B3F26F /* EldDeviceManager.swift in Sources */,
 				AACCEB3E25C0AC7E00F9AB0A /* EldParameter.h in Sources */,
 				AACCEB3F25C0AC7E00F9AB0A /* EldLatestRecords.h in Sources */,
@@ -779,9 +783,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 823T3VVHXY;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = BestELD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -841,6 +847,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eld.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BestELD/Utility Files/BestELD-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -858,9 +865,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 823T3VVHXY;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = BestELD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -920,6 +929,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eld.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BestELD/Utility Files/BestELD-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

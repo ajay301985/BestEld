@@ -33,9 +33,6 @@ class GraphGenerator {
   }
 
   func generatePath(imageView: UIImageView? = nil, dayDataArr: [DayData]) {
-
-
-
     guard let currentImageView = graphImageView else {
       assertionFailure("invalid image object")
       return
@@ -66,7 +63,7 @@ class GraphGenerator {
       let endTime = BLDAppUtility.timezoneDate(from: endTimeObj)
       let currentEndText = BLDAppUtility.textForDate(date: endTime)
       var yPosition: CGFloat = 75
-      var xPositionInGraph = imageXPosition(for: startTime)
+      var xPositionInGraph = imageXPosition(for: startTimeObj)
 
       if (currentDateText != currentStartText) {
         let currentDateText1 = BLDAppUtility.textForDate(date: currentDateData.dateValue.dayBefore)
@@ -96,11 +93,11 @@ class GraphGenerator {
         drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .blue, inView: currentImageView)
       }
 
-      var xPositionInGraph1 = imageXPosition(for: endTime)
+      var xPositionInGraph1 = imageXPosition(for: endTimeObj)
       //if (currentDateText != currentStartText) {
-        if (currentDateText != currentEndText) {
-          xPositionInGraph1 = imageSize?.width ?? 120
-        }
+//        if (currentDateText != currentEndText) {
+//          xPositionInGraph1 = imageSize?.width ?? 120
+//        }
       //}
       let endPoint = CGPoint(x: xPositionInGraph1, y: yPosition)
       lastPoint = endPoint
@@ -110,7 +107,11 @@ class GraphGenerator {
 
   func imageXPosition(for inDate: Date) -> CGFloat {
     var xPosition: CGFloat = 0.0
-    let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
+   // let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
+    let calendar = Calendar.current
+    let timeObj=calendar.dateComponents([.hour,.minute,.second], from: inDate)
+    print("\(timeObj.hour!):\(timeObj.minute!):\(timeObj.second!)")
+
     let hours = timeObj.hour ?? 0
     let minute = timeObj.minute ?? 1
     let frameWidthObj = (imageSize?.width ?? 120)

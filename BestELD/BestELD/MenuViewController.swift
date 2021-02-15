@@ -12,7 +12,7 @@ class MenuViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
   private var menuItems: [MenuItem] = []
 
-
+  var selectedItemIndex:Int = 0
   var didSelectMenuItem: ((_ selectedItem: MenuItem?, _ index:Int)->())!
 
   override func viewDidLoad() {
@@ -21,10 +21,9 @@ class MenuViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-  func setup(menuItemArr: [MenuItem]) {
+  func setup(menuItemArr: [MenuItem], selectedIndex: Int) {
     menuItems = menuItemArr
-
-    //collectionView.reloadData()
+    selectedItemIndex = selectedIndex
   }
     
 
@@ -62,6 +61,8 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     let menuItem = menuItems[rowIndex]
 
     let imageObj = UIImage(named: menuItem.imageName)
+    cell.imageView.backgroundColor =  rowIndex == selectedItemIndex ? UIColor(rgb: 0xfffcdb, alphaVal: 1.0): UIColor(rgb: 0xfffcdb, alphaVal: 0.4)
+    cell.imageView.cornerRadiusV = (cell.imageView.frame.size.width/2)
     cell.imageView.image = imageObj
     cell.title.text = menuItem.title
     return cell
@@ -70,6 +71,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     dismiss(animated: true, completion: {
       let rowIndex = (indexPath.section * 3) + indexPath.row
+      //if rowIndex == self.selectedItemIndex {return} //selecting the same item
       self.didSelectMenuItem(nil, rowIndex)
     })
   }

@@ -21,7 +21,11 @@ class DutyStatusViewController: UIViewController {
   @IBOutlet weak var offDutyButton: UIButton!
   @IBOutlet weak var onDutyButton: UIButton!
   @IBOutlet weak var sleeperButton: UIButton!
-  
+
+  @IBOutlet weak var offDutyLabel: UILabel!
+  @IBOutlet weak var onDutyLabel: UILabel!
+  @IBOutlet weak var sleeperLabel: UILabel!
+
   var didChangedDutyStatus: ((_ status: DutyStatus, _ notes:String?, _ location:String?) -> ())!
 
   private var currentDutyStatus: DutyStatus = .OFFDUTY {
@@ -35,11 +39,24 @@ class DutyStatusViewController: UIViewController {
         dateHeightConstraint.constant = 0
         dateContainerView.isHidden = true
         // Do any additional setup after loading the view.
-
+    locationTextField.isEnabled = false
+    locationTextField.text = BldLocationManager.shared.locationText
+    currentDutyStatus = DutyStatus(rawValue: DataHandeler.shared.currentDayData.dutyStatus ?? "OFFDUTY") ?? .OFFDUTY
     NotificationCenter.default.addObserver(self, selector: #selector(DutyStatusViewController.keyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(DutyStatusViewController.keyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
     }
+
+  override func viewDidAppear(_ animated: Bool) {
+    locationTextField.text = BldLocationManager.shared.locationText
+  }
+
+  func updateButtonSelectedState() {
+    offDutyButton.setTitleShadowColor(.red, for: .selected)
+    offDutyButton.setTitleShadowColor(.red, for: .selected)
+    offDutyButton.setTitleShadowColor(.red, for: .selected)
+  }
+
 
   var isEditiingEvent: Bool = false {
     didSet {
@@ -53,11 +70,17 @@ class DutyStatusViewController: UIViewController {
   private func updateButton(status: DutyStatus) {
     switch status {
       case .ONDUTY:
-        print("on duty")
+        onDutyLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        offDutyLabel.font = UIFont.systemFont(ofSize: 14)
+        sleeperLabel.font = UIFont.systemFont(ofSize: 14)
       case .OFFDUTY:
-        print("off duty")
+        onDutyLabel.font = UIFont.systemFont(ofSize: 14)
+        offDutyLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        sleeperLabel.font = UIFont.systemFont(ofSize: 14)
       case .SLEEPER:
-        print("sleeper duty")
+        onDutyLabel.font = UIFont.systemFont(ofSize: 14)
+        offDutyLabel.font = UIFont.systemFont(ofSize: 14)
+        sleeperLabel.font = UIFont.boldSystemFont(ofSize: 14)
       case .YARD:
         print("yad duty")
       case .PERSONAL:

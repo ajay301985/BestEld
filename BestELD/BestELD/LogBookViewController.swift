@@ -80,6 +80,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBOutlet var deviceTextField: UILabel!
 
 
+  var selectedMenuItemIndex = 0
   var userTripDataArray: [DayData] = []
 
   var currentStatus: DutyStatus = .OFFDUTY {
@@ -102,22 +103,40 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // navigationController?.navigationBar.isHidden = false
+
+    currentStatus = .OFFDUTY
     let currentDriver = viewModel.driverName
     let currentDriver1 = viewModel.currentDay
-    print("driver name is = \(currentDriver) and driving on \(currentDriver1)")
+    print("driver name is = \(String(describing: currentDriver)) and driving on \(String(describing: currentDriver1))")
 
     GraphGenerator.shared.setupImageView(imageView: graphImageView)
     performLoggedIn()
 
     AuthenicationService.shared.fetchUserLogbookData(user: "")
 
-    let utcTimeZone = TimeZone(abbreviation: "UTC")!
-    let currentDate = Date().to(timeZone: TimeZone(abbreviation: UserPreferences.shared.currentTimeZone)!, from: utcTimeZone)
-    let currentDateData = BLDAppUtility.generateDataSource(dateFrom: currentDate, numOfDays: 8)[0] //get todays data
+    EldManager.sharedInstance()?.registerBleStateCallback( { error in
+      if let errorObj = error as NSError? {
+        switch errorObj.code {
+          case 1003:
+            self.showDefaultAlert(title: nil, message: "Device not connected", handler: nil)
+          case 1005:
+            self.showDefaultAlert(title: nil, message: "Device not supported", handler: nil)
+          case 1006:
+            self.showDefaultAlert(title: nil, message: "Device not authorized", handler: nil)
+          case 1008:
+            self.showDefaultAlert(title: nil, message: "Device powered off", handler: nil)
+          case 1009:
+            self.showDefaultAlert(title: nil, message: "Device powered on", handler: nil)
+          default:
+            print("test")
+        }
+      }
+      })
+
+    let currentDateData = BLDAppUtility.generateDataSource(dateFrom: Date(), numOfDays: 8)[0] //get todays data
     UserPreferences.shared.currentSelectedDayData = currentDateData
     if DataHandeler.shared.currentDayData == nil {
-//        DataHandeler.shared.dutyStatusChanged(status: .OffDuty,description: "off duty from start of the day", timeToStart: Date())
+        DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
     }
   }
 
@@ -125,8 +144,9 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let menuViewControllerObj = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
     let menuItems = BLDAppUtility.menuItems(loggedInUser: false)
-    menuViewControllerObj.setup(menuItemArr: menuItems)
+    menuViewControllerObj.setup(menuItemArr: menuItems, selectedIndex: selectedMenuItemIndex)
     menuViewControllerObj.didSelectMenuItem = { [weak self] _, itemIndex in
+      self?.selectedMenuItemIndex = itemIndex
       switch itemIndex {
         case 0:
           print("")
@@ -162,7 +182,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
       if error != nil {
         self.showDefaultAlert(title: "Error", message: "Unable to find list of Elds \(error.debugDescription)", handler: nil)
         #warning("Debug Mode settings")
-//        return
+        return
         // self.eldList = ["ELD1","ELD2","ELD3","ELD4","ELD5","ELD6","ELD7","ELD8","ELD9"]
       } else {
         self.eldList = deviceIds as! [String]
@@ -207,14 +227,20 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     // tableView.reloadData()
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
-      return
-    }
+  fileprivate func reloadLogBookData(_ currentDateData: DateData) {
     let dayDataArray = generateData(for: currentDateData)
     GraphGenerator.shared.generatePath(dayDataArr: dayDataArray)
     userTripDataArray = dayDataArray
     tableView.reloadData()
+  }
+
+
+  override func viewDidAppear(_ animated: Bool) {
+    guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+      return
+    }
+    reloadLogBookData(currentDateData)
+    currentStatus = DutyStatus(rawValue: DataHandeler.shared.currentDayData.dutyStatus ?? "OFFDUTY") ?? .OFFDUTY
   }
 
   func generateData(for dayDate: DateData) -> [DayData] {
@@ -236,18 +262,23 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     let sortedData = dayDataArray.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
     let currentDateText = BLDAppUtility.textForDate(date: dayDate.dateValue)
     var currentDayDataArray: [DayData] = []
-    for data in sortedData {
-      if let startTimeObj = data.startTime {
-        let currentStartTime = BLDAppUtility.timezoneDate(from: startTimeObj)
-        let startTimeText = BLDAppUtility.textForDate(date: currentStartTime)
+    let dateMinus4Hours = Calendar.current.date(byAdding: .hour, value: 24, to: dayDate.dateValue) ?? Date()
 
-        if let endTimeObj = data.endTime {
+    for data in sortedData {
+      if let startTimeObj = data.startTime, let endTimeObj = data.endTime {
+        if (startTimeObj >= dayDate.dateValue && startTimeObj < dateMinus4Hours) || (endTimeObj >= dayDate.dateValue && endTimeObj < dateMinus4Hours) {
+          currentDayDataArray.append(data)
+        }
+
+/*        let currentStartTime = BLDAppUtility.timezoneDate(from: startTimeObj)
+        let startTimeText = BLDAppUtility.textForDate(date: currentStartTime)
           let currentEndTime = BLDAppUtility.timezoneDate(from: endTimeObj)
           let endTimeText = BLDAppUtility.textForDate(date: currentEndTime)
           if ((startTimeText == currentDateText) || (endTimeText == currentDateText)) {
             currentDayDataArray.append(data)
-          }
-        }
+          } */
+      } else {
+        print("Invalid end time")
       }
     }
 
@@ -256,7 +287,6 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
   func performLoggedIn() {
     if viewModel.shouldSetDefaultOffDuty {
-      // self.viewModel?.dutyStatusChanged(status: .OffDuty)
     }
   }
 
@@ -276,10 +306,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
       }
       DispatchQueue.main.async {
         self.dayButton.setTitle(currentDateData.displayDate, for: .normal)
-        let dayDataArray = self.generateData(for: currentDateData)
-        GraphGenerator.shared.generatePath(dayDataArr: dayDataArray)
-        self.userTripDataArray = dayDataArray
-        self.tableView.reloadData()
+        self.reloadLogBookData(currentDateData)
       }
     }
     dayController.modalPresentationStyle = .overCurrentContext
@@ -289,7 +316,12 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
   @IBAction func violenceOnlyModeClicked(_ sender: Any) {}
 
-  @IBAction func dayProfileClicked(_ sender: Any) {}
+  @IBAction func dayProfileClicked(_ sender: Any) {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let dayInfoController = storyboard.instantiateViewController(withIdentifier: "DailyInfoViewController") as! DailyInfoViewController
+    dayInfoController.modalPresentationStyle = .overCurrentContext
+    present(dayInfoController, animated: true, completion: nil)
+  }
 
   @IBAction func dutyButtonClicked(_ sender: Any) {
     var status: DutyStatus = .OFFDUTY
@@ -318,8 +350,12 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
           drivingController.currentDriver = self.viewModel.currentDriver
           drivingController.modalPresentationStyle = .fullScreen
           self.navigationController?.pushViewController(drivingController, animated: true)
-          // self.present(drivingController, animated: true) {
-          print("present")
+        } else {
+          guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+            return
+          }
+
+          self.reloadLogBookData(currentDateData)
         }
       }),
       cancelAction: (title: nil, handler: { _, _ in
@@ -353,8 +389,8 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
     let sortTitleText = shortTitle(status: status ?? .OFFDUTY)
     tableCell.dutyStatusLabel.text = sortTitleText
     tableCell.dutyStatusLabel.backgroundColor = bgColor(status: status ?? .OFFDUTY)
-    tableCell.descriptionLabel.text = currentDayData.rideDescription
-    tableCell.locationLabel.text = currentDayData.startLocation
+    tableCell.descriptionLabel.text = currentDayData.startLocation
+    tableCell.locationLabel.text = currentDayData.rideDescription
     let eventDate = currentDayData.startTime
     let eventDateEnd = currentDayData.endTime
     guard let dutyTime = eventDate else {
@@ -391,15 +427,16 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
   private func bgColor(status: DutyStatus) -> UIColor {
     switch status {
       case .DRIVING:
-        return .magenta
+        return UIColor(rgb: 0xf34b4b, alphaVal: 1.0) //#F34B4B
       case .OFFDUTY,
            .PERSONAL:
-        return .green
+        return UIColor(rgb: 0x93e868, alphaVal: 1.0)
       case .ONDUTY,
            .YARD:
-        return .red
+        return UIColor(rgb: 0xff0000, alphaVal: 1.0)
+
       case .SLEEPER:
-        return .orange
+        return UIColor(rgb: 0xfdac5b, alphaVal: 1.0)
     }
   }
 }

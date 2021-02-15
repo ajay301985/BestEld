@@ -63,6 +63,14 @@ class BLDAppUtility {
   }
 
 
+  static func stringForDate(inDate: Date) -> String {
+    let dateFormatter = DateFormatter()
+//    dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z" //2021-02-06 13:05:50 +0000
+    let dateString = dateFormatter.string(from: inDate)
+    return dateString
+  }
+
   static func textForDate(date: Date) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .medium
@@ -79,7 +87,8 @@ class BLDAppUtility {
   }
 
   static func hourMinuteValues(for inDate: Date) -> (hour: Int?, minute: Int?) {
-    let calendar = Calendar.current
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(identifier: UserPreferences.shared.currentTimeZone)!
     let time=calendar.dateComponents([.hour,.minute,.second], from: inDate)
     print("\(time.hour!):\(time.minute!):\(time.second!)")
     return (time.hour, time.minute)
@@ -212,13 +221,16 @@ class BLDAppUtility {
     var days:  [DateData] = []
     for index in 0..<numOfDays {
       //if currentDate
-      var dateString = BLDAppUtility.timezoneTextForDate(date: currentDate)
+      let dateObj = currentDate.startOfDayWithTimezone
+      var dateString = BLDAppUtility.textForDate(date: dateObj)
+        //dateFrom.startOfDayWithTimezone
+      //timezoneTextForDate(date: currentDate)
       if index == 0 {
         dateString = "Today"
       }else if (index == 1) {
         dateString = "Yesterday"
       }
-      let dayData = DateData(displayDate: dateString, actualDate: dateString, dateValue: currentDate)
+      let dayData = DateData(displayDate: dateString, actualDate: dateString, dateValue: dateObj)
       days.insert(dayData, at: days.count)
       currentDate = currentDate.dayBefore
     }
@@ -241,5 +253,17 @@ extension UIViewController: UITextFieldDelegate{
   public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true;
+  }
+}
+
+
+extension UIColor{
+  convenience init(rgb: UInt, alphaVal: CGFloat) {
+    self.init(
+      red: CGFloat((rgb & 0xFF0000) >> 16) / 255.0,
+      green: CGFloat((rgb & 0x00FF00) >> 8) / 255.0,
+      blue: CGFloat(rgb & 0x0000FF) / 255.0,
+      alpha: alphaVal
+    )
   }
 }

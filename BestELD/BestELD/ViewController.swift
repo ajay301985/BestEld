@@ -18,6 +18,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var userPasswordTextField: UITextField!
 
   var viewModel = ViewViewModel()
+  var selectedMenuItemIndex = 0
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationController?.navigationBar.isHidden = true
@@ -133,8 +134,9 @@ class ViewController: UIViewController {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let menuViewControllerObj =  storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
     let menuItems = BLDAppUtility.menuItems(loggedInUser: false)
-    menuViewControllerObj.setup(menuItemArr: menuItems)
+    menuViewControllerObj.setup(menuItemArr: menuItems, selectedIndex: selectedMenuItemIndex)
     menuViewControllerObj.didSelectMenuItem = { [weak self] selectMenuItem, itemIndex in
+      self?.selectedMenuItemIndex = itemIndex
       self?.itemDidSelect(index: itemIndex)
     }
     menuViewControllerObj.modalPresentationStyle = .overCurrentContext
@@ -145,31 +147,23 @@ class ViewController: UIViewController {
   func itemDidSelect(index: Int) {
     switch index {
       case 0:
-        print("item")
         showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
       case 1:
         loggedInAsATestUser()
       case 2:
-        print("item")
         showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
       case 3:
-        print("item")
-        showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
+        showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
       case 4:
-        print("item")
         showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
       case 5:
-        print("item")
         showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
       case 6:
-        print("item")
         showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
       case 7:
-        print("item")
         showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
       case 8:
-        print("item")
-        showDefaultAlert(title: "Alert", message: "Work in progress", handler: nil)
+        showDefaultAlert(title: "Alert", message: "Only available for logged in users", handler: nil)
 
       default:
         print("default")

@@ -17,7 +17,6 @@ class BldLocationManager: NSObject  {
 
   var currentLocation: CLLocation?
   var currentLocationPlacemark: CLPlacemark?
-  var currentLocationVisit: CLVisit?
 
   func requestLocationAccess() {
     locationManager.requestAlwaysAuthorization()
@@ -26,7 +25,8 @@ class BldLocationManager: NSObject  {
     // 2
     //locationManager.allowsBackgroundLocationUpdates = true
     // 3
-    locationManager.startMonitoringVisits()
+    locationManager.startUpdatingLocation()
+    //startMonitoringVisits()
     //locationManager.startUpdatingLocation()
   }
 
@@ -47,12 +47,35 @@ class BldLocationManager: NSObject  {
       return ""
     }
 
-    return (placeName + placeLocality)
+    return (placeName + ", " + placeLocality)
   }
 
 }
 
 extension BldLocationManager: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager,
+                                didUpdateLocations locations: [CLLocation]) {
+
+    currentLocation = locations.first
+    guard  let validLocation = currentLocation else {
+      assertionFailure("invalid location")
+      return
+    }
+    BldLocationManager.geoCoder.reverseGeocodeLocation(validLocation ) { placemarks, _ in
+      if let place = placemarks?.first {
+        self.currentLocationPlacemark = place
+//        print("\(place.administrativeArea)")
+        print("\(place.name)")
+        print("\(place.locality)")
+//        print("\(place.subLocality)")
+//        print("\(place.country)")
+//        print("\(place.postalCode)")
+      }
+    }
+
+  }
+
+  /*
   func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
     // create CLLocation from the coordinates of CLVisit
     currentLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
@@ -75,10 +98,5 @@ extension BldLocationManager: CLLocationManagerDelegate {
 
     // Get location description
   }
-
-  func newVisitReceived(_ visit: CLVisit, description: String) {
-    //let location = Location(visit: visit, descriptionString: description)
-    currentLocationVisit = visit
-    // Save location to disk
-  }
+*/
 }

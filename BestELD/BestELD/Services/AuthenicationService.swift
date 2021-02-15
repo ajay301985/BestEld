@@ -88,8 +88,8 @@ class AuthenicationService {
 //    let data = try? JSONSerialization.data(withJSONObject: parameters, options: [])
 //    request.httpBody = data
 
-    let dayDataDict = BLDAppUtility.testDicData()
-    DataHandeler.shared.updateDriverLogbookData(driverLogbookData: dayDataDict)
+//    let dayDataDict = BLDAppUtility.testDicData()
+//    DataHandeler.shared.updateDriverLogbookData(driverLogbookData: dayDataDict)
     // 3
 //    dataTask = defaultSession.dataTask(with: request) { data, response, error in
 //    }

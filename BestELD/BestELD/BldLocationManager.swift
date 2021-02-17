@@ -65,8 +65,8 @@ extension BldLocationManager: CLLocationManagerDelegate {
       if let place = placemarks?.first {
         self.currentLocationPlacemark = place
 //        print("\(place.administrativeArea)")
-        print("\(place.name)")
-        print("\(place.locality)")
+//        print("\(place.name)")
+//        print("\(place.locality)")
 //        print("\(place.subLocality)")
 //        print("\(place.country)")
 //        print("\(place.postalCode)")

@@ -74,6 +74,7 @@ class DataHandeler {
 }
 
 extension DataHandeler {
+  #warning("if data is being added for another day then add a metadata for that")
   func dutyStatusChanged(status: DutyStatus, description:String? = nil, timeToStart: Date? = nil) {
     let dutyStatus = DutyStatus(rawValue: currentDayData?.dutyStatus ?? "OFFDUTY")
     if ((currentDayData != nil) && dutyStatus == status) {
@@ -118,7 +119,7 @@ extension DataHandeler {
   private func performOffDutyStatusChanged(description: String?, startTime: Date? = nil) {
     let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date(), driverDL: currentDriver.dlNumber ?? testDriverDLNumber)
     guard let metaData = driverMetaData, (metaData.dayData?.count ?? 0 > 0) else {
-      let startDate = Date().startOfDay //enter a test object
+      let startDate = Date().startOfDayWithTimezone //enter a test object
       currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OFFDUTY, desciption: description ?? "off duty",for: currentDriver)
       return
     }

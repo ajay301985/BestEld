@@ -23,7 +23,7 @@ class DeviceListViewController: UIViewController {
     // Do any additional setup after loading the view.
   }
 
-  func setup(bldDeviceList: [String]) {
+  func setup(bldDeviceList: [EldScanObject]) {
     deviceList = bldDeviceList
   }
 
@@ -50,7 +50,7 @@ class DeviceListViewController: UIViewController {
 
   // MARK: Private
 
-  private var deviceList: [String] = []
+  private var deviceList: [EldScanObject] = []
 }
 
 extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -64,9 +64,9 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
       tableCell = UITableViewCell(style: .value2, reuseIdentifier: "devicelistidentifier")
     }
 
-    tableCell?.textLabel?.text = deviceList[indexPath.row]
+    tableCell?.textLabel?.text = deviceList[indexPath.row].deviceId
     tableCell?.textLabel?.textAlignment = .left
-    tableCell?.detailTextLabel?.text = "Connected"
+    tableCell?.detailTextLabel?.text = "Connect"
     tableCell?.detailTextLabel?.textAlignment = .right
     return tableCell ?? UITableViewCell()
   }

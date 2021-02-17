@@ -93,7 +93,7 @@ class ViewController: UIViewController {
       }
 
       }
-   
+     */
     guard let userEmail = userEmailTextField.text, let userPassword = userPasswordTextField.text else {
       showDefaultAlert(title: "Error", message: "Email and password should not be empty", handler: nil)
       return
@@ -101,12 +101,11 @@ class ViewController: UIViewController {
     if (!isValidEmail(userEmail) || userPassword.count < 5) {
       showDefaultAlert(title: "Error", message: "User email and password is not valid", handler: nil)
       return
-    } */
-    AuthenicationService.shared.loginUser(emailId: "userEmail", password: "userPassword") { [weak self] result in
+    }
+    AuthenicationService.shared.loginUser(emailId: userEmail, password: userPassword) { [weak self] result in
       guard let self = self else { return }
       switch result {
         case .success(let driverObj):
-          print("drive")
           guard let driver = driverObj, let dlNumber = driverObj?.dlNumber else {
             return
           }

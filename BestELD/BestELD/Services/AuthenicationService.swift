@@ -36,6 +36,7 @@ class AuthenicationService {
     dataTask = defaultSession.dataTask(with: request) { data, response, error in
       // 5
       if let error = error {
+        completion(.failure(error))
         print(error.localizedDescription)
       } else if let data = data,
         let response = response as? HTTPURLResponse,

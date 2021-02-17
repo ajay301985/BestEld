@@ -69,7 +69,7 @@ enum DutyStatus: String {
   }
 }
 
-class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class LogBookViewController: UIViewController {
   // MARK: Internal
 
   @IBOutlet var dutyStatusButton: UIButton!
@@ -78,6 +78,12 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   @IBOutlet var graphImageView: UIImageView!
   @IBOutlet var dutyStatusTextField: UILabel!
   @IBOutlet var deviceTextField: UILabel!
+
+  @IBOutlet var onDutyLabel: UILabel!
+  @IBOutlet var offDutyLabel: UILabel!
+  @IBOutlet var drivingLabel: UILabel!
+  @IBOutlet var sleeperLabel: UILabel!
+
 
 
   var selectedMenuItemIndex = 0
@@ -89,25 +95,13 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
   }
 
-  func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    1
-  }
-
-  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    eldList.count
-  }
-
-  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    eldList[row]
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
     currentStatus = .OFFDUTY
-    let currentDriver = viewModel.driverName
-    let currentDriver1 = viewModel.currentDay
-    print("driver name is = \(String(describing: currentDriver)) and driving on \(String(describing: currentDriver1))")
+//    let currentDriver = viewModel.driverName
+//    let currentDriver1 = viewModel.currentDay
+//    print("driver name is = \(String(describing: currentDriver)) and driving on \(String(describing: currentDriver1))")
 
     GraphGenerator.shared.setupImageView(imageView: graphImageView)
     performLoggedIn()
@@ -177,25 +171,47 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
   }
 
   @IBAction func scanEldDevices(_ sender: Any) {
+    if let connectedDevice = selectedEldDevice {
+      let alertController = UIAlertController(title: "Connected", message: "You are connected \(connectedDevice.deviceId ?? "")", preferredStyle: UIAlertController.Style.alert)
+      alertController.addAction(UIAlertAction(title: "Disconnect", style: .cancel, handler: {_ in
+        let isDisconnected = EldManager.sharedInstance()?.disconnectEld()
+        if (true == isDisconnected) {
+          self.deviceTextField.text = ""
+          self.dutyStatusButton.isSelected.toggle()
+        }
+      }))
+      DispatchQueue.main.async { [weak self] in
+        self?.present(alertController, animated: true, completion: nil)
+      }
+      return
+    }
+
     EldManager.sharedInstance()?.scan(forElds: { deviceIds, error in
-      print("get some devices")
-      if error != nil {
-        self.showDefaultAlert(title: "Error", message: "Unable to find list of Elds \(error.debugDescription)", handler: nil)
-        #warning("Debug Mode settings")
-        return
-        // self.eldList = ["ELD1","ELD2","ELD3","ELD4","ELD5","ELD6","ELD7","ELD8","ELD9"]
-      } else {
-        self.eldList = deviceIds as! [String]
+      if (deviceIds?.count ?? 0 > 0)
+      {
+        self.eldList = deviceIds as? [EldScanObject] ?? []
+      }
+      else {
+        if (error != nil) {
+          self.showDefaultAlert(title: "Error", message: "Unable to find list of Elds \(error.debugDescription)", handler: nil)
+          return
+        }else {
+          self.showDefaultAlert(title: "Alert", message: "No Device found", handler: nil)
+          return
+        }
       }
 
       let storyboard = UIStoryboard(name: "Main", bundle: nil)
       let listController = storyboard.instantiateViewController(withIdentifier: "DeviceListViewController") as! DeviceListViewController
       listController.setup(bldDeviceList: self.eldList)
       listController.didSelectDevice = { [weak self] index in
-        let currentDeviceId = self?.eldList[index]
+        let currentDeviceId = self?.eldList[index].deviceId
         EldManager.sharedInstance()?.connect(toEld: { dataRecord, type, _ in
+          self?.dutyStatusButton.isSelected.toggle()
+          self?.deviceTextField.text = currentDeviceId
+          self?.selectedEldDevice = self?.eldList[index]
           if type == .ELD_DATA_RECORD {
-            EldDeviceManager.shared.currentEldDataRecord = dataRecord as! EldDataRecord
+            EldDeviceManager.shared.currentEldDataRecord = dataRecord as? EldDataRecord
           }
         }, .ELD_DATA_RECORD, { _, _ in
           print("connection status change ")
@@ -217,6 +233,12 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         drivingController.currentDriver = self.viewModel.currentDriver
         drivingController.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(drivingController, animated: true)
+      }else {
+        guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+          return
+        }
+
+        self.reloadLogBookData(currentDateData)
       }
     }
     dutyStatusController.modalPresentationStyle = .overCurrentContext
@@ -260,16 +282,39 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
       dayDataArray += dayDataArr2
     }
     let sortedData = dayDataArray.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
-    let currentDateText = BLDAppUtility.textForDate(date: dayDate.dateValue)
+//    let currentDateText = BLDAppUtility.textForDate(date: dayDate.dateValue)
     var currentDayDataArray: [DayData] = []
     let dateMinus4Hours = Calendar.current.date(byAdding: .hour, value: 24, to: dayDate.dateValue) ?? Date()
 
+    var timeData:[Int:String] = [:]
+    var onDutyInt = 0.0
+    var offDutyInt = 0.0
+    var sleeperInt = 0.0
+    var drivingInt = 0.0
     for data in sortedData {
       if let startTimeObj = data.startTime, let endTimeObj = data.endTime {
         if (startTimeObj >= dayDate.dateValue && startTimeObj < dateMinus4Hours) || (endTimeObj >= dayDate.dateValue && endTimeObj < dateMinus4Hours) {
+          let status = DutyStatus(rawValue: data.dutyStatus ?? "OFFDUTY")
+          let timeDeff = endTimeObj.timeIntervalSince(startTimeObj)
+          switch status {
+            case .DRIVING:
+              drivingInt += timeDeff
+            case .ONDUTY, .YARD:
+              onDutyInt += timeDeff
+            case .OFFDUTY, .PERSONAL:
+              offDutyInt += timeDeff
+            case .SLEEPER:
+              sleeperInt += timeDeff
+            default:
+              print("te")
+          }
           currentDayDataArray.append(data)
         }
 
+        onDutyLabel.text = "\(onDutyInt.stringFromTimeInterval())"
+        offDutyLabel.text = "\(offDutyInt.stringFromTimeInterval())"
+        sleeperLabel.text = "\(sleeperInt.stringFromTimeInterval())"
+        drivingLabel.text = "\(drivingInt.stringFromTimeInterval())"
 /*        let currentStartTime = BLDAppUtility.timezoneDate(from: startTimeObj)
         let startTimeText = BLDAppUtility.textForDate(date: currentStartTime)
           let currentEndTime = BLDAppUtility.timezoneDate(from: endTimeObj)
@@ -281,6 +326,7 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         print("Invalid end time")
       }
     }
+
 
     return currentDayDataArray
   }
@@ -323,52 +369,15 @@ class LogBookViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     present(dayInfoController, animated: true, completion: nil)
   }
 
-  @IBAction func dutyButtonClicked(_ sender: Any) {
-    var status: DutyStatus = .OFFDUTY
-    let button = sender as! UIButton
-    switch button.tag {
-      case 0:
-        status = .OFFDUTY
-      case 1:
-        status = .ONDUTY
-      case 2:
-        status = .SLEEPER
-      case 3:
-        status = .PERSONAL
-      default:
-        status = .YARD
-    }
-    print("duty status")
-
-    showAlertToUser(
-      status: currentStatus,
-      continueAction: (title: nil, handler: { description, date in
-        DataHandeler.shared.dutyStatusChanged(status: status, description: description, timeToStart: date)
-        self.currentStatus = status
-        if status == .ONDUTY {
-          let drivingController = self.viewModel.drivingStoryboardInstance()
-          drivingController.currentDriver = self.viewModel.currentDriver
-          drivingController.modalPresentationStyle = .fullScreen
-          self.navigationController?.pushViewController(drivingController, animated: true)
-        } else {
-          guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
-            return
-          }
-
-          self.reloadLogBookData(currentDateData)
-        }
-      }),
-      cancelAction: (title: nil, handler: { _, _ in
-      }))
-  }
-
   @IBAction func dutyStatusButtonClicked(_ sender: Any) {}
 
   // MARK: Private
 
   private var viewModel: LogBookViewModel! // TODO: fix it
 
-  private var eldList: [String] = []
+  
+  private var eldList: [EldScanObject] = []
+  private var selectedEldDevice: EldScanObject?
 
   private func addButtonToNavationBar() {
 //    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Connect Eld", style: .done, target: self, action: #selector(connectEld))
@@ -438,5 +447,22 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
       case .SLEEPER:
         return UIColor(rgb: 0xfdac5b, alphaVal: 1.0)
     }
+  }
+}
+
+
+extension TimeInterval{
+
+  func stringFromTimeInterval() -> String {
+
+    let time = NSInteger(self)
+
+    let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
+    let seconds = time % 60
+    let minutes = (time / 60) % 60
+    let hours = (time / 3600)
+
+    return String(format: "%0.2d:%0.2d",hours,minutes)
+
   }
 }

@@ -7,5 +7,5 @@
 #import "EldDataRecord.h"
 #import "EldBroadcast.h"
 #import "EldLatestRecords.h"
-
+#import "EldScanObject.h"
 

@@ -662,7 +662,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ND" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duq-eE-fWl">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ON" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duq-eE-fWl">
                                         <rect key="frame" x="0.0" y="121.5" width="20" height="40.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -899,9 +899,13 @@
                     <connections>
                         <outlet property="dayButton" destination="kO3-Sx-NNB" id="gfg-Tf-PvP"/>
                         <outlet property="deviceTextField" destination="v32-bF-G0v" id="75e-xa-P32"/>
+                        <outlet property="drivingLabel" destination="iCx-8F-Ben" id="CA2-m8-jnR"/>
                         <outlet property="dutyStatusButton" destination="rNJ-br-6cf" id="M4J-3o-Ypa"/>
                         <outlet property="dutyStatusTextField" destination="4kK-pJ-UPt" id="Ng7-xw-5eI"/>
                         <outlet property="graphImageView" destination="aYv-2D-PeW" id="iMN-iX-ykB"/>
+                        <outlet property="offDutyLabel" destination="KFW-ZJ-7LV" id="4hQ-V6-DPh"/>
+                        <outlet property="onDutyLabel" destination="ENu-a7-gPC" id="Isi-xI-oqL"/>
+                        <outlet property="sleeperLabel" destination="4By-dT-ek5" id="YW5-OU-mfn"/>
                         <outlet property="tableView" destination="n1i-G3-g3b" id="X29-4A-YB5"/>
                     </connections>
                 </viewController>

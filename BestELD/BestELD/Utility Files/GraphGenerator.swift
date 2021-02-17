@@ -50,27 +50,27 @@ class GraphGenerator {
         assertionFailure("In valid object")
         return
       }
-      let startTime = BLDAppUtility.timezoneDate(from: startTimeObj)
+//      let startTime = BLDAppUtility.timezoneDate(from: startTimeObj)
 
       guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
         return
       }
 
-      let currentDateText = BLDAppUtility.textForDate(date: currentDateData.dateValue)
-      let currentStartText = BLDAppUtility.textForDate(date: startTime)
+//      let currentDateText = BLDAppUtility.textForDate(date: currentDateData.dateValue)
+//      let currentStartText = BLDAppUtility.textForDate(date: startTime)
 
       let endTimeObj = dayData.endTime ?? Date()
-      let endTime = BLDAppUtility.timezoneDate(from: endTimeObj)
-      let currentEndText = BLDAppUtility.textForDate(date: endTime)
+//      let endTime = BLDAppUtility.timezoneDate(from: endTimeObj)
+//      let currentEndText = BLDAppUtility.textForDate(date: endTime)
       var yPosition: CGFloat = 75
-      var xPositionInGraph = imageXPosition(for: startTimeObj)
+      let xPositionInGraph = imageXPosition(for: startTimeObj)
 
-      if (currentDateText != currentStartText) {
+/*      if (currentDateText != currentStartText) {
         let currentDateText1 = BLDAppUtility.textForDate(date: currentDateData.dateValue.dayBefore)
         if (currentDateText1 == currentStartText) {
           xPositionInGraph = 0 //start time is on previous day
         }
-      }
+      } */
 
       let currentColor: UIColor = .blue
       let currentDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
@@ -93,12 +93,7 @@ class GraphGenerator {
         drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .blue, inView: currentImageView)
       }
 
-      var xPositionInGraph1 = imageXPosition(for: endTimeObj)
-      //if (currentDateText != currentStartText) {
-//        if (currentDateText != currentEndText) {
-//          xPositionInGraph1 = imageSize?.width ?? 120
-//        }
-      //}
+      let xPositionInGraph1 = imageXPosition(for: endTimeObj)
       let endPoint = CGPoint(x: xPositionInGraph1, y: yPosition)
       lastPoint = endPoint
       drawLineFromPoint(start: startPoint, toPoint: endPoint, ofColor: currentColor, inView: currentImageView)
@@ -108,21 +103,18 @@ class GraphGenerator {
   func imageXPosition(for inDate: Date) -> CGFloat {
     var xPosition: CGFloat = 0.0
    // let timeObj = BLDAppUtility.hourMinuteValues(for: inDate)
-    let calendar = Calendar.current
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(identifier: UserPreferences.shared.currentTimeZone)!
     let timeObj=calendar.dateComponents([.hour,.minute,.second], from: inDate)
     print("\(timeObj.hour!):\(timeObj.minute!):\(timeObj.second!)")
 
     let hours = timeObj.hour ?? 0
     let minute = timeObj.minute ?? 1
     let frameWidthObj = (imageSize?.width ?? 120)
-    if (hours == 0) {
-      xPosition = 0
-    }else {
-      let position = (hours * 4) + (minute/15)
-      let frameWidth = (frameWidthObj/95)
-      let finalPosition = CGFloat(position) * frameWidth
-      xPosition = finalPosition
-    }
+    let position = (hours * 4) + (minute/15)
+    let frameWidth = (frameWidthObj/95)
+    let finalPosition = CGFloat(position) * frameWidth
+    xPosition = finalPosition
     return xPosition
   }
 

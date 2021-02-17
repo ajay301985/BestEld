@@ -23,6 +23,7 @@
 		AA57D46825B3941300269519 /* AppNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46725B3941300269519 /* AppNavigationViewController.swift */; };
 		AA6ABB4B25C534D200B3F26F /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6ABB4A25C534D200B3F26F /* DeviceListViewController.swift */; };
 		AA6ABB5225C5592C00B3F26F /* EldDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6ABB5125C5592C00B3F26F /* EldDeviceManager.swift */; };
+		AA6CEC6825DD852100A46689 /* DailyLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6CEC6725DD852100A46689 /* DailyLogTableViewCell.swift */; };
 		AA7DAAAE25B754D1001C5F6A /* ViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DAAAD25B754D1001C5F6A /* ViewViewModel.swift */; };
 		AA7DAAB125B7587D001C5F6A /* LogBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DAAB025B7587D001C5F6A /* LogBookViewController.swift */; };
 		AA7DAAB425B759D2001C5F6A /* LogBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DAAB325B759D2001C5F6A /* LogBookViewModel.swift */; };
@@ -100,6 +101,7 @@
 		AA57D46725B3941300269519 /* AppNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationViewController.swift; sourceTree = "<group>"; };
 		AA6ABB4A25C534D200B3F26F /* DeviceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
 		AA6ABB5125C5592C00B3F26F /* EldDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EldDeviceManager.swift; sourceTree = "<group>"; };
+		AA6CEC6725DD852100A46689 /* DailyLogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogTableViewCell.swift; sourceTree = "<group>"; };
 		AA7DAAAD25B754D1001C5F6A /* ViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewViewModel.swift; sourceTree = "<group>"; };
 		AA7DAAB025B7587D001C5F6A /* LogBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBookViewController.swift; sourceTree = "<group>"; };
 		AA7DAAB325B759D2001C5F6A /* LogBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBookViewModel.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				AABD5EBE25BC1FF8004A52D8 /* DayDataTableViewCell.swift */,
+				AA6CEC6725DD852100A46689 /* DailyLogTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				AACCEB1025C0A8EB00F9AB0A /* EldLibManager.m in Sources */,
 				AABEDAB825B387B0007C9345 /* UserPreferencesViewController.swift in Sources */,
 				AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */,
+				AA6CEC6825DD852100A46689 /* DailyLogTableViewCell.swift in Sources */,
 				AA57D46125B38DD000269519 /* StringExtension.swift in Sources */,
 				AA7DAAB125B7587D001C5F6A /* LogBookViewController.swift in Sources */,
 				AA0A9F1925CEEF580050FF4E /* UserPreferences.swift in Sources */,

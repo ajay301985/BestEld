@@ -19,16 +19,16 @@ class AuthenicationService {
   func loginUser(emailId: String, password: String, completion: @escaping loginResult) {
     dataTask?.cancel()
 
-    let emailID1 = "pankajsunal66@gmail.com"
-    let password1 = "Pankaj@123"
+//    let emailID1 = "pankajsunal66@gmail.com"
+//    let password1 = "Pankaj@123"
 
     let url = URL(string: "http://52.53.153.62:8080/api/driver/login")!
     var request = URLRequest(url: url)
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.httpMethod = "POST"
     let parameters: [String: Any] = [
-      "email": emailID1,
-      "password": password1
+      "email": emailId,
+      "password": password
     ]
     let data = try? JSONSerialization.data(withJSONObject: parameters, options: [])
     request.httpBody = data

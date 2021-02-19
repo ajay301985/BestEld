@@ -16,6 +16,7 @@ class DailyLogTableViewCell: UITableViewCell {
   override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    //valueTextField.applyBottomBorder()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

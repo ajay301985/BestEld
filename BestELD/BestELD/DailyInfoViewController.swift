@@ -19,12 +19,19 @@ class DailyInfoViewController: UIViewController {
     var hadExtraInfo: Bool
   }
 
+  @IBOutlet weak var preTripButton: UIButton!
+  @IBOutlet weak var postTripButton: UIButton!
   @IBOutlet weak var inspectionButton: UIButton!
   @IBOutlet weak var dailylogButton: UIButton!
   @IBOutlet weak var inspectionView: UIView!
   @IBOutlet weak var logInfoTableView: UITableView!
+  @IBOutlet weak var notesTextField: UITextField!
+  @IBOutlet weak var locationTextField: UITextField!
 
   var dailyLogDataArr: [DailyLogInfo] = []
+  @IBOutlet weak var postTripButtonClicked: UIButton!
+  @IBAction func preTripButtonClicked(_ sender: Any) {
+  }
   @IBAction func confirmClicked(_ sender: Any) {
   }
 
@@ -42,8 +49,13 @@ class DailyInfoViewController: UIViewController {
 
   override func viewDidLoad() {
     inspectionView.isHidden = true
+    notesTextField.applyBottomBorder()
+    locationTextField.applyBottomBorder()
     generateDataModels()
+    inspectionButton.applyLeftBorder()
     logInfoTableView.reloadData()
+    notesTextField.delegate = self
+    locationTextField.delegate = self
   }
 
 
@@ -96,6 +108,7 @@ extension DailyInfoViewController: UITableViewDelegate, UITableViewDataSource {
     tableCell.titleLabel.textColor = currenLog.isViolation ?? false ? UIColor.red : UIColor.black
     tableCell.infoLabel.text = currenLog.extraInfo
     tableCell.valueTextField.text = currenLog.logValue
+    tableCell.valueTextField.delegate = self
     tableCell.valueTextField.isEnabled = currenLog.isEditable
     return tableCell
   }
@@ -105,3 +118,4 @@ extension DailyInfoViewController: UITableViewDelegate, UITableViewDataSource {
   }
 
 }
+

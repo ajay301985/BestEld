@@ -119,22 +119,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "61D2F93B-0A9D-4F7D-8C75-A07FED2D5531"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BestELD/DataHandeler.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "dutyStatusChanged(status:description:timeToStart:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4734BAF0-5126-4219-BBD7-8E4DD3313121"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -321,86 +305,6 @@
             startingLineNumber = "42"
             endingLineNumber = "42"
             landmarkName = "loginUser(emailId:password:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6705368D-F266-440E-A732-194C9C105012"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BestELD/DataHandeler.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "dutyStatusChanged(status:description:timeToStart:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "92B4F587-ECBB-4029-B6FF-1346533A2A9A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BestELD/DataHandeler.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "dutyStatusChanged(status:description:timeToStart:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "92B4F587-ECBB-4029-B6FF-1346533A2A9A - 948b87d7d9df1763"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BestELD.DataHandeler.dutyStatusChanged(status: BestELD.DutyStatus, description: Swift.Optional&lt;Swift.String&gt;, timeToStart: Swift.Optional&lt;Foundation.Date&gt;) -&gt; ()"
-                  moduleName = "BestELD"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ajayrawat/Documents/GitHub/BestEld/BestELD/BestELD/DataHandeler.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "101"
-                  endingLineNumber = "101"
-                  offsetFromSymbolStart = "2114">
-               </Location>
-               <Location
-                  uuid = "92B4F587-ECBB-4029-B6FF-1346533A2A9A - 948b87d7d9df1763"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BestELD.DataHandeler.dutyStatusChanged(status: BestELD.DutyStatus, description: Swift.Optional&lt;Swift.String&gt;, timeToStart: Swift.Optional&lt;Foundation.Date&gt;) -&gt; ()"
-                  moduleName = "BestELD"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ajayrawat/Documents/GitHub/BestEld/BestELD/BestELD/DataHandeler.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "101"
-                  endingLineNumber = "101"
-                  offsetFromSymbolStart = "2933">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DEFB9519-5B65-4DEA-B9BA-9A48B4F6A6DE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BestELD/DataHandeler.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "performOnDutyStatusChanged(description:startTime:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

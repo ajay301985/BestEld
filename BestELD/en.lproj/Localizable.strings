@@ -25,3 +25,5 @@ notes = "Notes";
 location = "Location";
 dailylog = "DAILY LOG";
 inspection = "INSPECTION";
+pretrip = "Pre-Trip";
+posttrip = "Post-Trip";

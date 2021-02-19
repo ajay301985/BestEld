@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     navigationController?.navigationBar.isHidden = true
 
     addItemSQS()
+    userEmailTextField.applyBottomBorder()
+    userPasswordTextField.applyBottomBorder()
     //configureAmplify()
     // Do any additional setup after loading the view.
   }

@@ -147,3 +147,25 @@ extension Date {
     return [NSDate dateWithTimeInterval: seconds sinceDate: self];
   } */
 }
+
+
+extension UITextField {
+
+  func applyBottomBorder() {
+    let bottomLine = CALayer()
+    bottomLine.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
+    bottomLine.backgroundColor = UIColor.lightGray.cgColor
+    borderStyle = .none
+    layer.addSublayer(bottomLine)
+  }
+}
+
+extension UIButton {
+
+  func applyLeftBorder() {
+    let bottomLine = CALayer()
+    bottomLine.frame = CGRect(x: 0, y: 0, width: 1, height: self.frame.size.height)
+    bottomLine.backgroundColor = UIColor.lightGray.cgColor
+    layer.addSublayer(bottomLine)
+  }
+}

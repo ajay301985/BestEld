@@ -38,6 +38,13 @@ class DutyStatusViewController: UIViewController {
         viewBottomConstraint.constant = 0
         dateHeightConstraint.constant = 0
         dateContainerView.isHidden = true
+
+    noteTextField.applyBottomBorder()
+    locationTextField.applyBottomBorder()
+    startDateTextField.applyBottomBorder()
+    endDateTextField.applyBottomBorder()
+
+
         // Do any additional setup after loading the view.
     locationTextField.isEnabled = false
     locationTextField.text = BldLocationManager.shared.locationText

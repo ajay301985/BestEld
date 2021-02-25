@@ -1075,13 +1075,17 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JYK-Ev-cwF">
-                                <rect key="frame" x="16" y="375" width="343" height="94"/>
+                                <rect key="frame" x="16" y="439" width="343" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="K80-uw-hkw"/>
-                                    <constraint firstAttribute="height" constant="94" id="Vmr-XN-Hu1"/>
+                                    <constraint firstAttribute="height" constant="30" id="Vmr-XN-Hu1"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="motionBar" translatesAutoresizingMaskIntoConstraints="NO" id="6cr-9b-DTj">
+                                <rect key="frame" x="67" y="282" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speedindicator" translatesAutoresizingMaskIntoConstraints="NO" id="ePe-SG-Sff">
                                 <rect key="frame" x="29" y="112" width="317" height="238"/>
                                 <constraints>
@@ -1304,6 +1308,9 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="l10nTitle" value="posttrip"/>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="postTripButtonClicked:" destination="mgC-Yu-mAi" eventType="touchUpInside" id="TY4-Ja-Jhh"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUB-fm-SiG">
                                                 <rect key="frame" x="8" y="74" width="327" height="21"/>
@@ -1462,7 +1469,6 @@
                         <outlet property="logInfoTableView" destination="buq-Mh-YX6" id="geA-9a-aPo"/>
                         <outlet property="notesTextField" destination="C6o-6d-4qx" id="eaA-B2-y3r"/>
                         <outlet property="postTripButton" destination="3hC-4b-8rC" id="UYT-RA-mZI"/>
-                        <outlet property="postTripButtonClicked" destination="3hC-4b-8rC" id="mVi-rz-Lak"/>
                         <outlet property="preTripButton" destination="0xh-Qa-iS0" id="XeA-1i-nn0"/>
                     </connections>
                 </viewController>
@@ -1715,6 +1721,61 @@
             </objects>
             <point key="canvasLocation" x="2549.5999999999999" y="841.52923538230891"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="RCE-fU-VRD">
+            <objects>
+                <viewController id="ZHX-cb-PZB" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QlR-zL-0Dv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYG-my-Mm5">
+                                <rect key="frame" x="0.0" y="203" width="375" height="464"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UPW-1G-UJA">
+                                        <rect key="frame" x="0.0" y="27" width="375" height="437"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="92X-Gz-7LZ">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="UBU-Ji-YI5">
+                                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KTm-8x-WhJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </collectionViewCellContentView>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="UPW-1G-UJA" secondAttribute="trailing" id="Siw-ta-rgJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="UPW-1G-UJA" secondAttribute="bottom" id="hsI-mr-WaX"/>
+                                    <constraint firstItem="UPW-1G-UJA" firstAttribute="top" secondItem="GYG-my-Mm5" secondAttribute="top" constant="27" id="o6Z-ZU-PW4"/>
+                                    <constraint firstItem="UPW-1G-UJA" firstAttribute="leading" secondItem="GYG-my-Mm5" secondAttribute="leading" id="sYI-2d-aG2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cUJ-fK-3zY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="GYG-my-Mm5" firstAttribute="bottom" secondItem="cUJ-fK-3zY" secondAttribute="bottom" id="0ik-Bv-Nfv"/>
+                            <constraint firstItem="GYG-my-Mm5" firstAttribute="trailing" secondItem="cUJ-fK-3zY" secondAttribute="trailing" id="Rfl-7i-fj6"/>
+                            <constraint firstItem="GYG-my-Mm5" firstAttribute="leading" secondItem="cUJ-fK-3zY" secondAttribute="leading" id="g4Z-hL-WMu"/>
+                            <constraint firstItem="GYG-my-Mm5" firstAttribute="top" secondItem="cUJ-fK-3zY" secondAttribute="top" constant="203" id="td4-wJ-ySx"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vT3-IH-wOM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3552.8000000000002" y="774.96251874062978"/>
+        </scene>
         <!--Device List View Controller-->
         <scene sceneID="fx5-qs-8hz">
             <objects>
@@ -1861,6 +1922,7 @@
         <image name="inspection_unselected" width="27.5" height="29.5"/>
         <image name="list" width="32" height="14"/>
         <image name="location" width="38" height="38"/>
+        <image name="motionBar" width="173" height="130"/>
         <image name="ondutystatuscircle" width="52" height="52"/>
         <image name="plus" width="24" height="24"/>
         <image name="sleeperdutystatuscircle" width="52" height="52"/>

@@ -25,7 +25,8 @@ class LogBookViewModel {
   }
 
   var currentDay: Date? {
-    return dayMetaDataArr[0].day
+    let logDate = Date(timeIntervalSince1970: dayMetaDataArr[0].day)
+    return logDate
   }
   
   var shouldSetDefaultOffDuty: Bool {

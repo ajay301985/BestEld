@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H524" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DayData" representedClassName="DayData" syncable="YES" codeGenerationType="class">
         <attribute name="day" optional="YES" attributeType="String"/>
         <attribute name="dlNumber" attributeType="String"/>
@@ -22,7 +22,7 @@
         <relationship name="ofDayMetaData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="dayData" inverseEntity="DayMetaData"/>
     </entity>
     <entity name="DayMetaData" representedClassName="DayMetaData" syncable="YES" codeGenerationType="class">
-        <attribute name="day" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="day" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="dayText" optional="YES" attributeType="String"/>
         <attribute name="dlNumber" attributeType="String"/>
         <relationship name="dayData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DayData" inverseName="ofDayMetaData" inverseEntity="DayData"/>
@@ -55,11 +55,12 @@
         <attribute name="status" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Inspection" representedClassName="Inspection" syncable="YES" codeGenerationType="class">
+        <attribute name="dlNumber" optional="YES" attributeType="String"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="ofDayData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayMetaData" inverseName="inspection" inverseEntity="DayMetaData"/>
     </entity>
     <elements>
@@ -67,6 +68,6 @@
         <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="118"/>
         <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
         <element name="Eld" positionX="-447.0625" positionY="12.578125" width="128" height="118"/>
-        <element name="Inspection" positionX="-159.12109375" positionY="-350.734375" width="128" height="133"/>
+        <element name="Inspection" positionX="-159.12109375" positionY="-350.734375" width="128" height="148"/>
     </elements>
 </model>

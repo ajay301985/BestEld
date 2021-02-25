@@ -106,7 +106,7 @@ class LogBookViewController: UIViewController {
     GraphGenerator.shared.setupImageView(imageView: graphImageView)
     performLoggedIn()
 
-    AuthenicationService.shared.fetchUserLogbookData(user: "")
+//    AuthenicationService.shared.fetchUserLogbookData(user: "")
 
     EldManager.sharedInstance()?.registerBleStateCallback( { error in
       if let errorObj = error as NSError? {
@@ -129,8 +129,16 @@ class LogBookViewController: UIViewController {
 
     let currentDateData = BLDAppUtility.generateDataSource(dateFrom: Date(), numOfDays: 8)[0] //get todays data
     UserPreferences.shared.currentSelectedDayData = currentDateData
-    if DataHandeler.shared.currentDayData == nil {
+
+    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
+    if dayMetaDataObj == nil {
         DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
+    }else {
+      if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
+        let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+        let latestDayData = sortedData.last
+        DataHandeler.shared.currentDayData = latestDayData
+      }
     }
   }
 
@@ -267,17 +275,17 @@ class LogBookViewController: UIViewController {
 
   func generateData(for dayDate: DateData) -> [DayData] {
     var dayDataArray: [DayData] = []
-    let dayMetaDataObj = DataHandeler.shared.userDayMetaData(dayStart: dayDate.dateValue, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateValue.startOfDay.timeIntervalSince1970, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr
     }
 
-    let dayMetaDataObj1 = DataHandeler.shared.userDayMetaData(dayStart: dayDate.dateValue.dayBefore, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let dayMetaDataObj1 = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateValue.dayBefore.startOfDay.timeIntervalSince1970, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr1 = dayMetaDataObj1?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr1
     }
 
-    let dayMetaDataObj2 = DataHandeler.shared.userDayMetaData(dayStart: dayDate.dateValue.dayAfter, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let dayMetaDataObj2 = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateValue.dayAfter.startOfDay.timeIntervalSince1970, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr2 = dayMetaDataObj2?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr2
     }

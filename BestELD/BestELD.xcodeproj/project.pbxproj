@@ -17,6 +17,7 @@
 		AA16AABB25BD5DAE00A6D9CD /* GraphGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */; };
 		AA27E8F825CC54F1009B449F /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */; };
 		AA27E8FC25CC80C9009B449F /* AuthenicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27E8FB25CC80C9009B449F /* AuthenicationService.swift */; };
+		AA453C4E25E05B0E00F2DAF3 /* DailyLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA453C4D25E05B0E00F2DAF3 /* DailyLogRepository.swift */; };
 		AA4C17EF25B8109D00215330 /* BLDAppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */; };
 		AA57D46125B38DD000269519 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46025B38DD000269519 /* StringExtension.swift */; };
 		AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D46425B38F6B00269519 /* AppUtility.swift */; };
@@ -95,6 +96,7 @@
 		AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphGenerator.swift; sourceTree = "<group>"; };
 		AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		AA27E8FB25CC80C9009B449F /* AuthenicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenicationService.swift; sourceTree = "<group>"; };
+		AA453C4D25E05B0E00F2DAF3 /* DailyLogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogRepository.swift; sourceTree = "<group>"; };
 		AA4C17EE25B8109D00215330 /* BLDAppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLDAppUtility.swift; sourceTree = "<group>"; };
 		AA57D46025B38DD000269519 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		AA57D46425B38F6B00269519 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 		AAB39DB425B4DD7300EECA67 /* API Repository */ = {
 			isa = PBXGroup;
 			children = (
+				AA453C4D25E05B0E00F2DAF3 /* DailyLogRepository.swift */,
 				AAB39DB525B4DE6500EECA67 /* DriverApiRepository.swift */,
 			);
 			path = "API Repository";
@@ -605,6 +608,7 @@
 				AABD5EB525BB4D37004A52D8 /* DataHandeler.swift in Sources */,
 				AAB39DB625B4DE6500EECA67 /* DriverApiRepository.swift in Sources */,
 				AACCEB6225C0B21B00F9AB0A /* AFSecurityPolicy.m in Sources */,
+				AA453C4E25E05B0E00F2DAF3 /* DailyLogRepository.swift in Sources */,
 				AA57D46825B3941300269519 /* AppNavigationViewController.swift in Sources */,
 				AAB2CAFF25C5B97E00057DE8 /* DailyLogViewController.swift in Sources */,
 				AACCEB5D25C0B21B00F9AB0A /* AFURLResponseSerialization.m in Sources */,

@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
+
+enum TripStatus: String {
+  case PRETRIP
+  case POSTTRIP
+}
+
+
 class DailyInfoViewController: UIViewController {
 
   struct DailyLogInfo {
@@ -28,11 +35,21 @@ class DailyInfoViewController: UIViewController {
   @IBOutlet weak var notesTextField: UITextField!
   @IBOutlet weak var locationTextField: UITextField!
 
+  var currentTripStatus: TripStatus = .PRETRIP
+
   var dailyLogDataArr: [DailyLogInfo] = []
-  @IBOutlet weak var postTripButtonClicked: UIButton!
-  @IBAction func preTripButtonClicked(_ sender: Any) {
+  @IBAction func postTripButtonClicked(_ sender: Any) {
+    currentTripStatus = .POSTTRIP
   }
+
+  @IBAction func preTripButtonClicked(_ sender: Any) {
+    currentTripStatus = .PRETRIP
+  }
+
   @IBAction func confirmClicked(_ sender: Any) {
+    if (inspectionView.isHidden == false) {
+      let dayTripData = DataHandeler.shared.saveTripData(status: currentTripStatus , notes: notesTextField.text, location: "", inDayData: Date())
+    }
   }
 
   @IBAction func cancelClicked(_ sender: Any) {
@@ -41,6 +58,8 @@ class DailyInfoViewController: UIViewController {
 
   @IBAction func inspectionClicked(_ sender: Any) {
     inspectionView.isHidden = false
+    locationTextField.isEnabled = false
+    locationTextField.text = BldLocationManager.shared.locationText
   }
 
   @IBAction func dailylogClicked(_ sender: Any) {

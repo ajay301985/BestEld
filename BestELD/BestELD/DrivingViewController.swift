@@ -78,7 +78,7 @@ class DrivingViewController: UIViewController {
         assertionFailure("Invalid driver object")
         return
       }
-      let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: driverObj.dlNumber ?? testDriverDLNumber)
+      let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driverObj.dlNumber ?? testDriverDLNumber)
       guard let metaData = driverMetaData, (metaData.dayData?.count ?? 0 > 0) else {
         assertionFailure("something wrong with database")
         return

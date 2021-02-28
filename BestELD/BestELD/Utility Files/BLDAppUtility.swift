@@ -16,6 +16,11 @@ class BLDAppUtility {
   static let timeZonedateTimeFormatter = DateFormatter()
 
 
+  static func startOfTheDayTimeInterval(for inDate: Date) -> TimeInterval {
+    return inDate.startOfDay.timeIntervalSince1970
+  }
+
+
   static func timezoneDate(from dayDate: Date) -> Date {
 
 
@@ -222,15 +227,16 @@ class BLDAppUtility {
     for index in 0..<numOfDays {
       //if currentDate
       let dateObj = currentDate.startOfDayWithTimezone
+      let currentTimezoneTimeInterval = dateObj.timeIntervalSince1970
+      let timezoneUTC = currentDate.startOfDay.timeIntervalSince1970
       var dateString = BLDAppUtility.textForDate(date: dateObj)
-        //dateFrom.startOfDayWithTimezone
-      //timezoneTextForDate(date: currentDate)
       if index == 0 {
         dateString = "Today"
       }else if (index == 1) {
         dateString = "Yesterday"
       }
-      let dayData = DateData(displayDate: dateString, actualDate: dateString, dateValue: dateObj)
+      let dayData = DateData(displayDate: dateString, dateCurrent: currentTimezoneTimeInterval, dateUTC: timezoneUTC)
+        //DateData(displayDate: dateString, actualDate: dateString, dateValue: dateObj)
       days.insert(dayData, at: days.count)
       currentDate = currentDate.dayBefore
     }

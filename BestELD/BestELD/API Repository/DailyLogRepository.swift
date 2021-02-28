@@ -19,9 +19,10 @@ class DailyLogRepository {
       return
     }
 
+    var logDayDataArray: Array<[String:Any]> = []
     var logDataDict:[String:Any] = [:]
     for _ in 1...numberOfDays {
-      let metaData = DataHandeler.shared.dayMetaData(dayStart: currentDate.startOfDay.timeIntervalSince1970, driverDL: driverLicenseNumber)
+      let metaData = DataHandeler.shared.dayMetaData(dayStart: TimeInterval(BLDAppUtility.startOfTheDayTimeInterval(for: currentDate)) , driverDL: driverLicenseNumber)
 
       if let logDayData = metaData?.dayData {
         var logDayDataArray: Array<[String:Any]> = []
@@ -59,11 +60,20 @@ class DailyLogRepository {
         }
         logDataDict["inspection"] = inspectionArray
       }
-      logDataDict["date"] = Int(currentDate.timeIntervalSince1970)
+      logDataDict["date"] = metaData?.day ??  BLDAppUtility.startOfTheDayTimeInterval(for: currentDate)
+      if metaData?.id != nil {
+        logDataDict["id"] = metaData?.id
+      }
+
+      if metaData?.driverId != nil {
+        logDataDict["driverId"] = metaData?.driverId
+      }
+
+      logDayDataArray.append(logDataDict)
       currentDate = currentDate.dayBefore
     }
 
-    AuthenicationService.shared.saveLogDataToServer(dataDict: logDataDict) { [weak self] result in
+    AuthenicationService.shared.saveLogDataToServer(dataDictArray: logDayDataArray) { [weak self] result in
       print("got some data")
     }
 

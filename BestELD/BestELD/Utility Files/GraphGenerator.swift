@@ -45,6 +45,7 @@ class GraphGenerator {
     }
 
     var lastPoint: CGPoint = CGPoint.zero
+    var currentIndex = 0
     for dayData in dayDataArr {
       guard let startTimeObj = dayData.startTime else {
         assertionFailure("In valid object")
@@ -87,16 +88,24 @@ class GraphGenerator {
           print("ON Duty")
       }
 
-      let startPoint = CGPoint(x: xPositionInGraph, y: yPosition)
+      var startPoint = CGPoint(x: xPositionInGraph, y: yPosition)
 
       if (!lastPoint.equalTo(CGPoint.zero)) {
         drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .blue, inView: currentImageView)
       }
 
       let xPositionInGraph1 = imageXPosition(for: endTimeObj)
-      let endPoint = CGPoint(x: xPositionInGraph1, y: yPosition)
+      var endPoint = CGPoint(x: xPositionInGraph1, y: yPosition)
+      if endPoint.x < startPoint.x {
+        if currentIndex == 0 {
+          startPoint.x = 0
+        } else {
+          endPoint.x = imageSize?.width ?? 120
+        }
+      }
       lastPoint = endPoint
       drawLineFromPoint(start: startPoint, toPoint: endPoint, ofColor: currentColor, inView: currentImageView)
+      currentIndex += 1
     }
   }
 

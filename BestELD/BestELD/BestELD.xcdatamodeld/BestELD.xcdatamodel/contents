@@ -23,8 +23,9 @@
     </entity>
     <entity name="DayMetaData" representedClassName="DayMetaData" syncable="YES" codeGenerationType="class">
         <attribute name="day" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="dayText" optional="YES" attributeType="String"/>
         <attribute name="dlNumber" attributeType="String"/>
+        <attribute name="driverId" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <relationship name="dayData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DayData" inverseName="ofDayMetaData" inverseEntity="DayData"/>
         <relationship name="inspection" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Inspection" inverseName="ofDayData" inverseEntity="Inspection"/>
     </entity>
@@ -65,7 +66,7 @@
     </entity>
     <elements>
         <element name="DayData" positionX="-54" positionY="-18" width="128" height="28"/>
-        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="118"/>
+        <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="133"/>
         <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
         <element name="Eld" positionX="-447.0625" positionY="12.578125" width="128" height="118"/>
         <element name="Inspection" positionX="-159.12109375" positionY="-350.734375" width="128" height="148"/>

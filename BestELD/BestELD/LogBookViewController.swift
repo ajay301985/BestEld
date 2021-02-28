@@ -108,6 +108,7 @@ class LogBookViewController: UIViewController {
 
 //    AuthenicationService.shared.fetchUserLogbookData(user: "")
 
+    /*
     EldManager.sharedInstance()?.registerBleStateCallback( { error in
       if let errorObj = error as NSError? {
         switch errorObj.code {
@@ -125,12 +126,12 @@ class LogBookViewController: UIViewController {
             print("test")
         }
       }
-      })
+      }) */
 
     let currentDateData = BLDAppUtility.generateDataSource(dateFrom: Date(), numOfDays: 8)[0] //get todays data
     UserPreferences.shared.currentSelectedDayData = currentDateData
 
-    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
+    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
     if dayMetaDataObj == nil {
         DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
     }else {
@@ -138,7 +139,16 @@ class LogBookViewController: UIViewController {
         let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
         let latestDayData = sortedData.last
         DataHandeler.shared.currentDayData = latestDayData
+      } else {
+        DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
+        let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
+        if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
+          let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+          let latestDayData = sortedData.last
+          DataHandeler.shared.currentDayData = latestDayData
+        }
       }
+
     }
   }
 
@@ -194,7 +204,13 @@ class LogBookViewController: UIViewController {
       return
     }
 
+
+    showAlertView()
     EldManager.sharedInstance()?.scan(forElds: { deviceIds, error in
+      DispatchQueue.main.async {
+        self.view.viewWithTag(997)?.removeFromSuperview()
+      }
+
       if (deviceIds?.count ?? 0 > 0)
       {
         self.eldList = deviceIds as? [EldScanObject] ?? []
@@ -228,6 +244,33 @@ class LogBookViewController: UIViewController {
       listController.modalPresentationStyle = .overCurrentContext
       self.present(listController, animated: true, completion: nil)
     })
+  }
+
+
+  private func showAlertView() {
+    let parentView = UIView(frame: view.frame)
+    parentView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+    parentView.tag = 997
+    parentView.alpha = 1.0
+    let childView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+    childView.backgroundColor = .white
+    let headerLabel = UILabel(frame: CGRect(x: 20, y: 85, width: 280, height: 20))
+    headerLabel.text = "Searching for the devices"
+    headerLabel.font = UIFont.boldSystemFont(ofSize: 18)
+    headerLabel.baselineAdjustment = .alignCenters
+    headerLabel.textAlignment = .center
+    childView.addSubview(headerLabel)
+    let descriptionLabel = UILabel(frame: CGRect(x: 20, y: 115, width: 280, height: 20))
+    descriptionLabel.baselineAdjustment = .alignCenters
+    descriptionLabel.text = "Please wait ...."
+    descriptionLabel.textColor = .lightGray
+    descriptionLabel.textAlignment = .center
+    descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+    childView.addSubview(descriptionLabel)
+    parentView.addSubview(childView)
+    childView.layer.cornerRadius = 20
+    childView.center = parentView.center
+    view.addSubview(parentView)
   }
 
   @IBAction func dutyModeChanged(_ sender: Any) {
@@ -275,25 +318,30 @@ class LogBookViewController: UIViewController {
 
   func generateData(for dayDate: DateData) -> [DayData] {
     var dayDataArray: [DayData] = []
-    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateValue.startOfDay.timeIntervalSince1970, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+
+
+    let dayTimeInterval = TimeInterval(60 * 60 * 24)
+    let utcTimeIntervalNextDay = (dayDate.dateUTC - dayTimeInterval)
+
+    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateUTC, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr
     }
 
-    let dayMetaDataObj1 = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateValue.dayBefore.startOfDay.timeIntervalSince1970, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let dayMetaDataObj1 = DataHandeler.shared.dayMetaData(dayStart: utcTimeIntervalNextDay, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr1 = dayMetaDataObj1?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr1
     }
 
-    let dayMetaDataObj2 = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateValue.dayAfter.startOfDay.timeIntervalSince1970, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+/*    let dayMetaDataObj2 = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateUTC, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
     if let dayDataArr2 = dayMetaDataObj2?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr2
-    }
+    } */
     let sortedData = dayDataArray.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
 //    let currentDateText = BLDAppUtility.textForDate(date: dayDate.dateValue)
     var currentDayDataArray: [DayData] = []
-    let dateMinus4Hours = Calendar.current.date(byAdding: .hour, value: 24, to: dayDate.dateValue) ?? Date()
-
+    let currentTimezoneTimeIntervalStart = dayDate.dateCurrent//Calendar.current.date(byAdding: .hour, value: 24, to: dayDate.dateValue) ?? Date()
+    let currentTimezoneTimeIntervalEnd = (dayDate.dateCurrent + dayTimeInterval)
     var timeData:[Int:String] = [:]
     var onDutyInt = 0.0
     var offDutyInt = 0.0
@@ -301,7 +349,9 @@ class LogBookViewController: UIViewController {
     var drivingInt = 0.0
     for data in sortedData {
       if let startTimeObj = data.startTime, let endTimeObj = data.endTime {
-        if (startTimeObj >= dayDate.dateValue && startTimeObj < dateMinus4Hours) || (endTimeObj >= dayDate.dateValue && endTimeObj < dateMinus4Hours) {
+        let startTimeTimeInterval = startTimeObj.timeIntervalSince1970
+        let endTimeTimeInterval = endTimeObj.timeIntervalSince1970
+        if (startTimeTimeInterval >= currentTimezoneTimeIntervalStart && startTimeTimeInterval < currentTimezoneTimeIntervalEnd) || (endTimeTimeInterval >= currentTimezoneTimeIntervalStart && endTimeTimeInterval < currentTimezoneTimeIntervalEnd) {
           let status = DutyStatus(rawValue: data.dutyStatus ?? "OFFDUTY")
           let timeDeff = endTimeObj.timeIntervalSince(startTimeObj)
           switch status {
@@ -420,7 +470,13 @@ extension LogBookViewController: UITableViewDelegate, UITableViewDataSource {
       endTime = BLDAppUtility.timeString(from: eventDateEnd!)
     }
 
-    tableCell.timeLabel.text = "\(currentDateString) - \(endTime)"
+    if DEBUGMODE {
+      tableCell.timeLabel.text = "\(currentDateString) - \(endTime)"
+    } else {
+      tableCell.timeLabel.text = currentDateString
+    }
+
+
     return tableCell
   }
 

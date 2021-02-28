@@ -39,7 +39,7 @@ class DataHandeler {
     dayMetaDataObj.setValue(start.description, forKey: "startTimeString")
     let userLocation = BldLocationManager.shared.locationText
     dayMetaDataObj.setValue(userLocation, forKey: "startLocation")
-    let driverMetaData = dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: driver.dlNumber ?? testDriverDLNumber)
+    let driverMetaData = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driver.dlNumber ?? testDriverDLNumber)
     if driverMetaData?.dayData?.count ?? 0 < 1 {
       driverMetaData?.setValue(NSSet(object: dayMetaDataObj), forKey: "DayData")
     } else {
@@ -84,26 +84,14 @@ extension DataHandeler {
         performDutyStatusChanged(description: description, startTime: timeToStart, dutyStatus: .PERSONAL)
     }
 
-    let dayMetaDataObj = dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: currentDriver.dlNumber ?? testDriverDLNumber, createOnDemand: true)
+    let dayMetaDataObj = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? testDriverDLNumber, createOnDemand: true)
     let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
     let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
     GraphGenerator.shared.generatePath(dayDataArr: sortedData)
   }
 
-  private func performOnDutyStatusChanged(description: String?, startTime: Date? = nil) {
-    guard let dayData = currentDayData else {
-      print("invalid day data")
-      return
-    }
-
-    let currentTime = Date()
-    dayData.endTime = startTime ?? currentTime
-    let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: .ONDUTY, desciption: description ?? "on Duty Now", for: currentDriver)
-    currentDayData = currentDayData1
-  }
-
   private func performOffDutyStatusChanged(description: String?, startTime: Date? = nil) {
-    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: currentDriver.dlNumber ?? testDriverDLNumber, createOnDemand: true)
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? testDriverDLNumber, createOnDemand: true)
     guard let metaData = driverMetaData, metaData.dayData?.count ?? 0 > 0 else {
       let startDate = Date().startOfDayWithTimezone // enter a test object
       currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OFFDUTY, desciption: description ?? "off duty", for: currentDriver)
@@ -116,6 +104,7 @@ extension DataHandeler {
     }
 
     dayData.endTime = startTime ?? Date()
+    dayData.endTimeString = startTime?.description ?? Date().description
     performDutyStatusChanged(description: description, startTime: startTime, dutyStatus: .OFFDUTY)
   }
 
@@ -126,10 +115,11 @@ extension DataHandeler {
     }
 
     let currentTime = Date()
-    dayData.endTime = startTime ?? currentTime
+    dayData.endTime = startTime ?? Date()
+    dayData.endTimeString = startTime?.description ?? Date().description
     let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: dutyStatus, desciption: description ?? "", for: currentDriver)
     currentDayData = currentDayData1
-    DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date().startOfDay, numberOfDays: 8)
+    DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1)
   }
 }
 
@@ -262,11 +252,14 @@ extension DataHandeler {
     let context = BLDAppUtility.dataContext()
     let driverDL = currentDriver.dlNumber ?? ""
     for logData in driverLogbookData {
-      let logBookDate = logData["date"] as! Double
+      let logBookDate = logData["createdDate"] as! Double
+      let driverId = logData["driverId"] as! String
+      let logDataId = logData["id"] as! String
       // self.deleteDayMetaData(dayStart: logBookDate, driverDL: self.currentDriver.dlNumber ?? "")
       let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "DayMetaData")
       fetchRequest.predicate = NSPredicate(format: "(dlNumber == %@) AND (day == %lf)", driverDL, logBookDate)
 
+    //  var dayMetaDataObj: DayMetaData?
       if let testDriverMetaData = try? context.fetch(fetchRequest), let dayMetaDataObj = testDriverMetaData.first as? DayMetaData {
         let optionArray = dayMetaDataObj.mutableSetValue(forKey: "dayData")
         for object in optionArray {
@@ -277,16 +270,10 @@ extension DataHandeler {
           context.delete(inspectionObj as! NSManagedObject)
         }
         context.delete(testDriverMetaData.first!)
-        let logBookDayData = logData["dayData"] as! [[String: Any]]
-        for inLogData in logBookDayData {
-          if let currentDayData = createDayData(with: inLogData) {
-            if dayMetaDataObj.dayData?.count ?? 0 < 1 {
-              dayMetaDataObj.setValue(NSSet(object: currentDayData), forKey: "DayData")
-            } else {
-              let dayDataArr = dayMetaDataObj.mutableSetValue(forKey: "DayData")
-              dayDataArr.add(currentDayData)
-            }
-          }
+        do {
+          try context.save()
+        } catch {
+          print("Failed to save driver data\(error)")
         }
         /*
          if (dayMetaDataObj.dayData?.count ?? 0 < 1) {
@@ -295,27 +282,28 @@ extension DataHandeler {
            let dayDataArr = dayMetaDataObj.mutableSetValue(forKey: "dayData")
            dayDataArr.add(dayDataArray)
          } */
-      } else {
+      }
         // let entity = NSEntityDescription.entity(forEntityName: "DayMetaData", in: context)
         // let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context) as! DayMetaData
 
-        let dayMetaDataObj = createTestUserMetaData(for: driverDL, dayData: logBookDate)
+        let dayMetaDataObj = createTestUserMetaData(for: driverDL, dayData: logBookDate, driverId: driverId, logbookId: logDataId)
+      //a(for: driverDL, dayData: logBookDate, )
 
         if dayMetaDataObj != nil {
 //            let dayTextValue = BLDAppUtility.textForDate(date: data)
-          let logBookDayData = logData["dayData"] as! [[String: Any]]
-          for inLogData in logBookDayData {
-            if let currentDayData = createDayData(with: inLogData) {
-              if dayMetaDataObj?.dayData?.count ?? 0 < 1 {
-                dayMetaDataObj?.setValue(NSSet(object: currentDayData), forKey: "DayData")
-              } else {
-                let dayDataArr = dayMetaDataObj?.mutableSetValue(forKey: "DayData")
-                dayDataArr?.add(currentDayData)
+          if let logBookDayData = logData["dayData"] as? [[String: Any]] {
+            for inLogData in logBookDayData {
+              if let currentDayData = createDayData(with: inLogData) {
+                if dayMetaDataObj?.dayData?.count ?? 0 < 1 {
+                  dayMetaDataObj?.setValue(NSSet(object: currentDayData), forKey: "DayData")
+                } else {
+                  let dayDataArr = dayMetaDataObj?.mutableSetValue(forKey: "DayData")
+                  dayDataArr?.add(currentDayData)
+                }
               }
             }
           }
         }
-      }
     }
 
     do {
@@ -643,7 +631,7 @@ extension DataHandeler {
     return nil
   }
 
-  func createTestUserMetaData(for driverLicence: String, dayData: TimeInterval) -> DayMetaData? {
+  func createTestUserMetaData(for driverLicence: String, dayData: TimeInterval, driverId: String? = nil, logbookId: String? = nil) -> DayMetaData? {
     let context = BLDAppUtility.dataContext()
     let entity = NSEntityDescription.entity(forEntityName: "DayMetaData", in: context)
     let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context)
@@ -653,10 +641,14 @@ extension DataHandeler {
       return nil
     }
 
-    // let dayTextValue = BLDAppUtility.textForDate(date: data)
     dayMetaDataObj.setValue(dayData, forKey: "day")
-    dayMetaDataObj.setValue("", forKey: "dayText")
     dayMetaDataObj.setValue(driverLicence, forKey: "dlNumber")
+    if driverId != nil {
+      dayMetaDataObj.setValue(driverId!, forKey: "driverId")
+    }
+    if logbookId != nil {
+      dayMetaDataObj.setValue(logbookId!, forKey: "id")
+    }
 
     do {
       try context.save()
@@ -666,7 +658,7 @@ extension DataHandeler {
     return dayMetaDataObj as? DayMetaData
   }
 
-  func createUserMetaData(for driverLicence: String, data: Date, dayText: String) -> DayMetaData? {
+  func createUserMetaData(for driverLicence: String, inDate: Date) -> DayMetaData? {
     let context = BLDAppUtility.dataContext()
     let entity = NSEntityDescription.entity(forEntityName: "DayMetaData", in: context)
     let dayMetaDataObj = NSManagedObject(entity: entity!, insertInto: context)
@@ -676,9 +668,8 @@ extension DataHandeler {
       return nil
     }
 
-    let dayTextValue = BLDAppUtility.textForDate(date: data)
-    dayMetaDataObj.setValue(data.startOfDay, forKey: "day")
-    dayMetaDataObj.setValue(dayTextValue, forKey: "dayText")
+    let timeIntervalDate = BLDAppUtility.startOfTheDayTimeInterval(for: inDate)
+    dayMetaDataObj.setValue(timeIntervalDate, forKey: "day")
     dayMetaDataObj.setValue(driverLicence, forKey: "dlNumber")
 
     do {
@@ -691,7 +682,7 @@ extension DataHandeler {
 
   func cleanupData(for driverLicence: String) {
     let context = BLDAppUtility.dataContext()
-    let dayMetaDataObj = dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: driverLicence)
+    let dayMetaDataObj = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driverLicence)
     guard let metaDataToDelete = dayMetaDataObj else {
       // assertionFailure("invalid data to delete")
       return

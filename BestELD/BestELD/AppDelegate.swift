@@ -9,6 +9,9 @@ import UIKit
 import CoreData
 import AWSCore
 
+
+let DEBUGMODE = false
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

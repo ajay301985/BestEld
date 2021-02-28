@@ -9,8 +9,8 @@ import UIKit
 
 struct DateData {
   var displayDate: String
-  var actualDate: String
-  var dateValue: Date
+  var dateCurrent: TimeInterval
+  var dateUTC: TimeInterval
 }
 
 class DaysViewController: UIViewController {

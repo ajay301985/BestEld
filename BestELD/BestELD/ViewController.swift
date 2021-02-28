@@ -19,6 +19,9 @@ class ViewController: UIViewController {
 
   var viewModel = ViewViewModel()
   var selectedMenuItemIndex = 0
+
+  private var alertController: UIAlertController?
+
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationController?.navigationBar.isHidden = true
@@ -84,27 +87,29 @@ class ViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
   }
   @IBAction func loginClicked(_ sender: Any) {
-    #warning("Aj temporary disable")
-/*    AuthenicationService.shared.loginUser(emailId: "userEmail", password: "userPassword") { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-        case .success(let driverObj):
-          print("dddd")
-        case .failure(_):
-          print("ddd")
-      }
 
-      }
+    var userEmail: String?
+    var userPassword: String?
 
-    guard let userEmail = userEmailTextField.text, let userPassword = userPasswordTextField.text else {
+    if DEBUGMODE {
+      userEmail = "pankajsunal66@gmail.com"
+      userPassword = "Pankaj@123"
+    } else {
+      userEmail = userEmailTextField.text ?? ""
+      userPassword = userPasswordTextField.text ?? ""
+    }
+
+    guard let userEmail1 = userEmail, let userPassword1 = userPassword else {
       showDefaultAlert(title: "Error", message: "Email and password should not be empty", handler: nil)
       return
     }
-    if (!isValidEmail(userEmail) || userPassword.count < 5) {
+    if (!isValidEmail(userEmail1) || userPassword1.count < 5) {
       showDefaultAlert(title: "Error", message: "User email and password is not valid", handler: nil)
       return
-    }*/
-    AuthenicationService.shared.loginUser(emailId: "userEmail", password: "userPassword") { [weak self] result in
+    }
+
+    alertController = displayLoginAlert()
+    AuthenicationService.shared.loginUser(emailId: userEmail1, password: userPassword1) { [weak self] result in
       guard let self = self else { return }
       switch result {
         case .success(let driverObj):
@@ -113,6 +118,7 @@ class ViewController: UIViewController {
           }
           DispatchQueue.main.async {
             DataHandeler.shared.setupData(for: dlNumber)
+            self.alertController?.dismiss(animated: false, completion: nil)
             self.loggedIn(user: driver)
           }
         case .failure(let error):
@@ -197,14 +203,31 @@ class ViewController: UIViewController {
     navigationController?.pushViewController(logBookViewController, animated: true) */
   }
 
+  func displayLoginAlert() -> UIAlertController {
+    //Create the UIAlertController
+    let pending = UIAlertController(title: " Login.... ", message: "                 ", preferredStyle: .alert)
+    //Create the activity indicator to display in it.
+    let indicator = UIActivityIndicatorView(frame: CGRect(x: pending.view.frame.width / 2.0, y: pending.view.frame.height / 2.0, width: 20.0, height: 20.0))
+    indicator.center = CGPoint(x: pending.view.frame.width / 2.0, y: pending.view.frame.height / 2.0)
+    indicator.backgroundColor = .red
+    //Add the activity indicator to the alert's view
+    //pending.view.addSubview(indicator)
+    //Start animating
+    indicator.startAnimating()
+    pending.view.tintColor = .yellow
+    //pending.view.backgroundColor = .lightGray
+
+    self.present(pending, animated: true, completion: nil)
+    return pending
+  }
 
   func loggedIn(user: Driver) {
     AuthenicationService.shared.fetchUserLogbookData(user: "", startTime: Date(), numberOfDays: 8) { [weak self] result in
       guard let self = self else {return}
 
-      var driverMetaData = DataHandeler.shared.dayMetaData(dayStart: Date().startOfDay.timeIntervalSince1970, driverDL: user.dlNumber ?? testDriverDLNumber)
+      var driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: user.dlNumber ?? testDriverDLNumber)
       if ((driverMetaData == nil)) {
-        driverMetaData = DataHandeler.shared.createTestUserMetaData(for: user.dlNumber ?? testDriverDLNumber, dayData: Date().startOfDay.timeIntervalSince1970)
+        driverMetaData = DataHandeler.shared.createTestUserMetaData(for: user.dlNumber ?? testDriverDLNumber, dayData: BLDAppUtility.startOfTheDayTimeInterval(for: Date()))
       }
       guard  let metaData = driverMetaData else {
         assertionFailure("failed to create objects")

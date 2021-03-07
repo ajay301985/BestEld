@@ -41,6 +41,12 @@ class DataHandeler {
     dayMetaDataObj.setValue(start.description, forKey: "startTimeString")
     let userLocation = BldLocationManager.shared.locationText
     dayMetaDataObj.setValue(userLocation, forKey: "startLocation")
+
+    let eldDataRecord = EldDeviceManager.shared.currentEldDataRecord
+    if ((eldDataRecord != nil) && (status == DutyStatus.DRIVING || status == DutyStatus.ONDUTY)) {
+      dayMetaDataObj.setValue(eldDataRecord?.odometer ?? 0, forKey: "startOdometer")
+    }
+
     let driverMetaData = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driver.dlNumber ?? TEST_DRIVER_DL_NUMBER)
     if driverMetaData?.dayData?.count ?? 0 < 1 {
       driverMetaData?.setValue(NSSet(object: dayMetaDataObj), forKey: "DayData")
@@ -108,6 +114,13 @@ extension DataHandeler {
 
     dayData.endTime = startTime ?? Date()
     dayData.endTimeString = startTime?.description ?? Date().description
+
+    let eldDataRecord = EldDeviceManager.shared.currentEldDataRecord
+    let preDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
+    if ((eldDataRecord != nil) && (preDutyStatus == DutyStatus.DRIVING || preDutyStatus == DutyStatus.ONDUTY)) {
+      dayData.endOdometer = eldDataRecord?.odometer ?? 0
+    }
+
     performDutyStatusChanged(description: description, startTime: startTime, dutyStatus: .OFFDUTY)
   }
 
@@ -120,6 +133,12 @@ extension DataHandeler {
     let currentTime = Date()
     dayData.endTime = startTime ?? Date()
     dayData.endTimeString = startTime?.description ?? Date().description
+    let eldDataRecord = EldDeviceManager.shared.currentEldDataRecord
+    let preDutyStatus = DutyStatus(rawValue: dayData.dutyStatus ?? "OFFDUTY")
+    if ((eldDataRecord != nil) && (preDutyStatus == DutyStatus.DRIVING || preDutyStatus == DutyStatus.ONDUTY)) {
+      dayData.endOdometer = eldDataRecord?.odometer ?? 0
+    }
+
     let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: dutyStatus, desciption: description ?? "", for: currentDriver)
     currentDayData = currentDayData1
     DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1)

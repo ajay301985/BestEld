@@ -229,8 +229,9 @@ class LogBookViewController: UIViewController {
               print("Error in fetching \(error.localizedDescription)")
           }
         }
+        return
       }
-      return
+
       if (deviceIds?.count ?? 0 > 0)
       {
         self.eldList = deviceIds as? [EldScanObject] ?? []
@@ -256,6 +257,21 @@ class LogBookViewController: UIViewController {
           self?.selectedEldDevice = self?.eldList[index]
           if type == .ELD_DATA_RECORD {
             EldDeviceManager.shared.currentEldDataRecord = dataRecord as? EldDataRecord
+            if (DataHandeler.shared.currentEldData == nil) { //fetch current Eld
+              AuthenicationService.shared.getEldTrukMapping(eldVinId: EldDeviceManager.shared.currentEldDataRecord?.vin ?? "1FTLR4FEXBPA98994") {[weak self] result in
+                guard let self = self else { return }
+
+                switch result {
+                  case .success(let eldObj):
+                    DataHandeler.shared.currentEldData = eldObj
+                    DispatchQueue.main.async {
+                      self.updateViewForEld(inEld: eldObj)
+                    }
+                  case .failure(let error):
+                    print("Error in fetching \(error.localizedDescription)")
+                }
+              }
+            }
           }
         }, .ELD_DATA_RECORD, { _, _ in
           print("connection status change ")

@@ -99,10 +99,6 @@ class LogBookViewController: UIViewController {
     super.viewDidLoad()
 
     currentStatus = .OFFDUTY
-//    let currentDriver = viewModel.driverName
-//    let currentDriver1 = viewModel.currentDay
-//    print("driver name is = \(String(describing: currentDriver)) and driving on \(String(describing: currentDriver1))")
-
     GraphGenerator.shared.setupImageView(imageView: graphImageView)
     performLoggedIn()
 
@@ -272,6 +268,13 @@ class LogBookViewController: UIViewController {
                 }
               }
             }
+
+            if (self?.currentStatus != .DRIVING) {
+              let dataRecord = EldDeviceManager.shared.currentEldDataRecord
+              if dataRecord?.speed ?? 0 > DRIVING_MODE_SPEED {
+                self?.launchDrivingMode()
+              }
+            }
           }
         }, .ELD_DATA_RECORD, { _, _ in
           print("connection status change ")
@@ -312,24 +315,31 @@ class LogBookViewController: UIViewController {
     view.addSubview(parentView)
   }
 
+  private func launchDrivingMode() {
+    let drivingController = self.viewModel.drivingStoryboardInstance()
+    drivingController.currentDriver = self.viewModel.currentDriver
+    drivingController.modalPresentationStyle = .fullScreen
+    self.navigationController?.pushViewController(drivingController, animated: true)
+  }
+
   @IBAction func dutyModeChanged(_ sender: Any) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let dutyStatusController = storyboard.instantiateViewController(withIdentifier: "DutyStatusViewController") as! DutyStatusViewController
     dutyStatusController.didChangedDutyStatus = { status, notes, _ in
       DataHandeler.shared.dutyStatusChanged(status: status, description: notes, timeToStart: Date())
       self.currentStatus = status
-      if status == .ONDUTY {
+      guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+        return
+      }
+
+      self.reloadLogBookData(currentDateData)
+/*      if status == .ONDUTY {
         let drivingController = self.viewModel.drivingStoryboardInstance()
         drivingController.currentDriver = self.viewModel.currentDriver
         drivingController.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(drivingController, animated: true)
       }else {
-        guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
-          return
-        }
-
-        self.reloadLogBookData(currentDateData)
-      }
+      } */
     }
     dutyStatusController.modalPresentationStyle = .overCurrentContext
     present(dutyStatusController, animated: true, completion: nil)

@@ -39,10 +39,14 @@ class DailyInfoViewController: UIViewController {
 
   var dailyLogDataArr: [DailyLogInfo] = []
   @IBAction func postTripButtonClicked(_ sender: Any) {
+    preTripButton.isSelected = false
+    postTripButton.isSelected = true
     currentTripStatus = .POSTTRIP
   }
 
   @IBAction func preTripButtonClicked(_ sender: Any) {
+    preTripButton.isSelected = false
+    postTripButton.isSelected = false
     currentTripStatus = .PRETRIP
   }
 

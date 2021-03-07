@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 let TEST_DRIVER_DL_NUMBER = "xyz12345"
+let DRIVING_MODE_SPEED = 5.0
 
 enum Storyboards: String {
   case Main

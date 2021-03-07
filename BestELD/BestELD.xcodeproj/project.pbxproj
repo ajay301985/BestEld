@@ -118,7 +118,7 @@
 		AABD5EB425BB4D37004A52D8 /* DataHandeler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandeler.swift; sourceTree = "<group>"; };
 		AABD5EB725BB8601004A52D8 /* BldLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BldLocationManager.swift; sourceTree = "<group>"; };
 		AABD5EBE25BC1FF8004A52D8 /* DayDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataTableViewCell.swift; sourceTree = "<group>"; };
-		AABEDA8525B2DA50007C9345 /* BestELD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestELD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AABEDA8525B2DA50007C9345 /* Best ELD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Best ELD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AABEDA8825B2DA50007C9345 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AABEDA8C25B2DA50007C9345 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AABEDA8F25B2DA50007C9345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 		AABEDA8625B2DA50007C9345 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AABEDA8525B2DA50007C9345 /* BestELD.app */,
+				AABEDA8525B2DA50007C9345 /* Best ELD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -446,7 +446,7 @@
 			);
 			name = BestELD;
 			productName = BestELD;
-			productReference = AABEDA8525B2DA50007C9345 /* BestELD.app */;
+			productReference = AABEDA8525B2DA50007C9345 /* Best ELD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -854,7 +854,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eld.poc;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Best ELD";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BestELD/Utility Files/BestELD-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -936,7 +936,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eld.poc;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Best ELD";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BestELD/Utility Files/BestELD-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

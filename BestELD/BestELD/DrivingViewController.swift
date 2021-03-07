@@ -24,6 +24,7 @@ class DrivingViewController: UIViewController {
       dutyStatusTextField.text = currentStatus.title
     }
   }
+
   override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationController?.navigationBar.isHidden = true
@@ -34,10 +35,10 @@ class DrivingViewController: UIViewController {
         tempratureTextField.isEnabled = false
         tempratureTextField.setTitle("56 F", for: .normal)
         circularProgressBar.lineWidth = 20
-        let imageObj = UIImage(named: "motionbarbackground")
-        circularProgressBar.backgroundColor = .yellow
+        let imageObj = UIImage(named: "speedindicator")
+        circularProgressBar.image = imageObj
+        //circularProgressBar.backgroundColor = .yellow
         navigationController?.setNavigationBarHidden(true, animated: false)
-
     }
     
 
@@ -78,7 +79,7 @@ class DrivingViewController: UIViewController {
         assertionFailure("Invalid driver object")
         return
       }
-      let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driverObj.dlNumber ?? testDriverDLNumber)
+      let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driverObj.dlNumber ?? TEST_DRIVER_DL_NUMBER)
       guard let metaData = driverMetaData, (metaData.dayData?.count ?? 0 > 0) else {
         assertionFailure("something wrong with database")
         return

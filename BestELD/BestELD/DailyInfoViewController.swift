@@ -49,6 +49,7 @@ class DailyInfoViewController: UIViewController {
   @IBAction func confirmClicked(_ sender: Any) {
     if (inspectionView.isHidden == false) {
       let dayTripData = DataHandeler.shared.saveTripData(status: currentTripStatus , notes: notesTextField.text, location: "", inDayData: Date())
+      dismiss(animated: true, completion: nil)
     }
   }
 
@@ -79,10 +80,15 @@ class DailyInfoViewController: UIViewController {
 
 
   private func generateDataModels() {
-    var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: "BT001", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    guard let currentEldData = DataHandeler.shared.currentEldData else {
+      assertionFailure("Invalid Eld Data")
+      return
+    }
+
+    var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: currentEldData.truckNumber ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Trailers", logValue: "363", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Trailers", logValue: "xyz trailer", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
     dailyLogObj = DailyLogInfo(logTitle: "Distance", logValue: "123Miles", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: true)
@@ -100,16 +106,16 @@ class DailyInfoViewController: UIViewController {
     dailyLogObj = DailyLogInfo(logTitle: "Drivers", logValue: driverFullName, isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Co-Drivers", logValue: "Pankaj", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Co-Drivers", logValue: "xyz co-driver", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: "xyz carrier", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: currentEldData.carrierName ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: "Home Terminal address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: "xyz Home Terminal address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Main office", logValue: "Main office address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Main office", logValue: "xyz Main office address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
   }
 

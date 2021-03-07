@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-let testDriverDLNumber = "xyz12345"
+let TEST_DRIVER_DL_NUMBER = "xyz12345"
 
 enum Storyboards: String {
   case Main

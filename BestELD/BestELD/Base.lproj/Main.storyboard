@@ -13,7 +13,7 @@
         <!--App Navigation View Controller-->
         <scene sceneID="z22-t6-Yg3">
             <objects>
-                <navigationController storyboardIdentifier="NavController" id="MYq-K9-LyA" customClass="AppNavigationViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavController" id="MYq-K9-LyA" customClass="AppNavigationViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="exf-4l-p8V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -29,7 +29,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -164,7 +164,7 @@
         <!--Duty Status View Controller-->
         <scene sceneID="bLK-Pe-9hO">
             <objects>
-                <viewController storyboardIdentifier="DutyStatusViewController" id="leQ-g0-XcV" customClass="DutyStatusViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DutyStatusViewController" id="leQ-g0-XcV" customClass="DutyStatusViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bGl-23-gMn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -531,7 +531,7 @@
         <!--Log Book View Controller-->
         <scene sceneID="jCj-ty-mrg">
             <objects>
-                <viewController storyboardIdentifier="LogBookViewController" id="Tws-P6-a36" customClass="LogBookViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogBookViewController" id="Tws-P6-a36" customClass="LogBookViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="afk-w1-tov">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -540,7 +540,7 @@
                                 <rect key="frame" x="0.0" y="312" width="375" height="331"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="dayDataTableCellIdentifier" rowHeight="73" id="M8d-4N-THT" customClass="DayDataTableViewCell" customModule="BestELD" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="dayDataTableCellIdentifier" rowHeight="73" id="M8d-4N-THT" customClass="DayDataTableViewCell" customModule="Best_ELD" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M8d-4N-THT" id="SH5-xJ-YEx">
@@ -921,7 +921,7 @@
         <!--Driving View Controller-->
         <scene sceneID="3wP-jB-bYs">
             <objects>
-                <viewController storyboardIdentifier="DrivingViewController" id="nva-Lu-IVm" customClass="DrivingViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DrivingViewController" id="nva-Lu-IVm" customClass="DrivingViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K4r-kC-1Nb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1086,14 +1086,14 @@
                                 <rect key="frame" x="67" y="282" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speedindicator" translatesAutoresizingMaskIntoConstraints="NO" id="ePe-SG-Sff">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speedindicator" translatesAutoresizingMaskIntoConstraints="NO" id="ePe-SG-Sff">
                                 <rect key="frame" x="29" y="112" width="317" height="238"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="317" id="962-ch-Jka"/>
                                     <constraint firstAttribute="height" constant="238" id="Keg-CI-11z"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyh-1a-AhG" customClass="CircularProgressBar" customModule="BestELD" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyh-1a-AhG" customClass="CircularProgressBar" customModule="Best_ELD" customModuleProvider="target">
                                 <rect key="frame" x="69.5" y="148" width="236" height="186"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -1147,7 +1147,7 @@
         <!--Daily Info View Controller-->
         <scene sceneID="7P1-ms-7Gu">
             <objects>
-                <viewController storyboardIdentifier="DailyInfoViewController" id="mgC-Yu-mAi" customClass="DailyInfoViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DailyInfoViewController" id="mgC-Yu-mAi" customClass="DailyInfoViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UNV-YW-rNT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1159,7 +1159,7 @@
                                         <rect key="frame" x="16" y="52" width="343" height="322"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DailyLogTableViewCell" rowHeight="70" id="1gk-Jj-kcf" customClass="DailyLogTableViewCell" customModule="BestELD" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DailyLogTableViewCell" rowHeight="70" id="1gk-Jj-kcf" customClass="DailyLogTableViewCell" customModule="Best_ELD" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="343" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1gk-Jj-kcf" id="eV2-eo-y7d">
@@ -1284,13 +1284,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EpI-N8-FYg">
                                         <rect key="frame" x="16" y="52" width="343" height="322"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xh-Qa-iS0">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xh-Qa-iS0">
                                                 <rect key="frame" x="8" y="19" width="166" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="166" id="1DL-ac-cA5"/>
                                                     <constraint firstAttribute="height" constant="30" id="s4A-ma-iVc"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                <state key="normal" title="Button" image="tripselected"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="l10nTitle" value="pretrip"/>
                                                 </userDefinedRuntimeAttributes>
@@ -1298,13 +1299,14 @@
                                                     <action selector="preTripButtonClicked:" destination="mgC-Yu-mAi" eventType="touchUpInside" id="2wE-nn-WRr"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hC-4b-8rC">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hC-4b-8rC">
                                                 <rect key="frame" x="187" y="19" width="148" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="04J-zU-jV8"/>
                                                     <constraint firstAttribute="width" constant="148" id="iSN-eN-q6a"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                <state key="normal" title="Button" image="tripselected"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="l10nTitle" value="posttrip"/>
                                                 </userDefinedRuntimeAttributes>
@@ -1479,7 +1481,7 @@
         <!--User Preferences View Controller-->
         <scene sceneID="Qj8-JZ-xwU">
             <objects>
-                <viewController storyboardIdentifier="UserPreferencesViewController" id="O1x-Im-D8b" customClass="UserPreferencesViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserPreferencesViewController" id="O1x-Im-D8b" customClass="UserPreferencesViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bh8-ag-7oK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1514,7 +1516,7 @@
         <!--Menu View Controller-->
         <scene sceneID="cLp-Sv-RtQ">
             <objects>
-                <viewController storyboardIdentifier="MenuViewController" id="yLt-Gb-ELE" customClass="MenuViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" id="yLt-Gb-ELE" customClass="MenuViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FkY-Hc-vgA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1533,7 +1535,7 @@
                                     <inset key="sectionInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="menuitemcellidentifier" id="ITi-YW-ePU" customClass="MenuCollectionCell" customModule="BestELD" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="menuitemcellidentifier" id="ITi-YW-ePU" customClass="MenuCollectionCell" customModule="Best_ELD" customModuleProvider="target">
                                         <rect key="frame" x="15" y="28" width="105" height="110"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="z8L-Ro-Mk6">
@@ -1591,7 +1593,7 @@
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="MenuItemHeaderView" id="vPN-pu-HMi" customClass="MenuItemHeaderView" customModule="BestELD" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="MenuItemHeaderView" id="vPN-pu-HMi" customClass="MenuItemHeaderView" customModule="Best_ELD" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="315" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -1644,7 +1646,7 @@
         <!--Days View Controller-->
         <scene sceneID="VAW-Kh-Nrb">
             <objects>
-                <viewController storyboardIdentifier="DaysViewController" id="RZw-QS-3UN" customClass="DaysViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DaysViewController" id="RZw-QS-3UN" customClass="DaysViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5WM-F6-33d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1779,7 +1781,7 @@
         <!--Device List View Controller-->
         <scene sceneID="fx5-qs-8hz">
             <objects>
-                <viewController storyboardIdentifier="DeviceListViewController" id="Unu-87-8kA" customClass="DeviceListViewController" customModule="BestELD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DeviceListViewController" id="Unu-87-8kA" customClass="DeviceListViewController" customModule="Best_ELD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R7m-JF-dvs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1928,6 +1930,7 @@
         <image name="sleeperdutystatuscircle" width="52" height="52"/>
         <image name="speedindicator" width="309" height="259"/>
         <image name="temprature" width="26" height="26"/>
+        <image name="tripselected" width="47" height="47"/>
         <image name="warning" width="26" height="24"/>
         <image name="yardmode" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">

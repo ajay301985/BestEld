@@ -9,12 +9,14 @@ import CoreData
 import Foundation
 
 class DataHandeler {
+
   // MARK: Internal
 
   static let shared = DataHandeler()
 
   var currentDriver: Driver!
   var currentDayData: DayData!
+  var currentEldData: Eld!
 
   func setupData(for driverLicence: String) {
     currentDriver = getDriverData(for: driverLicence)
@@ -39,7 +41,7 @@ class DataHandeler {
     dayMetaDataObj.setValue(start.description, forKey: "startTimeString")
     let userLocation = BldLocationManager.shared.locationText
     dayMetaDataObj.setValue(userLocation, forKey: "startLocation")
-    let driverMetaData = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driver.dlNumber ?? testDriverDLNumber)
+    let driverMetaData = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driver.dlNumber ?? TEST_DRIVER_DL_NUMBER)
     if driverMetaData?.dayData?.count ?? 0 < 1 {
       driverMetaData?.setValue(NSSet(object: dayMetaDataObj), forKey: "DayData")
     } else {
@@ -84,17 +86,18 @@ extension DataHandeler {
         performDutyStatusChanged(description: description, startTime: timeToStart, dutyStatus: .PERSONAL)
     }
 
-    let dayMetaDataObj = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? testDriverDLNumber, createOnDemand: true)
+    let dayMetaDataObj = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER, createOnDemand: true)
     let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
     let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
     GraphGenerator.shared.generatePath(dayDataArr: sortedData)
   }
 
   private func performOffDutyStatusChanged(description: String?, startTime: Date? = nil) {
-    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? testDriverDLNumber, createOnDemand: true)
+    let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER, createOnDemand: true)
     guard let metaData = driverMetaData, metaData.dayData?.count ?? 0 > 0 else {
       let startDate = Date().startOfDayWithTimezone // enter a test object
       currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OFFDUTY, desciption: description ?? "off duty", for: currentDriver)
+      DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1)
       return
     }
 
@@ -127,7 +130,7 @@ extension DataHandeler {
 
 extension DataHandeler {
   func testUser() -> Driver? {
-    let testDriverLicenceNumber = testDriverDLNumber
+    let testDriverLicenceNumber = TEST_DRIVER_DL_NUMBER
     let driverDataObj = getDriverData(for: testDriverLicenceNumber)
     guard driverDataObj != nil else {
       return createTestDriverData()
@@ -158,7 +161,7 @@ extension DataHandeler {
     let context = BLDAppUtility.dataContext()
 
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Eld")
-    fetchRequest.predicate = NSPredicate(format: "macAddress == %@", macAddress)
+    fetchRequest.predicate = NSPredicate(format: "vin == %@", macAddress)
 
     do {
       let eldData = try context.fetch(fetchRequest)
@@ -183,7 +186,7 @@ extension DataHandeler {
       print("wrong object")
       return nil
     }
-    testDriver.setValue(testDriverDLNumber, forKey: "dlNumber")
+    testDriver.setValue(TEST_DRIVER_DL_NUMBER, forKey: "dlNumber")
     testDriver.setValue("test driver", forKey: "firstName")
 
     do {
@@ -200,45 +203,60 @@ extension DataHandeler {
       return nil
     }
 
-    var currentEld = getEldData(for: eldData["macAddress"] as! String)
+    var currentEld = getEldData(for: eldData["vin"] as! String)
     let context = BLDAppUtility.dataContext()
     if currentEld == nil {
       let entity = NSEntityDescription.entity(forEntityName: "Eld", in: context)
       currentEld = NSManagedObject(entity: entity!, insertInto: context) as? Eld
-
-      guard let currentEldObj = currentEld else {
-        print("wrong object")
-        return nil
-      }
-      currentEldObj.setValue(eldData["eldId"] as! String, forKey: "eldId")
-      currentEldObj.setValue(eldData["macAddress"] as! String, forKey: "macAddress")
-      currentEldObj.setValue(eldData["fleetDotNumber"] as! String, forKey: "fleetDotNumber")
-      currentEldObj.setValue(eldData["remarks"] as! String, forKey: "remarks")
-      currentEldObj.setValue(eldData["status"] as! String, forKey: "status")
-
-      do {
-        try context.save()
-      } catch {
-        print("Failed to save driver data\(error)")
-      }
-      return currentEldObj
-
-    } else {
-      guard let currentEldObj = currentEld else {
-        print("wrong object")
-        return nil
-      }
-      currentEldObj.setValue(eldData["fleetDotNumber"] as! String, forKey: "fleetDotNumber")
-      currentEldObj.setValue(eldData["remarks"] as! String, forKey: "remarks")
-      currentEldObj.setValue(eldData["status"] as! String, forKey: "status")
-
-      do {
-        try context.save()
-      } catch {
-        print("Failed to save driver data\(error)")
-      }
-      return currentEldObj
     }
+
+    guard let currentEldObj = currentEld else {
+      print("wrong object")
+      return nil
+    }
+
+    currentEldObj.setValue(eldData["cargoInsurance"] as! String, forKey: "cargoInsurance")
+    currentEldObj.setValue(eldData["carrierName"] as! String, forKey: "carrierName")
+    currentEldObj.setValue(eldData["expiryDate"] as! String, forKey: "expiryDate")
+    currentEldObj.setValue(eldData["fleetDOTNumber"] as! String, forKey: "fleetDOTNumber")
+    currentEldObj.setValue(eldData["fuelType"] as! String, forKey: "fuelType")
+    currentEldObj.setValue(eldData["id"] as! String, forKey: "id")
+    currentEldObj.setValue(eldData["liabilityInsurance"] as! String, forKey: "liabilityInsurance")
+    currentEldObj.setValue(eldData["licensePlate"] as! String, forKey: "licensePlate")
+    currentEldObj.setValue(eldData["make"] as! String, forKey: "make")
+    currentEldObj.setValue(eldData["model"] as! String, forKey: "model")
+    currentEldObj.setValue(eldData["odometer"] as! String, forKey: "odometer")
+    currentEldObj.setValue(eldData["policyNumber"] as! String, forKey: "policyNumber")
+    currentEldObj.setValue(eldData["regNumber"] as! String, forKey: "regNumber")
+    currentEldObj.setValue(eldData["registration"] as! String, forKey: "registration")
+    currentEldObj.setValue(eldData["truckNumber"] as! String, forKey: "truckNumber")
+    currentEldObj.setValue(eldData["vin"] as! String, forKey: "vin")
+    currentEldObj.setValue(eldData["year"] as! String, forKey: "year")
+
+    do {
+      try context.save()
+    } catch {
+      print("Failed to save driver data\(error)")
+    }
+    return currentEldObj
+
+    /*
+     } else {
+       guard let currentEldObj = currentEld else {
+         print("wrong object")
+         return nil
+       }
+       currentEldObj.setValue(eldData["fleetDotNumber"] as! String, forKey: "fleetDotNumber")
+       currentEldObj.setValue(eldData["remarks"] as! String, forKey: "remarks")
+       currentEldObj.setValue(eldData["status"] as! String, forKey: "status")
+
+       do {
+         try context.save()
+       } catch {
+         print("Failed to save driver data\(error)")
+       }
+       return currentEldObj
+     } */
   }
 
   func updateDriverLogbookData(driverLogbookData: [[String: Any]]) {
@@ -512,10 +530,9 @@ extension DataHandeler {
     currentInsepectionObj.setValue(currentDriver.dlNumber, forKey: "dlNumber")
     currentInsepectionObj.setValue(location, forKey: "location")
     currentInsepectionObj.setValue(notes, forKey: "notes")
-    currentInsepectionObj.setValue(status, forKey: "type")
+    currentInsepectionObj.setValue(status.rawValue, forKey: "type")
 
-    let currentDateAsText = BLDAppUtility.textForDate(date: Date())
-    let driverMetaData = getDayMetadata(for: currentDateAsText, driverDL: currentDriver.dlNumber ?? "")
+    let driverMetaData = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: inDayData), driverDL: currentDriver.dlNumber ?? "")
     if driverMetaData?.inspection?.count ?? 0 < 1 {
       driverMetaData?.setValue(NSSet(object: currentInsepectionObj), forKey: "Inspection")
     } else {

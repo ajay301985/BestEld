@@ -148,7 +148,6 @@ class LogBookViewController: UIViewController {
           DataHandeler.shared.currentDayData = latestDayData
         }
       }
-
     }
   }
 
@@ -211,6 +210,22 @@ class LogBookViewController: UIViewController {
         self.view.viewWithTag(997)?.removeFromSuperview()
       }
 
+      if DEBUGMODE == true {
+        AuthenicationService.shared.getEldTrukMapping(eldVinId: "1FTLR4FEXBPA98994") {[weak self] result in
+          guard let self = self else { return }
+
+          switch result {
+            case .success(let eldObj):
+              DataHandeler.shared.currentEldData = eldObj
+              DispatchQueue.main.async {
+                self.updateViewForEld(inEld: eldObj)
+              }
+            case .failure(let error):
+              print("Error in fetching \(error.localizedDescription)")
+          }
+        }
+      }
+      return
       if (deviceIds?.count ?? 0 > 0)
       {
         self.eldList = deviceIds as? [EldScanObject] ?? []
@@ -246,6 +261,9 @@ class LogBookViewController: UIViewController {
     })
   }
 
+  private func updateViewForEld(inEld: Eld?) {
+    deviceTextField.text = inEld?.truckNumber ?? "Invalid truck data"
+  }
 
   private func showAlertView() {
     let parentView = UIView(frame: view.frame)
@@ -323,12 +341,18 @@ class LogBookViewController: UIViewController {
     let dayTimeInterval = TimeInterval(60 * 60 * 24)
     let utcTimeIntervalNextDay = (dayDate.dateUTC - dayTimeInterval)
 
-    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateUTC, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let utdDateObj1 = Date(timeIntervalSince1970: dayDate.dateUTC)
+    print("UTC START  \(utdDateObj1)")
+    let utdDateObj2 = Date(timeIntervalSince1970: dayDate.dateCurrent)
+    print("DATE CURRENT TIMEZONE START \(utdDateObj2)")
+    let utdDateObj3 = Date(timeIntervalSince1970: utcTimeIntervalNextDay)
+    print("UTC END \(utdDateObj3)")
+    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: dayDate.dateUTC, driverDL: viewModel.currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER)
     if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr
     }
 
-    let dayMetaDataObj1 = DataHandeler.shared.dayMetaData(dayStart: utcTimeIntervalNextDay, driverDL: viewModel.currentDriver.dlNumber ?? testDriverDLNumber)
+    let dayMetaDataObj1 = DataHandeler.shared.dayMetaData(dayStart: utcTimeIntervalNextDay, driverDL: viewModel.currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER)
     if let dayDataArr1 = dayMetaDataObj1?.dayData?.allObjects as? [DayData] {
       dayDataArray += dayDataArr1
     }
@@ -342,13 +366,17 @@ class LogBookViewController: UIViewController {
     var currentDayDataArray: [DayData] = []
     let currentTimezoneTimeIntervalStart = dayDate.dateCurrent//Calendar.current.date(byAdding: .hour, value: 24, to: dayDate.dateValue) ?? Date()
     let currentTimezoneTimeIntervalEnd = (dayDate.dateCurrent + dayTimeInterval)
-    var timeData:[Int:String] = [:]
+    let utdDateObj4 = Date(timeIntervalSince1970: currentTimezoneTimeIntervalEnd)
+    print("Current Time zone END \(utdDateObj4)")
+
     var onDutyInt = 0.0
     var offDutyInt = 0.0
     var sleeperInt = 0.0
     var drivingInt = 0.0
     for data in sortedData {
       if let startTimeObj = data.startTime, let endTimeObj = data.endTime {
+        print("Event start  \(startTimeObj)")
+        print("Event end  \(endTimeObj)")
         let startTimeTimeInterval = startTimeObj.timeIntervalSince1970
         let endTimeTimeInterval = endTimeObj.timeIntervalSince1970
         if (startTimeTimeInterval >= currentTimezoneTimeIntervalStart && startTimeTimeInterval < currentTimezoneTimeIntervalEnd) || (endTimeTimeInterval >= currentTimezoneTimeIntervalStart && endTimeTimeInterval < currentTimezoneTimeIntervalEnd) {
@@ -369,10 +397,6 @@ class LogBookViewController: UIViewController {
           currentDayDataArray.append(data)
         }
 
-        onDutyLabel.text = "\(onDutyInt.stringFromTimeInterval())"
-        offDutyLabel.text = "\(offDutyInt.stringFromTimeInterval())"
-        sleeperLabel.text = "\(sleeperInt.stringFromTimeInterval())"
-        drivingLabel.text = "\(drivingInt.stringFromTimeInterval())"
 /*        let currentStartTime = BLDAppUtility.timezoneDate(from: startTimeObj)
         let startTimeText = BLDAppUtility.textForDate(date: currentStartTime)
           let currentEndTime = BLDAppUtility.timezoneDate(from: endTimeObj)
@@ -385,6 +409,10 @@ class LogBookViewController: UIViewController {
       }
     }
 
+    onDutyLabel.text = "\(onDutyInt.stringFromTimeInterval())"
+    offDutyLabel.text = "\(offDutyInt.stringFromTimeInterval())"
+    sleeperLabel.text = "\(sleeperInt.stringFromTimeInterval())"
+    drivingLabel.text = "\(drivingInt.stringFromTimeInterval())"
 
     return currentDayDataArray
   }

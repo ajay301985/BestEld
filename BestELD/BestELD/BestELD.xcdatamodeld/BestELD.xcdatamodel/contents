@@ -49,11 +49,23 @@
         <attribute name="zip" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Eld" representedClassName="Eld" syncable="YES" codeGenerationType="class">
-        <attribute name="eldId" optional="YES" attributeType="String"/>
-        <attribute name="fleetDotNumber" optional="YES" attributeType="String"/>
-        <attribute name="macAddress" optional="YES" attributeType="String"/>
-        <attribute name="remarks" optional="YES" attributeType="String"/>
-        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="cargoInsurance" optional="YES" attributeType="String"/>
+        <attribute name="carrierName" optional="YES" attributeType="String"/>
+        <attribute name="expiryDate" optional="YES" attributeType="String"/>
+        <attribute name="fleetDOTNumber" optional="YES" attributeType="String"/>
+        <attribute name="fuelType" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="liabilityInsurance" optional="YES" attributeType="String"/>
+        <attribute name="licensePlate" optional="YES" attributeType="String"/>
+        <attribute name="make" optional="YES" attributeType="String"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="odometer" optional="YES" attributeType="String"/>
+        <attribute name="policyNumber" optional="YES" attributeType="String"/>
+        <attribute name="registration" optional="YES" attributeType="String"/>
+        <attribute name="regNumber" optional="YES" attributeType="String"/>
+        <attribute name="truckNumber" optional="YES" attributeType="String"/>
+        <attribute name="vin" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Inspection" representedClassName="Inspection" syncable="YES" codeGenerationType="class">
         <attribute name="dlNumber" optional="YES" attributeType="String"/>
@@ -68,7 +80,7 @@
         <element name="DayData" positionX="-54" positionY="-18" width="128" height="28"/>
         <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="133"/>
         <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
-        <element name="Eld" positionX="-447.0625" positionY="12.578125" width="128" height="118"/>
+        <element name="Eld" positionX="-447.0625" positionY="12.578125" width="128" height="298"/>
         <element name="Inspection" positionX="-159.12109375" positionY="-350.734375" width="128" height="148"/>
     </elements>
 </model>

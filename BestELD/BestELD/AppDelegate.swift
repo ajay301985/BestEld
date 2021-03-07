@@ -10,7 +10,7 @@ import CoreData
 import AWSCore
 
 
-let DEBUGMODE = false
+let DEBUGMODE = true
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     print(Date())
 
+    let value1 = Date().startOfDay.timeIntervalSince1970
+    let value2 = value1 - TimeInterval(60 * 60 * 24 * 1)
+    let value3 = Date().dayBefore.startOfDay.timeIntervalSince1970
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z" //2021-02-06 13:05:50 +0000

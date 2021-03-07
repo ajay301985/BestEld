@@ -60,6 +60,12 @@ class DailyLogRepository {
         }
         logDataDict["inspection"] = inspectionArray
       }
+
+      let dayTimeInterval = TimeInterval(60 * 60 * 24 * 8)
+      let startDateTimeInterval = Date().timeIntervalSince1970
+      let endDateTimeInterval = (startDateTimeInterval - dayTimeInterval)
+      logDataDict["startDate"] = endDateTimeInterval
+      logDataDict["endDate"] = startDateTimeInterval
       logDataDict["date"] = metaData?.day ??  BLDAppUtility.startOfTheDayTimeInterval(for: currentDate)
       if metaData?.id != nil {
         logDataDict["id"] = metaData?.id

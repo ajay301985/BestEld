@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class CircularProgressBar: UIView {
+class CircularProgressBar: UIImageView {
 
   //MARK: awakeFromNib
 

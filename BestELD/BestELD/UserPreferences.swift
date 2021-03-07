@@ -20,6 +20,9 @@ class UserPreferences {
     return currentSelectedDayData
   }
 
+  var shouldSyncDataToServer: Bool {
+    return DataHandeler.shared.currentDriver.dlNumber != TEST_DRIVER_DL_NUMBER
+  }
 
   /*
    Time zones represent the standard time policies for a geopolitical region. Time zones have identifiers like “America/Los_Angeles” and can also be identified by abbreviations, such as PST for Pacific Standard Time. You can create time zone objects by ID with init(name:) and by abbreviation with init(abbreviation:).

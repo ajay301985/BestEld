@@ -259,6 +259,20 @@ extension DataHandeler {
      } */
   }
 
+  func getLastTrackedEvent(driverDLNumber: String, inDate: Date, numberOfDays: Int = 3) -> DayData? {
+
+    let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date().dayBefore), driverDL: driverDLNumber)
+      if dayMetaDataObj != nil {
+        if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
+          let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+          let latestDayData = sortedData.last
+          return latestDayData
+          //DataHandeler.shared.currentDayData = latestDayData
+      }
+      }
+    return nil
+  }
+
   func updateDriverLogbookData(driverLogbookData: [[String: Any]]) {
 //    guard let logbookData = driverLogbookData else {
 //      assertionFailure("invalid drive data")
@@ -478,6 +492,8 @@ extension DataHandeler {
       currentDriverObj.setValue(driverData["state"] as! String, forKey: "state")
       currentDriverObj.setValue(driverData["strAddress1"] as! String, forKey: "strAddress1")
       currentDriverObj.setValue(driverData["strAddress2"] as! String, forKey: "strAddress2")
+      currentDriverObj.setValue(driverData["homeTerminal"] as! String, forKey: "homeTerminal")
+      currentDriverObj.setValue(driverData["mainOffice"] as! String, forKey: "mainOffice")
       currentDriverObj.setValue(driverData["zip"] as! String, forKey: "zip")
       do {
         try context.save()

@@ -133,7 +133,12 @@ class LogBookViewController: UIViewController {
 
     let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
     if dayMetaDataObj == nil {
+      if let lastDayDataObj = DataHandeler.shared.getLastTrackedEvent(driverDLNumber: DataHandeler.shared.currentDriver.dlNumber ?? "", inDate: Date()) {
+        DataHandeler.shared.currentDayData = lastDayDataObj
+      }else {
         DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
+      }
+
     }else {
       if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
         let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
@@ -367,7 +372,7 @@ class LogBookViewController: UIViewController {
     let currentTimezoneTimeIntervalStart = dayDate.dateCurrent//Calendar.current.date(byAdding: .hour, value: 24, to: dayDate.dateValue) ?? Date()
     let currentTimezoneTimeIntervalEnd = (dayDate.dateCurrent + dayTimeInterval)
     let utdDateObj4 = Date(timeIntervalSince1970: currentTimezoneTimeIntervalEnd)
-    print("Current Time zone END \(utdDateObj4)")
+    print("Current Time END \(utdDateObj4)")
 
     var onDutyInt = 0.0
     var offDutyInt = 0.0

@@ -39,8 +39,10 @@
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="fleetDOTNumber" optional="YES" attributeType="String"/>
+        <attribute name="homeTerminal" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="mainOffice" optional="YES" attributeType="String"/>
         <attribute name="primaryPhone" optional="YES" attributeType="String"/>
         <attribute name="secondaryPhone" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="String"/>
@@ -79,7 +81,7 @@
     <elements>
         <element name="DayData" positionX="-54" positionY="-18" width="128" height="28"/>
         <element name="DayMetaData" positionX="-451.71875" positionY="-266.01171875" width="128" height="133"/>
-        <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="28"/>
+        <element name="Driver" positionX="45.625" positionY="-370.484375" width="128" height="328"/>
         <element name="Eld" positionX="-447.0625" positionY="12.578125" width="128" height="298"/>
         <element name="Inspection" positionX="-159.12109375" positionY="-350.734375" width="128" height="148"/>
     </elements>

@@ -88,7 +88,7 @@ class DailyInfoViewController: UIViewController {
     var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: currentEldData.truckNumber ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Trailers", logValue: "xyz trailer", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Trailers", logValue: "Invalid trailer", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
     dailyLogObj = DailyLogInfo(logTitle: "Distance", logValue: "123Miles", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: true)
@@ -112,10 +112,10 @@ class DailyInfoViewController: UIViewController {
     dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: currentEldData.carrierName ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: "xyz Home Terminal address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: DataHandeler.shared.currentDriver.homeTerminal ?? "Invalid Home Terminal" , isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Main office", logValue: "xyz Main office address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Main office", logValue: DataHandeler.shared.currentDriver.mainOffice ?? "Invalid Main office address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
   }
 

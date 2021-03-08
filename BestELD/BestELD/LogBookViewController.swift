@@ -95,6 +95,14 @@ class LogBookViewController: UIViewController {
     }
   }
 
+  fileprivate func registerCoreDataNotifications() {
+    //    AuthenicationService.shared.fetchUserLogbookData(user: "")
+
+    NotificationCenter.default.addObserver(self, selector: #selector(contextObjectsDidChange(_:)), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(contextWillSave(_:)), name: Notification.Name.NSManagedObjectContextWillSave, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(_:)), name: Notification.Name.NSManagedObjectContextDidSave, object: nil)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -102,8 +110,7 @@ class LogBookViewController: UIViewController {
     GraphGenerator.shared.setupImageView(imageView: graphImageView)
     performLoggedIn()
 
-//    AuthenicationService.shared.fetchUserLogbookData(user: "")
-
+    registerCoreDataNotifications()
     /*
     EldManager.sharedInstance()?.registerBleStateCallback( { error in
       if let errorObj = error as NSError? {
@@ -134,7 +141,6 @@ class LogBookViewController: UIViewController {
       }else {
         DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
       }
-
     }else {
       if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
         let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
@@ -150,6 +156,21 @@ class LogBookViewController: UIViewController {
         }
       }
     }
+  }
+
+  @objc func contextObjectsDidChange(_ notification: Notification) {
+    print(notification)
+  }
+  @objc func contextWillSave(_ notification: Notification) {
+    print(notification)
+  }
+  @objc func contextDidSave(_ notification: Notification) {
+    print(notification)
+    guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+      return
+    }
+
+    self.reloadLogBookData(currentDateData)
   }
 
   @IBAction func showMenuOptions(_ sender: Any) {
@@ -326,27 +347,26 @@ class LogBookViewController: UIViewController {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let dutyStatusController = storyboard.instantiateViewController(withIdentifier: "DutyStatusViewController") as! DutyStatusViewController
     dutyStatusController.didChangedDutyStatus = { status, notes, _ in
-      DataHandeler.shared.dutyStatusChanged(status: status, description: notes, timeToStart: Date())
-      self.currentStatus = status
-      guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
-        return
+      DispatchQueue.main.async {
+        DataHandeler.shared.dutyStatusChanged(status: status, description: notes, timeToStart: Date())
+        self.currentStatus = status
       }
-
-      self.reloadLogBookData(currentDateData)
-/*      if status == .ONDUTY {
-        let drivingController = self.viewModel.drivingStoryboardInstance()
-        drivingController.currentDriver = self.viewModel.currentDriver
-        drivingController.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(drivingController, animated: true)
-      }else {
-      } */
+/*        if status == .ONDUTY {
+          let drivingController = self.viewModel.drivingStoryboardInstance()
+          drivingController.currentDriver = self.viewModel.currentDriver
+          drivingController.modalPresentationStyle = .fullScreen
+          self.navigationController?.pushViewController(drivingController, animated: true)
+        }else {
+          guard let currentDateData = UserPreferences.shared.currentSelectedDayData else {
+            return
+          }
+*/
+//          self.reloadLogBookData(currentDateData)
+//      }
+//      }
     }
     dutyStatusController.modalPresentationStyle = .overCurrentContext
     present(dutyStatusController, animated: true, completion: nil)
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    // tableView.reloadData()
   }
 
   fileprivate func reloadLogBookData(_ currentDateData: DateData) {

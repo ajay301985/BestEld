@@ -85,7 +85,8 @@ class DailyInfoViewController: UIViewController {
 
   private func generateDataModels() {
     guard let currentEldData = DataHandeler.shared.currentEldData else {
-      assertionFailure("Invalid Eld Data")
+      //assertionFailure("Invalid Eld Data")
+      showDefaultAlert(title: "Error", message: "You are not connected to ELD device, Please connect ELD Device and check again", handler: nil)
       return
     }
 

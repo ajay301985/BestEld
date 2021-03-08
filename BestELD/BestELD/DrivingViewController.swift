@@ -19,7 +19,7 @@ class DrivingViewController: UIViewController {
   @IBOutlet weak var locationTextField: UILabel!
   var currentDriver: Driver?
   var isEnterDrivingStatus = false
-  var currentStatus: DutyStatus = .ONDUTY {
+  var currentStatus: DutyStatus = .DRIVING {
     didSet {
       dutyStatusTextField.text = currentStatus.title
     }

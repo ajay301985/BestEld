@@ -224,6 +224,7 @@ class BLDAppUtility {
 
     var currentDate = dateFrom
     var days:  [DateData] = []
+    let dayTimeInterval = TimeInterval(60 * 60 * 24 * 1)
     for index in 0..<numOfDays {
       //if currentDate
       let dateObj = currentDate.startOfDayWithTimezone
@@ -238,7 +239,7 @@ class BLDAppUtility {
       let dayData = DateData(displayDate: dateString, dateCurrent: currentTimezoneTimeInterval, dateUTC: timezoneUTC)
         //DateData(displayDate: dateString, actualDate: dateString, dateValue: dateObj)
       days.insert(dayData, at: days.count)
-      currentDate = currentDate.dayBefore
+      currentDate = currentDate.addingTimeInterval(-dayTimeInterval)//currentDate.dayBefore
     }
 
     return days

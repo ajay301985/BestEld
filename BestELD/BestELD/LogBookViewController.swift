@@ -111,25 +111,6 @@ class LogBookViewController: UIViewController {
     performLoggedIn()
 
     registerCoreDataNotifications()
-    /*
-    EldManager.sharedInstance()?.registerBleStateCallback( { error in
-      if let errorObj = error as NSError? {
-        switch errorObj.code {
-          case 1003:
-            self.showDefaultAlert(title: nil, message: "Device not connected", handler: nil)
-          case 1005:
-            self.showDefaultAlert(title: nil, message: "Device not supported", handler: nil)
-          case 1006:
-            self.showDefaultAlert(title: nil, message: "Device not authorized", handler: nil)
-          case 1008:
-            self.showDefaultAlert(title: nil, message: "Device powered off", handler: nil)
-          case 1009:
-            self.showDefaultAlert(title: nil, message: "Device powered on", handler: nil)
-          default:
-            print("test")
-        }
-      }
-      }) */
 
     let currentDateData = BLDAppUtility.generateDataSource(dateFrom: Date(), numOfDays: 8)[0] //get todays data
     UserPreferences.shared.currentSelectedDayData = currentDateData
@@ -147,12 +128,16 @@ class LogBookViewController: UIViewController {
         let latestDayData = sortedData.last
         DataHandeler.shared.currentDayData = latestDayData
       } else {
-        DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
-        let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
-        if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
-          let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
-          let latestDayData = sortedData.last
-          DataHandeler.shared.currentDayData = latestDayData
+        if let lastDayDataObj = DataHandeler.shared.getLastTrackedEvent(driverDLNumber: DataHandeler.shared.currentDriver.dlNumber ?? "", inDate: Date()) {
+          DataHandeler.shared.currentDayData = lastDayDataObj
+        }else {
+          DataHandeler.shared.dutyStatusChanged(status: .OFFDUTY,description: "off duty from start of the day", timeToStart: Date())
+          let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: DataHandeler.shared.currentDriver.dlNumber ?? "")
+          if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
+            let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+            let latestDayData = sortedData.last
+            DataHandeler.shared.currentDayData = latestDayData
+          }
         }
       }
     }
@@ -519,6 +504,30 @@ class LogBookViewController: UIViewController {
   private func addButtonToNavationBar() {
 //    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Connect Eld", style: .done, target: self, action: #selector(connectEld))
 //    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Driving Mode", style: .done, target: self, action: #selector(drivingMode))
+  }
+
+
+  private func checkELDConnection() {
+    /*
+     EldManager.sharedInstance()?.registerBleStateCallback( { error in
+     if let errorObj = error as NSError? {
+     switch errorObj.code {
+     case 1003:
+     self.showDefaultAlert(title: nil, message: "Device not connected", handler: nil)
+     case 1005:
+     self.showDefaultAlert(title: nil, message: "Device not supported", handler: nil)
+     case 1006:
+     self.showDefaultAlert(title: nil, message: "Device not authorized", handler: nil)
+     case 1008:
+     self.showDefaultAlert(title: nil, message: "Device powered off", handler: nil)
+     case 1009:
+     self.showDefaultAlert(title: nil, message: "Device powered on", handler: nil)
+     default:
+     print("test")
+     }
+     }
+     }) */
+
   }
 }
 

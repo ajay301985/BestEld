@@ -84,13 +84,13 @@ class DailyInfoViewController: UIViewController {
 
 
   private func generateDataModels() {
-    guard let currentEldData = DataHandeler.shared.currentEldData else {
+    //guard let currentEldData = DataHandeler.shared.currentEldData else {
       //assertionFailure("Invalid Eld Data")
-      showDefaultAlert(title: "Error", message: "You are not connected to ELD device, Please connect ELD Device and check again", handler: nil)
-      return
-    }
+      //showDefaultAlert(title: "Error", message: "You are not connected to ELD device, Please connect ELD Device and check again", handler: nil)
+      //return
+    //}
 
-    var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: currentEldData.truckNumber ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: DataHandeler.shared.currentEldData?.truckNumber ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
     dailyLogObj = DailyLogInfo(logTitle: "Trailers", logValue: "Invalid trailer", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
@@ -114,7 +114,7 @@ class DailyInfoViewController: UIViewController {
     dailyLogObj = DailyLogInfo(logTitle: "Co-Drivers", logValue: "xyz co-driver", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: currentEldData.carrierName ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: DataHandeler.shared.currentEldData?.carrierName ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
     dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: DataHandeler.shared.currentDriver.homeTerminal ?? "Invalid Home Terminal" , isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)

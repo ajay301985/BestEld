@@ -10,7 +10,7 @@ import CoreData
 import AWSCore
 
 
-let DEBUGMODE = true
+let DEBUGMODE = false
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -124,6 +124,7 @@ class ViewController: UIViewController {
         case .failure(let error):
           print(error.localizedDescription)
           DispatchQueue.main.async {
+            self.alertController?.dismiss(animated: false, completion: nil)
             self.showDefaultAlert(title: "Error", message: error.localizedDescription, handler: nil)
           }
       }

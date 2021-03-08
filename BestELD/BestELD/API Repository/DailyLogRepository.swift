@@ -10,8 +10,9 @@ import Foundation
 
 class DailyLogRepository {
   static let shared = DailyLogRepository()
-
-  func sendDailyLogsToServer(fromDate: Date, numberOfDays: Int = 8) {
+  typealias logBookResult = (Result<Bool, Error>) -> Void
+  
+  func sendDailyLogsToServer(fromDate: Date, numberOfDays: Int = 8, completion: @escaping logBookResult) {
     var currentDate = fromDate
     let currentDriver = DataHandeler.shared.currentDriver
     guard let driverLicenseNumber = currentDriver?.dlNumber else {
@@ -81,6 +82,7 @@ class DailyLogRepository {
 
     AuthenicationService.shared.saveLogDataToServer(dataDictArray: logDayDataArray) { [weak self] result in
       print("got some data")
+      completion(result)
     }
 
   }

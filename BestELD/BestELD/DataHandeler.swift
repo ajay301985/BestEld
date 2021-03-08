@@ -92,10 +92,10 @@ extension DataHandeler {
         performDutyStatusChanged(description: description, startTime: timeToStart, dutyStatus: .PERSONAL)
     }
 
-    let dayMetaDataObj = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER, createOnDemand: true)
-    let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
-    let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
-    GraphGenerator.shared.generatePath(dayDataArr: sortedData)
+    //let dayMetaDataObj = dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER, createOnDemand: true)
+    //let dayDataArr = dayMetaDataObj?.dayData?.allObjects as! [DayData]
+   // let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+  //  GraphGenerator.shared.generatePath(dayDataArr: sortedData)
   }
 
   private func performOffDutyStatusChanged(description: String?, startTime: Date? = nil) {
@@ -103,7 +103,21 @@ extension DataHandeler {
     guard let metaData = driverMetaData, metaData.dayData?.count ?? 0 > 0 else {
       let startDate = Date().startOfDayWithTimezone // enter a test object
       currentDayData = DataHandeler.shared.createDayData(start: startDate, end: Date(), status: .OFFDUTY, desciption: description ?? "off duty", for: currentDriver)
-      DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1)
+      if UserPreferences.shared.shouldSyncDataToServer {
+        DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1) { result in
+          let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: self.currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER)
+          if dayMetaDataObj != nil {
+            if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
+              let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+              let latestDayData = sortedData.last
+              self.currentDayData = latestDayData
+              NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "DatabaseDidChanged"), object: self) as Notification)
+            }
+          }
+        }
+      } else {
+        NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "DatabaseDidChanged"), object: self) as Notification)
+      }
       return
     }
 
@@ -141,7 +155,21 @@ extension DataHandeler {
 
     let currentDayData1 = DataHandeler.shared.createDayData(start: startTime ?? currentTime, end: Date(), status: dutyStatus, desciption: description ?? "", for: currentDriver)
     currentDayData = currentDayData1
-    DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1)
+    if UserPreferences.shared.shouldSyncDataToServer {
+      DailyLogRepository.shared.sendDailyLogsToServer(fromDate: Date(), numberOfDays: 1) { result in
+        let dayMetaDataObj = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: self.currentDriver.dlNumber ?? TEST_DRIVER_DL_NUMBER)
+        if dayMetaDataObj != nil {
+          if let dayDataArr = dayMetaDataObj?.dayData?.allObjects as? [DayData], dayDataArr.count > 0 {
+            let sortedData = dayDataArr.sorted(by: { $0.startTime ?? Date() < $1.startTime ?? Date() })
+            let latestDayData = sortedData.last
+            self.currentDayData = latestDayData
+            NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "DatabaseDidChanged"), object: self) as Notification)
+          }
+        }
+      }
+    } else {
+      NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "DatabaseDidChanged"), object: self) as Notification)
+    }
   }
 }
 
@@ -511,8 +539,14 @@ extension DataHandeler {
       currentDriverObj.setValue(driverData["state"] as! String, forKey: "state")
       currentDriverObj.setValue(driverData["strAddress1"] as! String, forKey: "strAddress1")
       currentDriverObj.setValue(driverData["strAddress2"] as! String, forKey: "strAddress2")
-      currentDriverObj.setValue(driverData["homeTerminal"] as! String, forKey: "homeTerminal")
-      currentDriverObj.setValue(driverData["mainOffice"] as! String, forKey: "mainOffice")
+      if let homeTerminalData = driverData["homeTerminal"] as? String {
+        currentDriverObj.setValue(homeTerminalData, forKey: "homeTerminal")
+      }
+
+      if let mainOffice = driverData["mainOffice"] as? String {
+        currentDriverObj.setValue(mainOffice, forKey: "mainOffice")
+      }
+
       currentDriverObj.setValue(driverData["zip"] as! String, forKey: "zip")
       do {
         try context.save()

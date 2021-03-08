@@ -56,10 +56,14 @@ class AuthenicationService {
               if let accessjwtToken = accessToken?["jwtToken"] as? String {
                 BLDAppUtility.saveAccessToken(token: accessjwtToken)
               }
-            }
-            DispatchQueue.main.async {
-              let currentDriver = DataHandeler.shared.updateDriverData(driverDataJson: userProfile)
-              completion(.success(currentDriver))
+              DispatchQueue.main.async {
+                let currentDriver = DataHandeler.shared.updateDriverData(driverDataJson: userProfile)
+                completion(.success(currentDriver))
+              }
+            } else {
+              DispatchQueue.main.async {
+                completion(.failure(NSError(domain: "Invalid User", code: 405, userInfo: [NSLocalizedDescriptionKey: "Invalid user"])))
+              }
             }
           } else {
             print("bad json")

@@ -48,7 +48,7 @@ class DutyStatusViewController: UIViewController {
         // Do any additional setup after loading the view.
     locationTextField.isEnabled = false
     locationTextField.text = BldLocationManager.shared.locationText
-    currentDutyStatus = DutyStatus(rawValue: DataHandeler.shared.currentDayData.dutyStatus ?? "OFFDUTY") ?? .OFFDUTY
+    currentDutyStatus = DutyStatus(rawValue: DataHandler.shared.currentDayData.dutyStatus ?? "OFFDUTY") ?? .OFFDUTY
     NotificationCenter.default.addObserver(self, selector: #selector(DutyStatusViewController.keyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(DutyStatusViewController.keyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 

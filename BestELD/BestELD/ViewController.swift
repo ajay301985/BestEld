@@ -117,7 +117,7 @@ class ViewController: UIViewController {
             return
           }
           DispatchQueue.main.async {
-            DataHandeler.shared.setupData(for: dlNumber)
+            DataHandler.shared.setupData(for: dlNumber)
             self.alertController?.dismiss(animated: false, completion: nil)
             self.loggedIn(user: driver)
           }
@@ -180,24 +180,24 @@ class ViewController: UIViewController {
 
   func loggedInAsATestUser() {
     addItemSQS()
-    DataHandeler.shared.cleanupData(for: TEST_DRIVER_DL_NUMBER) //clean up existing data
+    DataHandler.shared.cleanupData(for: TEST_DRIVER_DL_NUMBER) //clean up existing data
 
-    var currentDriver = DataHandeler.shared.getDriverData(for: TEST_DRIVER_DL_NUMBER)
+    var currentDriver = DataHandler.shared.getDriverData(for: TEST_DRIVER_DL_NUMBER)
     if (currentDriver == nil) {
-      currentDriver = DataHandeler.shared.createTestDriverData()
+      currentDriver = DataHandler.shared.createTestDriverData()
     }
-    DataHandeler.shared.setupData(for: TEST_DRIVER_DL_NUMBER)
+    DataHandler.shared.setupData(for: TEST_DRIVER_DL_NUMBER)
     //loggedIn(user: DataHandeler.shared.currentDriver)
-    var driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()) , driverDL: currentDriver?.dlNumber ?? TEST_DRIVER_DL_NUMBER)
+    var driverMetaData = DataHandler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()) , driverDL: currentDriver?.dlNumber ?? TEST_DRIVER_DL_NUMBER)
     if ((driverMetaData == nil)) {
-      driverMetaData = DataHandeler.shared.createTestUserMetaData(for: currentDriver?.dlNumber ?? TEST_DRIVER_DL_NUMBER, dayData: BLDAppUtility.startOfTheDayTimeInterval(for: Date()))
+      driverMetaData = DataHandler.shared.createTestUserMetaData(for: currentDriver?.dlNumber ?? TEST_DRIVER_DL_NUMBER, dayData: BLDAppUtility.startOfTheDayTimeInterval(for: Date()))
     }
     guard  let driver = currentDriver, let metaData = driverMetaData else {
       assertionFailure("failed to create objects")
       return
     }
 
-    DataHandeler.shared.currentDriver = driver
+    DataHandler.shared.currentDriver = driver
     let bookViewModel = LogBookViewModel(driver: driver, metaData: [metaData])
     let logBookViewController = viewModel.logBookStoryboardInstance()
     logBookViewController.setViewModel(dataViewModel: bookViewModel)
@@ -226,9 +226,9 @@ class ViewController: UIViewController {
     AuthenicationService.shared.fetchUserLogbookData(user: "", startTime: Date(), numberOfDays: 8) { [weak self] result in
       guard let self = self else {return}
 
-      var driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: user.dlNumber ?? TEST_DRIVER_DL_NUMBER)
+      var driverMetaData = DataHandler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: user.dlNumber ?? TEST_DRIVER_DL_NUMBER)
       if ((driverMetaData == nil)) {
-        driverMetaData = DataHandeler.shared.createTestUserMetaData(for: user.dlNumber ?? TEST_DRIVER_DL_NUMBER, dayData: BLDAppUtility.startOfTheDayTimeInterval(for: Date()))
+        driverMetaData = DataHandler.shared.createTestUserMetaData(for: user.dlNumber ?? TEST_DRIVER_DL_NUMBER, dayData: BLDAppUtility.startOfTheDayTimeInterval(for: Date()))
       }
       guard  let metaData = driverMetaData else {
         assertionFailure("failed to create objects")

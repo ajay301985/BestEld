@@ -13,6 +13,7 @@
 		3AEC7697EEAB4B86B2B29DC0 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = D23968173F2F464AB60949FD /* awsconfiguration.json */; };
 		3C7AA0A7AD8B49D7B5B4C411 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F412AD9A5A2F412BACF5CC7B /* Priority.swift */; };
 		946F1C348371479291ABCBB3 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C686C3EBBBE449F89BE426D5 /* amplifyconfiguration.json */; };
+		AA032CCD260C80900084016D /* VoilationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA032CCC260C80900084016D /* VoilationManager.swift */; };
 		AA0A9F1925CEEF580050FF4E /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A9F1825CEEF580050FF4E /* UserPreferences.swift */; };
 		AA16AABB25BD5DAE00A6D9CD /* GraphGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */; };
 		AA27E8F825CC54F1009B449F /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */; };
@@ -36,7 +37,7 @@
 		AAB39DB625B4DE6500EECA67 /* DriverApiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB39DB525B4DE6500EECA67 /* DriverApiRepository.swift */; };
 		AABD5EAF25BB40F6004A52D8 /* DrivingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EAE25BB40F6004A52D8 /* DrivingViewController.swift */; };
 		AABD5EB225BB43A1004A52D8 /* DrivingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EB125BB43A1004A52D8 /* DrivingViewModel.swift */; };
-		AABD5EB525BB4D37004A52D8 /* DataHandeler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EB425BB4D37004A52D8 /* DataHandeler.swift */; };
+		AABD5EB525BB4D37004A52D8 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EB425BB4D37004A52D8 /* DataHandler.swift */; };
 		AABD5EB825BB8601004A52D8 /* BldLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EB725BB8601004A52D8 /* BldLocationManager.swift */; };
 		AABD5EBF25BC1FF8004A52D8 /* DayDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD5EBE25BC1FF8004A52D8 /* DayDataTableViewCell.swift */; };
 		AABEDA8925B2DA50007C9345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABEDA8825B2DA50007C9345 /* AppDelegate.swift */; };
@@ -92,6 +93,7 @@
 		465CC1D4D31A4807BE4EC7EE /* Todo+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "Todo+Schema.swift"; path = "amplify/generated/models/Todo+Schema.swift"; sourceTree = "<group>"; };
 		7943DE86D57F4A4E8D81ABF9 /* Todo.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = Todo.swift; path = amplify/generated/models/Todo.swift; sourceTree = "<group>"; };
 		8A409668DDF64D9D8A520A08 /* schema.graphql */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text; name = schema.graphql; path = amplify/backend/api/amplifyDatasource/schema.graphql; sourceTree = "<group>"; };
+		AA032CCC260C80900084016D /* VoilationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoilationManager.swift; sourceTree = "<group>"; };
 		AA0A9F1825CEEF580050FF4E /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		AA16AABA25BD5DAE00A6D9CD /* GraphGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphGenerator.swift; sourceTree = "<group>"; };
 		AA27E8F725CC54F1009B449F /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
@@ -115,7 +117,7 @@
 		AAB39DB525B4DE6500EECA67 /* DriverApiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverApiRepository.swift; sourceTree = "<group>"; };
 		AABD5EAE25BB40F6004A52D8 /* DrivingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingViewController.swift; sourceTree = "<group>"; };
 		AABD5EB125BB43A1004A52D8 /* DrivingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingViewModel.swift; sourceTree = "<group>"; };
-		AABD5EB425BB4D37004A52D8 /* DataHandeler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandeler.swift; sourceTree = "<group>"; };
+		AABD5EB425BB4D37004A52D8 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		AABD5EB725BB8601004A52D8 /* BldLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BldLocationManager.swift; sourceTree = "<group>"; };
 		AABD5EBE25BC1FF8004A52D8 /* DayDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataTableViewCell.swift; sourceTree = "<group>"; };
 		AABEDA8525B2DA50007C9345 /* Best ELD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Best ELD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,6 +242,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AA032CCB260C80770084016D /* VoilationServices */ = {
+			isa = PBXGroup;
+			children = (
+				AA032CCC260C80900084016D /* VoilationManager.swift */,
+			);
+			path = VoilationServices;
+			sourceTree = "<group>";
+		};
 		AA27E8FA25CC80B3009B449F /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +341,7 @@
 		AABEDA8725B2DA50007C9345 /* BestELD */ = {
 			isa = PBXGroup;
 			children = (
+				AA032CCB260C80770084016D /* VoilationServices */,
 				AA27E8FA25CC80B3009B449F /* Services */,
 				AA7EDCDE25C5296D00291DED /* Cells */,
 				AACCEB4F25C0B21B00F9AB0A /* AFNetworking */,
@@ -350,7 +361,7 @@
 				AA57D46725B3941300269519 /* AppNavigationViewController.swift */,
 				AA7DAAB025B7587D001C5F6A /* LogBookViewController.swift */,
 				AABD5EAE25BB40F6004A52D8 /* DrivingViewController.swift */,
-				AABD5EB425BB4D37004A52D8 /* DataHandeler.swift */,
+				AABD5EB425BB4D37004A52D8 /* DataHandler.swift */,
 				AABD5EB725BB8601004A52D8 /* BldLocationManager.swift */,
 				AA7EDCD725C5147800291DED /* MenuViewController.swift */,
 				AA6ABB4A25C534D200B3F26F /* DeviceListViewController.swift */,
@@ -590,6 +601,7 @@
 				AABEDA8D25B2DA50007C9345 /* ViewController.swift in Sources */,
 				AACCEB1025C0A8EB00F9AB0A /* EldLibManager.m in Sources */,
 				AABEDAB825B387B0007C9345 /* UserPreferencesViewController.swift in Sources */,
+				AA032CCD260C80900084016D /* VoilationManager.swift in Sources */,
 				AA57D46525B38F6B00269519 /* AppUtility.swift in Sources */,
 				AA6CEC6825DD852100A46689 /* DailyLogTableViewCell.swift in Sources */,
 				AA57D46125B38DD000269519 /* StringExtension.swift in Sources */,
@@ -605,7 +617,7 @@
 				AABD5EB825BB8601004A52D8 /* BldLocationManager.swift in Sources */,
 				AA7DAAAE25B754D1001C5F6A /* ViewViewModel.swift in Sources */,
 				AABEDA8925B2DA50007C9345 /* AppDelegate.swift in Sources */,
-				AABD5EB525BB4D37004A52D8 /* DataHandeler.swift in Sources */,
+				AABD5EB525BB4D37004A52D8 /* DataHandler.swift in Sources */,
 				AAB39DB625B4DE6500EECA67 /* DriverApiRepository.swift in Sources */,
 				AACCEB6225C0B21B00F9AB0A /* AFSecurityPolicy.m in Sources */,
 				AA453C4E25E05B0E00F2DAF3 /* DailyLogRepository.swift in Sources */,
@@ -793,7 +805,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 823T3VVHXY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BestELD/Info.plist;
@@ -875,7 +887,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 823T3VVHXY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BestELD/Info.plist;

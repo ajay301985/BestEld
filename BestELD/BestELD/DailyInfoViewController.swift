@@ -52,7 +52,7 @@ class DailyInfoViewController: UIViewController {
 
   @IBAction func confirmClicked(_ sender: Any) {
     if (inspectionView.isHidden == false) {
-      let dayTripData = DataHandeler.shared.saveTripData(status: currentTripStatus , notes: notesTextField.text, location: "", inDayData: Date())
+      let dayTripData = DataHandler.shared.saveTripData(status: currentTripStatus , notes: notesTextField.text, location: "", inDayData: Date())
       dismiss(animated: true, completion: nil)
     }
   }
@@ -90,7 +90,7 @@ class DailyInfoViewController: UIViewController {
       //return
     //}
 
-    var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: DataHandeler.shared.currentEldData?.truckNumber ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    var dailyLogObj = DailyLogInfo(logTitle: "Vehicles", logValue: DataHandler.shared.currentEldData?.truckNumber ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
     dailyLogObj = DailyLogInfo(logTitle: "Trailers", logValue: "Invalid trailer", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
@@ -106,7 +106,7 @@ class DailyInfoViewController: UIViewController {
     dailyLogDataArr.append(dailyLogObj)
 
 
-    let driverFullName = (DataHandeler.shared.currentDriver.firstName ?? "" + (DataHandeler.shared.currentDriver.lastName ?? ""))
+    let driverFullName = (DataHandler.shared.currentDriver.firstName ?? "" + (DataHandler.shared.currentDriver.lastName ?? ""))
 
     dailyLogObj = DailyLogInfo(logTitle: "Drivers", logValue: driverFullName, isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
@@ -114,13 +114,13 @@ class DailyInfoViewController: UIViewController {
     dailyLogObj = DailyLogInfo(logTitle: "Co-Drivers", logValue: "xyz co-driver", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: DataHandeler.shared.currentEldData?.carrierName ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Carrier", logValue: DataHandler.shared.currentEldData?.carrierName ?? "", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: DataHandeler.shared.currentDriver.homeTerminal ?? "Invalid Home Terminal" , isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Home Terminal", logValue: DataHandler.shared.currentDriver.homeTerminal ?? "Invalid Home Terminal" , isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
 
-    dailyLogObj = DailyLogInfo(logTitle: "Main office", logValue: DataHandeler.shared.currentDriver.mainOffice ?? "Invalid Main office address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
+    dailyLogObj = DailyLogInfo(logTitle: "Main office", logValue: DataHandler.shared.currentDriver.mainOffice ?? "Invalid Main office address", isEditable: false, isViolation: false, extraInfo: nil, hadExtraInfo: false)
     dailyLogDataArr.append(dailyLogObj)
   }
 

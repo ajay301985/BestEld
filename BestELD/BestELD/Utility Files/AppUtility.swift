@@ -10,6 +10,13 @@ import UIKit
 
 let TEST_DRIVER_DL_NUMBER = "xyz12345"
 let DRIVING_MODE_SPEED = 5.0
+let oneDayTimeInterval = TimeInterval(60 * 60 * 24)
+let eightHourTimeInterval = TimeInterval(60 * 60 * 8)
+let thirtyMinuteTimeInterval = TimeInterval(60 * 30)
+let eightDayTimeInterval = TimeInterval(60 * 60 * 24 * 8)
+let sevenDayTimeInterval = TimeInterval(60 * 60 * 24 * 7)
+let thirtyFourTimeInterval = TimeInterval(60 * 60 * 24 * 34)
+let tenFourTimeInterval = TimeInterval(60 * 60 * 10)
 
 enum Storyboards: String {
   case Main

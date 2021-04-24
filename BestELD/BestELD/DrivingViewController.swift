@@ -54,7 +54,7 @@ class DrivingViewController: UIViewController {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let dutyStatusController =  storyboard.instantiateViewController(withIdentifier: "DutyStatusViewController") as! DutyStatusViewController
     dutyStatusController.didChangedDutyStatus = { status, notes, location in
-      DataHandeler.shared.dutyStatusChanged(status: status,description: notes, timeToStart: Date())
+      DataHandler.shared.dutyStatusChanged(status: status,description: notes, timeToStart: Date())
       self.currentStatus = status
       self.navigationController?.popViewController(animated: true)
     }
@@ -63,6 +63,7 @@ class DrivingViewController: UIViewController {
   }
 
   @IBAction func sliderValueChanged(_ sender: Any) {
+    return
     let slider = sender as! UISlider
     sliderValueText.text = String(slider.value)
     if slider.value > 5.0 {
@@ -79,13 +80,13 @@ class DrivingViewController: UIViewController {
         assertionFailure("Invalid driver object")
         return
       }
-      let driverMetaData = DataHandeler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driverObj.dlNumber ?? TEST_DRIVER_DL_NUMBER)
+      let driverMetaData = DataHandler.shared.dayMetaData(dayStart: BLDAppUtility.startOfTheDayTimeInterval(for: Date()), driverDL: driverObj.dlNumber ?? TEST_DRIVER_DL_NUMBER)
       guard let metaData = driverMetaData, (metaData.dayData?.count ?? 0 > 0) else {
         assertionFailure("something wrong with database")
         return
       }
       let startDate = Date()
-      DataHandeler.shared.dutyStatusChanged(status: .DRIVING, description: "Driving", timeToStart: startDate)
+      DataHandler.shared.dutyStatusChanged(status: .DRIVING, description: "Driving", timeToStart: startDate)
     }
   }
 
@@ -107,7 +108,7 @@ class DrivingViewController: UIViewController {
     showAlertToUser(
       status: currentStatus,
       continueAction: (title: nil, handler: { description,date in
-        DataHandeler.shared.dutyStatusChanged(status: status,description: description, timeToStart: date)
+        DataHandler.shared.dutyStatusChanged(status: status,description: description, timeToStart: date)
         self.currentStatus = status
         self.disableButton(for: status)
         self.navigationController?.popViewController(animated: true)

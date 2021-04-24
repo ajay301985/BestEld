@@ -14,7 +14,7 @@ class DailyLogRepository {
   
   func sendDailyLogsToServer(fromDate: Date, numberOfDays: Int = 8, completion: @escaping logBookResult) {
     var currentDate = fromDate
-    let currentDriver = DataHandeler.shared.currentDriver
+    let currentDriver = DataHandler.shared.currentDriver
     guard let driverLicenseNumber = currentDriver?.dlNumber else {
       assertionFailure("invalid driver data")
       return
@@ -23,7 +23,7 @@ class DailyLogRepository {
     var logDayDataArray: Array<[String:Any]> = []
     var logDataDict:[String:Any] = [:]
     for _ in 1...numberOfDays {
-      let metaData = DataHandeler.shared.dayMetaData(dayStart: TimeInterval(BLDAppUtility.startOfTheDayTimeInterval(for: currentDate)) , driverDL: driverLicenseNumber)
+      let metaData = DataHandler.shared.dayMetaData(dayStart: TimeInterval(BLDAppUtility.startOfTheDayTimeInterval(for: currentDate)) , driverDL: driverLicenseNumber)
 
       if let logDayData = metaData?.dayData {
         var logDayDataArray: Array<[String:Any]> = []
@@ -31,6 +31,7 @@ class DailyLogRepository {
           var dayDataDict:[String:Any] = [:]
           let currentDayData = dayData as! DayData
           dayDataDict["dlnumber"] = currentDayData.dlNumber
+          dayDataDict["day"] = currentDayData.day
           dayDataDict["dutystatus"] = currentDayData.dutyStatus
           dayDataDict["startlocation"] = currentDayData.startLocation
           dayDataDict["endlocation"] = currentDayData.endLocation

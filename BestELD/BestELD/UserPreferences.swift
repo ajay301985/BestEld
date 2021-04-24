@@ -21,7 +21,7 @@ class UserPreferences {
   }
 
   var shouldSyncDataToServer: Bool {
-    return DataHandeler.shared.currentDriver.dlNumber != TEST_DRIVER_DL_NUMBER
+    return DataHandler.shared.currentDriver.dlNumber != TEST_DRIVER_DL_NUMBER
   }
 
   /*

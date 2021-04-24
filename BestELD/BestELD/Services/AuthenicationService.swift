@@ -57,7 +57,7 @@ class AuthenicationService {
                 BLDAppUtility.saveAccessToken(token: accessjwtToken)
               }
               DispatchQueue.main.async {
-                let currentDriver = DataHandeler.shared.updateDriverData(driverDataJson: userProfile)
+                let currentDriver = DataHandler.shared.updateDriverData(driverDataJson: userProfile)
                 completion(.success(currentDriver))
               }
             } else {
@@ -136,7 +136,7 @@ class AuthenicationService {
              }
              }*/
             DispatchQueue.main.async {
-              DataHandeler.shared.updateDriverLogbookData(driverLogbookData: userLogbookData)
+              DataHandler.shared.updateDriverLogbookData(driverLogbookData: userLogbookData)
               completion(.success(true))
             }
           } else {
@@ -197,7 +197,7 @@ class AuthenicationService {
             }
 
             DispatchQueue.main.async {
-              DataHandeler.shared.updateDriverLogbookData(driverLogbookData: userLogbookData)
+              DataHandler.shared.updateDriverLogbookData(driverLogbookData: userLogbookData)
               completion(.success(true))
             }
           } else {
@@ -242,7 +242,7 @@ class AuthenicationService {
             print(jsonArray) // use the json here
             let userProfile = jsonArray["data"] as? [String: Any]
             DispatchQueue.main.async {
-              let currentEld = DataHandeler.shared.updateEldData(eldDataJson: userProfile)
+              let currentEld = DataHandler.shared.updateEldData(eldDataJson: userProfile)
               completion(.success(currentEld))
             }
           } else {

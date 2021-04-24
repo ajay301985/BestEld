@@ -89,20 +89,36 @@ class GraphGenerator {
       }
 
       var startPoint = CGPoint(x: xPositionInGraph, y: yPosition)
+      let startTimeInterval = startTimeObj.timeIntervalSince1970
+      if startTimeInterval < dayData.day {
+        startPoint.x = 0
+      }
 
       if (!lastPoint.equalTo(CGPoint.zero)) {
         drawLineFromPoint(start: lastPoint, toPoint: startPoint, ofColor: .blue, inView: currentImageView)
       }
 
       let xPositionInGraph1 = imageXPosition(for: endTimeObj)
+      let endTimeInterval = endTimeObj.timeIntervalSince1970
       var endPoint = CGPoint(x: xPositionInGraph1, y: yPosition)
-      if endPoint.x < startPoint.x {
+      let dayTimeInterval = TimeInterval(60 * 60 * 24 * 1)
+      if dayData.day > 0 {
+        if endTimeInterval > (dayData.day + dayTimeInterval) {
+          endPoint.x = imageSize?.width ?? 120
+        }
+      }
+      /*if endPoint.x < startPoint.x {
         if currentIndex == 0 {
           startPoint.x = 0
         } else {
           endPoint.x = imageSize?.width ?? 120
         }
       }
+      if endPoint.x == startPoint.x { //Assuming this is the last event
+        if currentIndex == (dayDataArr.count - 1) {
+          endPoint.x = imageSize?.width ?? 120
+        }
+      }*/
       lastPoint = endPoint
       drawLineFromPoint(start: startPoint, toPoint: endPoint, ofColor: currentColor, inView: currentImageView)
       currentIndex += 1
